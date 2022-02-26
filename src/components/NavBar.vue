@@ -1,0 +1,112 @@
+<script lang="ts">
+import { computed, defineComponent, onMounted, ref } from "vue";
+
+export default defineComponent({
+  setup() {
+    const isModalOpen = ref(false);
+    const isMobileScreen = computed(() => window.innerWidth < 700);
+    const isNavHidden = ref(false);
+    const toggleShowNav = () => {
+      if (isMobileScreen.value) {
+        isNavHidden.value = !isNavHidden.value;
+      }
+    };
+    onMounted(() => {
+      if (isMobileScreen.value) {
+        toggleShowNav();
+      }
+    });
+    return {
+      isModalOpen,
+      isMobileScreen,
+      isNavHidden,
+      toggleShowNav,
+    };
+  },
+});
+</script>
+
+<template>
+  <div class="navbar-wrapper">
+    <div class="logo">
+      <span><img src="../assets/hantel.svg" alt="logo" /></span>
+      <span>COACH</span>
+      <button
+        class="toggle-nav-button"
+        v-if="isMobileScreen"
+        @click="toggleShowNav"
+      >
+        ▼
+      </button>
+    </div>
+    <div class="nav-button-group" v-if="!isNavHidden">
+      <router-link class="nav-link" to="/explore">
+        <div class="nav-button" @click="toggleShowNav">Explore</div>
+      </router-link>
+      <router-link class="nav-link" to="/">
+        <div class="nav-button" @click="toggleShowNav">My Workouts</div>
+      </router-link>
+      <router-link class="nav-link" to="/register">
+        <div class="nav-button nav-link" @click="toggleShowNav">Sign up</div>
+      </router-link>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.logo {
+  display: inline-flex;
+  align-items: center;
+  font-size: 2rem;
+}
+
+.toggle-nav-button {
+  background: transparent;
+  border: none !important;
+  color: var(--white);
+}
+
+.navbar-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--primary);
+  color: var(--white);
+}
+
+.nav-button-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 16rem;
+}
+
+.nav-button {
+  text-align: center;
+  padding: 1rem;
+}
+
+@media screen and (min-width: 700px) {
+  .navbar-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    margin: 1rem 0 1rem 0;
+    background: var(--primary);
+    color: var(--white);
+  }
+
+  .toggle-nav-button {
+    display: none;
+  }
+
+  .nav-button-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: auto;
+  }
+}
+</style>
