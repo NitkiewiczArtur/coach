@@ -9,7 +9,7 @@ export default defineComponent({
     ExerciseTable,
   },
   async setup() {
-    const exercises = ref([]);
+    const exercises = ref<any>([]);
 
     exercises.value = await getExerciseById("0055");
     console.log(exercises);

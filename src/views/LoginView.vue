@@ -1,31 +1,31 @@
 <template>
   <div class="wrapper">
-    <form @submit.prevent="submitForm">
-      <h3>Logowanie</h3>
-      <template v-for="error in errors" :key = "error">
+    <form>
+      <h3>Logging in</h3>
+      <template v-for="error in errors" :key="error">
         <div class="error">{{ error }}</div>
       </template>
       <div>
-        <input type="email" v-model="email" placeholder="email" />
+        <input class="input" type="email" v-model="email" placeholder="email"/>
       </div>
       <div>
-        <input type="password" v-model="password" placeholder="password" />
+        <input class="input" type="password" v-model="password" placeholder="password"/>
       </div>
-      <button class="button" type="submit">Log in</button>
+      <button class="button" type="submit" @click="submitForm">Log in</button>
     </form>
     <div>
-      <h4>Nie posiadasz konta?</h4>
+      <h4>You dont have an account?</h4>
     </div>
     <router-link to="/register">
-      <button class="button">Zarejestruj się</button>
+      <button class="button">Sign up</button>
     </router-link>
   </div>
 </template>
 
 <script setup>
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import {ref} from "vue";
+import {useRouter} from "vue-router";
+import {signIn} from "@/services/firebaseService";
 
 const router = useRouter();
 const errors = ref([]);
@@ -40,14 +40,13 @@ const submitForm = () => {
     errors.value.push("Password required");
   }
   if (!errors.value.length) {
-    const auth = getAuth();
-    signInWithEmailAndPassword(auth, email.value, password.value)
-      .then((userCredential) => {
-        router.replace({ name: "home" });
-      })
-      .catch((error) => {
-        errors.value.push(error.message);
-      });
+    signIn(email.value, password.value)
+        .then((userCredential) => {
+          router.push("/explore");
+        })
+        .catch((error) => {
+          errors.value.push(error.message);
+        });
   }
 };
 </script>
