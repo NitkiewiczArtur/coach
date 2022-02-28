@@ -1,12 +1,12 @@
 import {shallowMount} from '@vue/test-utils'
 import LoginView from '@/views/LoginView.vue'
-import {signIn} from "@/services/firebaseService";
+import {signIn} from "@/services/authService";
 import {getRouter} from "vue-router-mock";
 
 let wrapper
 const TEST_EMAIL = "test@test.pl";
 const TEST_PASSWORD = "testPassword";
-jest.mock('@/services/firebaseService');
+jest.mock('@/services/authService');
 
 describe('LoginView.vue', () => {
     beforeEach(() => {
@@ -19,9 +19,9 @@ describe('LoginView.vue', () => {
         const inputs = wrapper.findAll('.input')
 
         expect(
-            buttons.every(button => ["Log in",
-                "Sign up"].includes(button.text()))
-        ).toBeTruthy();
+            buttons.every(button =>
+                button.text() === "Log in" || "Sign up"
+            )).toBeTruthy();
         expect(buttons.length == 2)
         expect(inputs.length == 2)
     });

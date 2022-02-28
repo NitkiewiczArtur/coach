@@ -1,4 +1,4 @@
-# tmp
+# coach
 
 ## Project setup
 ```

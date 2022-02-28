@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import RegisterView from "@/views/RegisterView.vue";
 import LoginView from "@/views/LoginView.vue";
 import ExploreView from "@/views/ExploreView.vue";
+import {currentUser} from "@/services/authService";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -22,6 +23,8 @@ const routes: Array<RouteRecordRaw> = [
         path: "/explore",
         name: "explore",
         component: ExploreView,
+        meta: {requiresAuth: true}
+
     },
     {
         path: "/register",
@@ -38,6 +41,18 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
     history: createWebHashHistory(),
     routes
+});
+
+router.beforeEach((to, from, next) => {
+    const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+    const isAuthenticated = currentUser();
+
+    if (requiresAuth && !isAuthenticated) {
+        next("/logIn");
+    } else {
+        next();
+    }
 })
-export { routes };
+
+export {routes};
 export default router;

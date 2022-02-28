@@ -1,26 +1,47 @@
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from "vue";
+import {computed, defineComponent, onMounted, ref} from "vue";
+import {onAuthStateChange, logOut} from "@/services/authService";
+import router from "@/router";
 
 export default defineComponent({
   setup() {
     const isModalOpen = ref(false);
     const isMobileScreen = computed(() => window.innerWidth < 700);
     const isNavHidden = ref(false);
+    const loggedIn = ref(false);
+    const currentUser = ref(null)
     const toggleShowNav = () => {
       if (isMobileScreen.value) {
         isNavHidden.value = !isNavHidden.value;
       }
     };
+    const signOut = () => {
+      logOut().then(() => {
+        router.push("/")
+      }).catch((error) => console.log(error))
+    };
     onMounted(() => {
       if (isMobileScreen.value) {
         toggleShowNav();
       }
+      //TODO: check if should be created
+      onAuthStateChange((user) => {
+        if (user) {
+          currentUser.value = user
+          loggedIn.value = true
+        } else {
+          currentUser.value = null
+          loggedIn.value = false
+        }
+      })
     });
     return {
       isModalOpen,
       isMobileScreen,
       isNavHidden,
+      loggedIn, currentUser,
       toggleShowNav,
+      signOut
     };
   },
 });
@@ -29,15 +50,16 @@ export default defineComponent({
 <template>
   <div class="navbar-wrapper">
     <div class="logo">
-      <span><img src="../assets/hantel.svg" alt="logo" /></span>
+      <span><img src="../assets/hantel.svg" alt="logo"/></span>
       <span>COACH</span>
       <button
-        class="toggle-nav-button"
-        v-if="isMobileScreen"
-        @click="toggleShowNav"
+          class="toggle-nav-button"
+          v-if="isMobileScreen"
+          @click="toggleShowNav"
       >
         ▼
       </button>
+      <div class="user-miniature">{{currentUser? currentUser.email.charAt(0): ""}}</div>
     </div>
     <div class="nav-button-group" v-if="!isNavHidden">
       <router-link class="nav-link" to="/explore">
@@ -46,9 +68,10 @@ export default defineComponent({
       <router-link class="nav-link" to="/">
         <div class="nav-button" @click="toggleShowNav">My Workouts</div>
       </router-link>
-      <router-link class="nav-link" to="/register">
-        <div class="nav-button nav-link" @click="toggleShowNav">Sign up</div>
+      <router-link v-if="!currentUser" class="nav-link" to="/register">
+        <div class="nav-button" @click="toggleShowNav">Sign up</div>
       </router-link>
+      <div v-if="currentUser" class="nav-button" @click="signOut">Sign out</div>
     </div>
   </div>
 </template>
@@ -59,7 +82,9 @@ export default defineComponent({
   align-items: center;
   font-size: 2rem;
 }
-
+.user-miniature{
+  font-size: 1rem;
+}
 .toggle-nav-button {
   background: transparent;
   border: none !important;

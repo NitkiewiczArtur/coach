@@ -25,7 +25,7 @@
 <script setup>
 import {ref} from "vue";
 import {useRouter} from "vue-router";
-import {signUp} from "@/services/firebaseService";
+import {signUp} from "@/services/authService";
 
 const router = useRouter();
 const errors = ref([]);
