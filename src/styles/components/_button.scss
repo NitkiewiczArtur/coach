@@ -1,0 +1,53 @@
+@use "../variables" as v;
+.button {
+  //background: #e62143;
+  background: v.$primary-color;
+  border-radius: 11px;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  font-family: Mija, -apple-system, BlinkMacSystemFont, Roboto, "Roboto Slab", "Droid Serif", "Segoe UI", system-ui, Arial, sans-serif;
+  font-weight: 700;
+  justify-content: center;
+  line-height: 1.5rem;
+  padding: 0.3rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  text-decoration-skip-ink: auto;
+  text-shadow: rgba(0, 0, 0, .3) 1px 1px 1px;
+  text-underline-offset: 1px;
+  transition: all .2s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: auto;
+  word-break: break-word;
+  border: 0;
+
+  &:active,
+  &:focus {
+    border-bottom-style: none;
+    border-color: #dadada;
+    box-shadow: rgba(0, 0, 0, .3) 0 3px 3px inset;
+    outline: 0;
+  }
+  &:hover {
+    border-bottom-style: none;
+    border-color: #dadada;
+  }
+  &--submit{
+    background-color: v.$submit;
+  }
+  &--cancel{
+    background-color: v.$danger;
+  }
+  &--triangle {
+    background-color:unset;
+    color: v.$primary-color;
+    padding: 0.2rem 0.3rem;
+  }
+}
+
+
+

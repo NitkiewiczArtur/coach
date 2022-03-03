@@ -1,0 +1,105 @@
+@use "../variables" as v;
+@use "../mixins";
+
+.table-container {
+  @include mixins.flex-column-center;
+  @include mixins.fill-all;
+}
+
+table {
+  width: 90vw;
+}
+
+th {
+  background-color: v.$primary-color;
+  height: 3.5rem;
+  color: white;
+}
+
+table th:first-of-type {
+  border-radius: 10px 0 0 10px;
+}
+
+table th:last-of-type {
+  border-radius: 0 10px 10px 0;
+}
+
+td {
+  background-color: v.$third-color;
+}
+
+tbody tr:first-of-type td:first-of-type {
+  border-radius: 10px 0 0 0;
+}
+
+tbody tr:first-of-type td:last-of-type {
+  border-radius: 0 10px 0 0;
+}
+
+tbody tr:last-of-type td:first-of-type {
+  border-radius: 0 0 0 10px;
+}
+
+tbody tr:last-of-type td:last-of-type {
+  border-radius: 0 0 10px 0;
+}
+
+.dont-show-in-desktop {
+  display: none
+}
+
+@media screen and (max-width: 590px) {
+  table {
+    width: 95vw;
+    display: block;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr {
+    height: 3rem;
+  }
+
+  td {
+    display: none;
+    background-color: v.$third-color;
+  }
+
+  .tbody-row {
+    display: inline-flex;
+    height: 2rem;
+    background-color: v.$third-color;
+    border-bottom: v.$background solid 3px;
+    width: 93vw;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .tbody-row:first-of-type {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  .tbody-row:last-of-type {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  .show-in-mobile-row {
+    display: unset;
+  }
+
+  .dont-show-in-desktop {
+    display: unset;
+  }
+
+  .margin-left{
+    margin-left: 1rem;
+  }
+
+  .margin-right{
+    margin-right: 1rem;
+  }
+}

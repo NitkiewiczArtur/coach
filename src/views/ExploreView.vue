@@ -1,8 +1,7 @@
 <script lang="ts">
-import { defineComponent, onMounted } from "vue";
+import {defineComponent, ref} from "vue";
 import ExerciseTable from "@/components/ExerciseTable.vue";
-import { ref } from "vue";
-import { getExerciseById } from "@/services/firebaseService.js"
+import {searchExercises} from "@/services/exerciseService"
 
 export default defineComponent({
   components: {
@@ -11,7 +10,7 @@ export default defineComponent({
   async setup() {
     const exercises = ref<any>([]);
 
-    exercises.value = await getExerciseById("0055");
+    exercises.value = await searchExercises();
     console.log(exercises);
     return {
       exercises,
@@ -22,6 +21,7 @@ export default defineComponent({
 
 <template>
   <div class="wrapper">EXPLORE</div>
+<!--  <search-bar search-keys="[Name]"></search-bar>-->
   <suspense>
     <ExerciseTable :exercises-to-display="exercises"></ExerciseTable>
   </suspense>

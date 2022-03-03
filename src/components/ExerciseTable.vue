@@ -1,166 +1,128 @@
 <template>
-  <div class="container">
-    <table class="font-color" style="width: 100vw">
-      <thead class="table-header-row">
-        <tr>
-          <th class="first-empty-header"></th>
-          <th>Photo</th>
-          <th>Exercise ID</th>
-          <th>Name</th>
-          <th>Target</th>
-          <th>Body part</th>
-          <th>Equipment</th>
-          <th>Add To Favourite</th>
-          <th></th>
-        </tr>
+  <div class="table-container">
+    <table>
+      <thead>
+      <tr>
+        <th>Photo</th>
+        <th>Exercise ID</th>
+        <th>Name</th>
+        <th>Target</th>
+        <th>Body part</th>
+        <th>Equipment</th>
+        <!--        <th>Add To Favourite</th>-->
+      </tr>
       </thead>
       <tbody>
-        <tr v-for="exercise in exercisesToDisplay" :key="exercise.id">
-          <td></td>
-          <td>
-            <img
-              style="height: 68px"
+      <tr v-for="exercise in exercisesToDisplay" :key="exercise.id"
+          class="tbody-row">
+        <td>
+          <img
+              class="exercise-image"
               :src="exercise.gifUrl"
               alt="exercise gif"
-            />
-          </td>
-          <td>{{ exercise.id }}</td>
-          <td>
-            {{ exercise.name }}
-          </td>
-          <td>
-            {{ exercise.target }}
-          </td>
-          <td>
-            {{ exercise.target }}
-          </td>
-          <td>
-            {{ exercise.bodyPart }}
-          </td>
-          <td />
-          <td>
-            {{ exercise.equipment }}
-          </td>
-        </tr>
+          />
+        </td>
+        <td>{{ exercise.id }}</td>
+        <td class="show-in-mobile-row margin-left">{{ exercise.name }}</td>
+        <td class="show-in-mobile-row margin-right dont-show-in-desktop">
+          <div class="button button--triangle" @click="showDetails(exercise)">▼</div>
+        </td>
+        <td>{{ exercise.target }}</td>
+        <td> {{ exercise.bodyPart }}</td>
+        <td>{{ exercise.equipment }}</td>
+      </tr>
       </tbody>
     </table>
-    <div v-if="showLoadingImage">
-      <img
-        class="loading-image"
-        src=""
-        alt="Image of exhausted Morty"
-      />
-    </div>
-    <div class="error-wrapper" v-else-if="error">
-      <div v-text="error"></div>
-      <img
-        class="error-image"
-        src=""
-        alt="Image of confused Morty"
-      />
+    <div class="modal" v-if="isExerciseDetailsVisible">
+      <div class="modal__content">
+        <img
+            class="exercise-image"
+            :src="detailedExercise.gifUrl"
+            alt="exercise gif"
+        />
+        <h4>{{ detailedExercise.name.toUpperCase() }}</h4>
+        <div class="exercise-info-wrapper">
+          <h4 class="exercise-info-wrapper__body-part">body part:</h4>
+          <h4 class="exercise-info-wrapper__body-part__value"> {{ detailedExercise.target.toUpperCase() }}
+            ({{ detailedExercise.bodyPart.toUpperCase() }})</h4>
+          <h4 class="exercise-info-wrapper__equipment">equipment: </h4>
+          <h4 class="exercise-info-wrapper__equipment__value">
+            {{ detailedExercise.equipment.toUpperCase() }}</h4>
+        </div>
+        <div class="button button--cancel" @click="closeExerciseDetailsModal">close</div>
+      </div>
     </div>
   </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: "ExerciseTable",
-  props: {
-    exercisesToDisplay: {
-      type: Array,
-      required: true,
-    },
-    showLoadingImage: {
-      type: Boolean,
-    },
-    error: {
-      type: Error,
-    },
+<script setup lang="ts">
+import {ref, Ref} from "vue";
+import {Exercise} from "@/model/Exercise";
+// eslint-disable-next-line no-undef,@typescript-eslint/no-unused-vars
+const props = defineProps({
+  exercisesToDisplay: {
+    type: Array,
+    required: true,
   },
-});
+  showLoadingImage: {
+    type: Boolean,
+  },
+  error: {
+    type: Error,
+  },
+})
+
+const isExerciseDetailsVisible = ref(false);
+const detailedExercise: Ref<Exercise> = ref({} as Exercise);
+const showDetails = (exerciseToShow) => {
+  detailedExercise.value = exerciseToShow
+  isExerciseDetailsVisible.value = true
+}
+const closeExerciseDetailsModal = () => {
+  isExerciseDetailsVisible.value = false
+}
 </script>
 
 <style lang="scss" scoped>
-.loading-image {
-  width: 60vw;
-  margin-left: 20vw;
-}
+@use "../styles/components/table";
+@use "../styles/components/modal";
+@use "../styles/components/button" as v;
 
-.error-image {
-  width: 20vw;
-}
+.exercise-info-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
 
-.error-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+  &__body-part {
+    grid-column: 1;
+    grid-row:1;
 
-.container {
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  height: 100%;
-  width: 100%;
-  padding: 0;
-
-  thead tr {
-    height: 3.5rem;
-    background-color: rgb(229, 234, 244, 0.25);
-    border-bottom: none;
+    &__value {
+      grid-column: 2;
+      grid-row:1;
+      text-align: start;
+    }
   }
 
-  th {
-    width: 10vw;
-  }
-
-  tr {
-    height: 5.5rem;
-    border-bottom: #a9b1bd solid 0.1px;
+  &__equipment {
+    grid-column: 1;
+    grid-row: 2;
+    &__value {
+      grid-column: 2;
+      grid-row: 2;
+      text-align: start;
+    }
   }
 }
 
-.favourite-btn {
-  width: 2.5rem;
-  height: 2.5rem;
-  background-color: white;
-  color: #11b0c8;
-  border: #11b0c8 solid 3px;
-  border-radius: 5px;
-  padding-top: 7px;
-
-  &--isFavourite {
-    background-color: #11b0c8;
-    border: #11b0c8 solid 3px;
-    color: white;
-  }
-}
-
-.border-bottom {
-  border-bottom: #a9b1bd solid 0.25px;
-}
-
-.first-empty-header {
-  width: 9rem;
+.exercise-image {
+  border-radius: 25px;
+  width: 10vw;
 }
 
 @media screen and (max-width: 590px) {
-  thead {
-    display: none;
-  }
-  .container {
-    tr {
-      display: flex;
-      flex-direction: column;
-      height: 18rem;
-      justify-content: space-between;
-      align-items: center;
-    }
-  }
-  .first-empty-header {
-    display: none;
+  .exercise-image {
+    width: 70vw;
   }
 }
 </style>

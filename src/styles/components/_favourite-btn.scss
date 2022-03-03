@@ -1,0 +1,15 @@
+.favourite-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: white;
+  color: #11b0c8;
+  border: #11b0c8 solid 3px;
+  border-radius: 5px;
+  padding-top: 7px;
+
+  &--isFavourite {
+    background-color: #11b0c8;
+    border: #11b0c8 solid 3px;
+    color: white;
+  }
+}

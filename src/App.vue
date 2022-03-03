@@ -17,17 +17,16 @@ import NavBar from "@/components/NavBar.vue";
 </template>
 
 <style lang="scss">
-:root {
-  --primary: #1e90ff;
-  --white: #ffffff;
-}
+@use "../src/styles/variables" as v;
 
 .app-wrapper {
   font-family: "Poppins", sans-serif;
-  font-size: 16px;
-  height: 100%;
-  width: 100%;
-  //overflow: hidden;
+  font-size: 13px;
+  height: 100vh;
+  width: 100vw;
+  background-color: v.$background;
+  color: v.$primary-color;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
 }
@@ -53,7 +52,7 @@ import NavBar from "@/components/NavBar.vue";
   }
 
   .content {
-    grid-column: 2 / 12;
+    grid-column: 1 / 12;
     grid-row: 2 / 12;
     // overflow-y: scroll;
     font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -63,47 +62,24 @@ import NavBar from "@/components/NavBar.vue";
   }
 }
 
-.modal {
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-
-  &__content {
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    display: grid;
-    justify-content: center;
-    background-color: rgb(0, 0, 0);
-    position: relative;
-  }
-}
-
 a.nav-link {
   &:link {
-    color: var(--white);
+    color: v.$secondary-color;
     text-decoration: none;
   }
 
   &:visited {
-    color: var(--white);
+    color: v.$secondary-color;
     text-decoration: none;
   }
 
   &:hover {
-    color: #336699;
+    color: v.$third-color;
     text-decoration: none;
   }
 
   &:active {
-    color: var(--white);
+    color: v.$secondary-color;
     text-decoration: none;
   }
 }

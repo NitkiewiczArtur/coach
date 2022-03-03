@@ -1,0 +1,33 @@
+@use "../mixins";
+@use "../variables" as v;
+
+.modal {
+  z-index: 1;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.2);
+
+  &__content {
+    @include mixins.flex-column-center;
+    margin: 15% auto;
+    padding: 20px;
+    width: 80vw;
+    background-color: v.$third-color;
+    color: v.$primary-color;
+    border-radius: 25px;
+    position: relative;
+
+    &__field {
+      background-color: v.$third-color;
+      width: 70vw;
+      color: v.$primary-color;
+      margin: 0.4rem;
+      padding: 0.25rem;
+      border-radius: 5px;
+    }
+  }
+}
