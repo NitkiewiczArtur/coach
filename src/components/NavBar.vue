@@ -51,15 +51,16 @@ export default defineComponent({
   <div class="navbar-wrapper">
     <div class="logo">
       <span><img src="../assets/hantel.svg" alt="logo"/></span>
-      <span>COACH</span>
+      <span class="color-info">C</span><span>OACH</span>
       <button
           class="toggle-nav-button"
           v-if="isMobileScreen"
           @click="toggleShowNav"
       >
-        ▼
+        {{isNavHidden? "▲": "▼"}}
       </button>
-      <div class="user-miniature">{{currentUser? currentUser.email.charAt(0): ""}}</div>
+<!--      <div class="button-44 button-44&#45;&#45;triangle">▼</div>-->
+<!--      <div class="user-miniature">{{currentUser? currentUser.email.charAt(0): ""}}</div>-->
     </div>
     <div class="nav-button-group" v-if="!isNavHidden">
       <router-link class="nav-link" to="/explore">
@@ -76,11 +77,17 @@ export default defineComponent({
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@use "../styles/variables" as v;
+
 .logo {
   display: inline-flex;
   align-items: center;
   font-size: 2rem;
+  font-weight: 700;
+}
+.color-info{
+  color: v.$info;
 }
 .user-miniature{
   font-size: 1rem;
@@ -88,15 +95,15 @@ export default defineComponent({
 .toggle-nav-button {
   background: transparent;
   border: none !important;
-  color: var(--white);
+  color: v.$secondary-color;
 }
 
 .navbar-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: var(--primary);
-  color: var(--white);
+  background: v.$primary-color;
+  color: v.$secondary-color;
 }
 
 .nav-button-group {
@@ -109,6 +116,10 @@ export default defineComponent({
 .nav-button {
   text-align: center;
   padding: 1rem;
+  &:hover{
+    color: v.$info;
+    cursor: pointer;
+  }
 }
 
 @media screen and (min-width: 700px) {
@@ -118,9 +129,9 @@ export default defineComponent({
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
-    margin: 1rem 0 1rem 0;
-    background: var(--primary);
-    color: var(--white);
+    margin-bottom: 1rem;
+    background: v.$primary-color;
+    color: v.$secondary-color;
   }
 
   .toggle-nav-button {

@@ -13,7 +13,7 @@
 
   &__content {
     @include mixins.flex-column-center;
-    margin: 15% auto;
+    margin: 5% auto;
     padding: 20px;
     width: 80vw;
     background-color: v.$third-color;

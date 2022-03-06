@@ -51,6 +51,8 @@ const submitForm = () => {
 };
 </script>
 <style lang="scss">
+@use "../styles/variables" as v;
+
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -69,8 +71,8 @@ input:focus {
 
 .button {
   padding: 0.5rem;
-  color: var(--white);
-  background-color: var(--primary);
+  color: v.$secondary-color;
+  background-color: v.$primary-color;
   border: none;
 
   &:hover {

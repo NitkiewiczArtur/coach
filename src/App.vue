@@ -28,7 +28,8 @@ import NavBar from "@/components/NavBar.vue";
   color: v.$primary-color;
   overflow: hidden;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
+  justify-content: space-between;
 }
 
 @media screen and (min-width: 700px) {
@@ -74,7 +75,7 @@ a.nav-link {
   }
 
   &:hover {
-    color: v.$third-color;
+    color: v.$info;
     text-decoration: none;
   }
 
