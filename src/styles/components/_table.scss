@@ -4,10 +4,12 @@
 .table-container {
   @include mixins.flex-column-center;
   @include mixins.fill-all;
+  margin-top: 2rem;
 }
 
 table {
   width: 90vw;
+  margin-top: 1rem;
 }
 
 th {

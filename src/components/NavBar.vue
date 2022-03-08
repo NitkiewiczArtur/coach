@@ -66,7 +66,7 @@ export default defineComponent({
       <router-link class="nav-link" to="/explore">
         <div class="nav-button" @click="toggleShowNav">Explore</div>
       </router-link>
-      <router-link class="nav-link" to="/">
+      <router-link class="nav-link" to="/myWorkouts">
         <div class="nav-button" @click="toggleShowNav">My Workouts</div>
       </router-link>
       <router-link v-if="!currentUser" class="nav-link" to="/register">
@@ -104,6 +104,7 @@ export default defineComponent({
   align-items: center;
   background: v.$primary-color;
   color: v.$secondary-color;
+  margin-top: 1rem;
 }
 
 .nav-button-group {
@@ -132,6 +133,7 @@ export default defineComponent({
     margin-bottom: 1rem;
     background: v.$primary-color;
     color: v.$secondary-color;
+    margin-top: 0;
   }
 
   .toggle-nav-button {

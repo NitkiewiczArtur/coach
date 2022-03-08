@@ -31,6 +31,9 @@ import NavBar from "@/components/NavBar.vue";
   flex-direction: column-reverse;
   justify-content: space-between;
 }
+.content{
+  height: 80vh;
+}
 
 @media screen and (min-width: 700px) {
   .app-wrapper {

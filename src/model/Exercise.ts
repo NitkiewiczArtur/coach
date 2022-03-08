@@ -3,5 +3,6 @@ export interface Exercise {
     gifUrl:string,
     bodyPart:string,
     target:string,
-    equipment:string
+    equipment:string,
+    id:string
 }

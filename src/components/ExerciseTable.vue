@@ -13,7 +13,8 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="exercise in exercisesToDisplay" :key="exercise.id"
+      <tr v-for="exercise in exercisesToDisplay"
+          :key="exercise.id"
           class="tbody-row">
         <td>
           <img
@@ -63,9 +64,6 @@ const props = defineProps({
   exercisesToDisplay: {
     type: Array,
     required: true,
-  },
-  showLoadingImage: {
-    type: Boolean,
   },
   error: {
     type: Error,
