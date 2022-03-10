@@ -6,21 +6,24 @@
   position: fixed;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
+  width: 100%;
   height: 100%;
-  overflow: auto;
   background-color: rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+  tr{
+    width: 80vw;
+  }
 
   &__content {
     @include mixins.flex-column-center;
+    text-align: left;
     margin: 5% auto;
     padding: 20px;
-    width: 80vw;
+    width: 85vw;
     background-color: v.$third-color;
     color: v.$primary-color;
     border-radius: 25px;
     position: relative;
-
     &__field {
       background-color: v.$third-color;
       width: 70vw;

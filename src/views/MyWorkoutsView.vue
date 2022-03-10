@@ -1,0 +1,51 @@
+<script lang="ts">
+import {defineComponent, ref} from "vue";
+import {getWorkouts, searchExercises} from "@/services/exerciseService"
+import SearchBar from "@/components/SearchBar.vue";
+import WorkoutList from "@/components/WorkoutList.vue";
+
+export default defineComponent({
+  components: {
+    SearchBar,
+    WorkoutList,
+  },
+  async setup() {
+    const workouts = ref<any>([]);
+
+    workouts.value = await getWorkouts();
+    console.log(workouts.value)
+    const onSearchClicked = async (searchValue: string) =>{
+      workouts.value = await searchExercises(searchValue)
+    }
+    return {
+      workouts,
+      onSearchClicked
+    };
+  },
+});
+</script>
+
+<template>
+  <div class="wrapper">
+<!--  <search-bar search-keys="[Name]"></search-bar>-->
+  <SearchBar @searchClicked="onSearchClicked"/>
+<WorkoutList :workouts-to-display="workouts"></WorkoutList>
+  </div>
+</template>
+<style lang="scss">
+.wrapper {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  height: 90vh;
+}
+
+@media screen and (min-width: 700px) {
+  .wrapper{
+    justify-content: start;
+    flex-direction: column;
+  }
+}
+</style>

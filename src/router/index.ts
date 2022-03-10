@@ -4,6 +4,7 @@ import RegisterView from "@/views/RegisterView.vue";
 import LoginView from "@/views/LoginView.vue";
 import ExploreView from "@/views/ExploreView.vue";
 import {currentUser} from "@/services/authService";
+import MyWorkoutsView from "@/views/MyWorkoutsView.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -23,6 +24,13 @@ const routes: Array<RouteRecordRaw> = [
         path: "/explore",
         name: "explore",
         component: ExploreView,
+        meta: {requiresAuth: true}
+
+    },
+    {
+        path: "/myWorkouts",
+        name: "myWorkouts",
+        component: MyWorkoutsView,
         meta: {requiresAuth: true}
 
     },

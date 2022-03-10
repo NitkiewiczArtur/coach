@@ -62,7 +62,7 @@ export default defineComponent({
 <!--      <div class="button-44 button-44&#45;&#45;triangle">▼</div>-->
 <!--      <div class="user-miniature">{{currentUser? currentUser.email.charAt(0): ""}}</div>-->
     </div>
-    <div class="nav-button-group" v-if="!isNavHidden">
+    <div class="nav-button-group" v-show="!isNavHidden">
       <router-link class="nav-link" to="/explore">
         <div class="nav-button" @click="toggleShowNav">Explore</div>
       </router-link>
@@ -141,7 +141,6 @@ export default defineComponent({
   }
 
   .nav-button-group {
-    display: flex;
     flex-direction: row;
     justify-content: space-between;
     height: auto;

@@ -9,7 +9,6 @@
         <th>Target</th>
         <th>Body part</th>
         <th>Equipment</th>
-        <!--        <th>Add To Favourite</th>-->
       </tr>
       </thead>
       <tbody>
@@ -34,32 +33,18 @@
       </tr>
       </tbody>
     </table>
-    <div class="modal" v-if="isExerciseDetailsVisible">
-      <div class="modal__content">
-        <img
-            class="exercise-image"
-            :src="detailedExercise.gifUrl"
-            alt="exercise gif"
-        />
-        <h4>{{ detailedExercise.name.toUpperCase() }}</h4>
-        <div class="exercise-info-wrapper">
-          <h4 class="exercise-info-wrapper__body-part">body part:</h4>
-          <h4 class="exercise-info-wrapper__body-part__value"> {{ detailedExercise.target.toUpperCase() }}
-            ({{ detailedExercise.bodyPart.toUpperCase() }})</h4>
-          <h4 class="exercise-info-wrapper__equipment">equipment: </h4>
-          <h4 class="exercise-info-wrapper__equipment__value">
-            {{ detailedExercise.equipment.toUpperCase() }}</h4>
-        </div>
-        <div class="button button--cancel" @click="closeExerciseDetailsModal">close</div>
-      </div>
-    </div>
+    <exercise-details :is-exercise-details-visible="isExerciseDetailsVisible"
+                      :detailed-exercise="detailedExercise"
+                      @closeExerciseDetailsModalClicked="onCloseExerciseDetailsModalClicked"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import {ref, Ref} from "vue";
 import {Exercise} from "@/model/Exercise";
-// eslint-disable-next-line no-undef,@typescript-eslint/no-unused-vars
+import ExerciseDetails from "@/components/modals/ExerciseDetails.vue";
+// eslint-disable-next-line no-undef
 const props = defineProps({
   exercisesToDisplay: {
     type: Array,
@@ -76,51 +61,16 @@ const showDetails = (exerciseToShow) => {
   detailedExercise.value = exerciseToShow
   isExerciseDetailsVisible.value = true
 }
-const closeExerciseDetailsModal = () => {
-  isExerciseDetailsVisible.value = false
+const onCloseExerciseDetailsModalClicked = () => {
+  isExerciseDetailsVisible.value = false;
 }
 </script>
 
 <style lang="scss" scoped>
 @use "../styles/components/table";
-@use "../styles/components/modal";
 @use "../styles/components/button" as v;
-
-.exercise-info-wrapper {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-
-  &__body-part {
-    grid-column: 1;
-    grid-row:1;
-
-    &__value {
-      grid-column: 2;
-      grid-row:1;
-      text-align: start;
-    }
-  }
-
-  &__equipment {
-    grid-column: 1;
-    grid-row: 2;
-    &__value {
-      grid-column: 2;
-      grid-row: 2;
-      text-align: start;
-    }
-  }
-}
-
 .exercise-image {
   border-radius: 25px;
   width: 10vw;
-}
-
-@media screen and (max-width: 590px) {
-  .exercise-image {
-    width: 70vw;
-  }
 }
 </style>

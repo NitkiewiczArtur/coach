@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { RouterView } from "vue-router";
+import {RouterView} from "vue-router";
 import NavBar from "@/components/NavBar.vue";
 </script>
 
 <template>
-  <div class="app-wrapper grid">
+  <div class="app-wrapper">
     <div class="navbar">
-      <NavBar />
+      <NavBar/>
     </div>
     <div class="content">
       <suspense>
-        <RouterView />
+        <RouterView/>
       </suspense>
     </div>
   </div>
@@ -26,22 +26,26 @@ import NavBar from "@/components/NavBar.vue";
   width: 100vw;
   background-color: v.$background;
   color: v.$primary-color;
-  overflow: hidden;
   display: flex;
-  flex-direction: column-reverse;
-  justify-content: space-between;
+  flex-direction: column;
 }
-.content{
-  height: 80vh;
+
+.content {
+}
+
+@media screen and (max-width: 700px) {
+  .navbar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
 }
 
 @media screen and (min-width: 700px) {
   .app-wrapper {
     font-family: "Poppins", sans-serif;
     font-size: 16px;
-    height: 100%;
     width: 100%;
-    //overflow: hidden;
     display: grid;
     grid-template-columns: repeat(11, 1fr);
     grid-template-rows: repeat(11, 1fr);
@@ -58,7 +62,7 @@ import NavBar from "@/components/NavBar.vue";
   .content {
     grid-column: 1 / 12;
     grid-row: 2 / 12;
-    // overflow-y: scroll;
+    overflow: auto;
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
