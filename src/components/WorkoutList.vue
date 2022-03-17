@@ -8,7 +8,10 @@
         <span>{{ workout.name }}</span>
         <div class="button-group">
           <div class="button button--primary"
-               @click="startTraining(workout)">start training
+               @click="showResults(workout)">results
+          </div>
+          <div class="button button--submit"
+               @click="startTraining(workout)">start
           </div>
           <div class="button button--triangle"
                @click="showDetails(workout)">▼
@@ -30,6 +33,7 @@ import {Workout} from "@/model/Workout";
 import {getExerciseById, getExercisesByIds} from "@/services/exerciseService"
 import {Exercise} from "@/model/Exercise";
 import WorkoutDetails from "@/components/modals/WorkoutDetails.vue";
+import router from "@/router";
 // eslint-disable-next-line no-undef
 const props = defineProps({
   workoutsToDisplay: {
@@ -46,6 +50,9 @@ const detailedWorkout: Ref<Workout> = ref({} as Workout);
 const detailedExercises: Ref<Array<Exercise | undefined>> = ref([]);
 const startTraining = (workout: Workout) => {
   console.log("TRAINING START")
+}
+const showResults = (workout: Workout) => {
+  router.push("/workoutResults")
 }
 
 const showDetails = async (workoutToShow: Workout) => {

@@ -1,8 +1,10 @@
 <script lang="ts">
 import {defineComponent, ref} from "vue";
-import {getWorkouts, searchExercises} from "@/services/exerciseService"
+import {searchExercises} from "@/services/exerciseService"
+import {getWorkouts} from "@/services/workoutService"
 import SearchBar from "@/components/SearchBar.vue";
 import WorkoutList from "@/components/WorkoutList.vue";
+import {Workout} from "@/model/Workout";
 
 export default defineComponent({
   components: {
@@ -10,12 +12,12 @@ export default defineComponent({
     WorkoutList,
   },
   async setup() {
-    const workouts = ref<any>([]);
+    const workouts = ref<Array<Workout>>([]);
 
     workouts.value = await getWorkouts();
     console.log(workouts.value)
-    const onSearchClicked = async (searchValue: string) =>{
-      workouts.value = await searchExercises(searchValue)
+    const onSearchClicked = async (searchValue: string) => {
+    //  workouts.value = await searchExercises(searchValue)
     }
     return {
       workouts,
@@ -27,9 +29,9 @@ export default defineComponent({
 
 <template>
   <div class="wrapper">
-<!--  <search-bar search-keys="[Name]"></search-bar>-->
-  <SearchBar @searchClicked="onSearchClicked"/>
-<WorkoutList :workouts-to-display="workouts"></WorkoutList>
+    <!--  <search-bar search-keys="[Name]"></search-bar>-->
+    <SearchBar @searchClicked="onSearchClicked"/>
+    <WorkoutList :workouts-to-display="workouts"></WorkoutList>
   </div>
 </template>
 <style lang="scss">
@@ -43,7 +45,7 @@ export default defineComponent({
 }
 
 @media screen and (min-width: 700px) {
-  .wrapper{
+  .wrapper {
     justify-content: start;
     flex-direction: column;
   }

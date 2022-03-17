@@ -46,13 +46,3 @@ export async function searchExercises(searchValue: string) {
     });
     return exercises;
 }
-
-export async function getWorkouts(): Promise<Array<Workout>> {
-    const workouts: Array<Workout> = []
-    const q = query(collection(db, "workouts"), limit(5));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-        workouts.push(doc.data() as Workout);
-    });
-    return workouts;
-}

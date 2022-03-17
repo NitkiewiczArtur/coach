@@ -1,5 +1,5 @@
 import {shallowMount} from '@vue/test-utils'
-import LoginView from '@/views/LoginView.vue'
+import SearchBar from '@/components/SearchBar.vue'
 import {signIn} from "@/services/authService";
 import {getRouter} from "vue-router-mock";
 
@@ -8,22 +8,18 @@ const TEST_EMAIL = "test@test.pl";
 const TEST_PASSWORD = "testPassword";
 jest.mock('@/services/authService');
 
-describe('LoginView.vue', () => {
+describe('SearchBar.vue', () => {
     beforeEach(() => {
-        wrapper = shallowMount(LoginView)
+        wrapper = shallowMount(SearchBar)
     });
     afterEach(() => jest.clearAllMocks())
 
-    it('renders ', () => {
-        const buttons = wrapper.findAll(".button")
-        const inputs = wrapper.findAll('.input')
+    it('renders properly', () => {
+        const button = wrapper.find(".button")
+        const input = wrapper.find('input')
 
-        expect(
-            buttons.every(button =>
-                button.text() === "Log in" || "Sign up"
-            )).toBeTruthy();
-        expect(buttons.length == 2)
-        expect(inputs.length == 2)
+        expect(button.text()==='search').toBeTruthy();
+        expect(input).toBeTruthy()
     });
 
     it('logg you in', async () => {
