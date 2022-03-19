@@ -1,6 +1,5 @@
 <script lang="ts">
 import {defineComponent, ref} from "vue";
-import {searchExercises} from "@/services/exerciseService"
 import {getWorkouts} from "@/services/workoutService"
 import SearchBar from "@/components/SearchBar.vue";
 import WorkoutList from "@/components/WorkoutList.vue";
@@ -15,7 +14,6 @@ export default defineComponent({
     const workouts = ref<Array<Workout>>([]);
 
     workouts.value = await getWorkouts();
-    console.log(workouts.value)
     const onSearchClicked = async (searchValue: string) => {
     //  workouts.value = await searchExercises(searchValue)
     }
@@ -41,7 +39,7 @@ export default defineComponent({
   align-items: center;
   justify-content: space-between;
   text-align: center;
-  height: 90vh;
+  height: 87vh;
 }
 
 @media screen and (min-width: 700px) {

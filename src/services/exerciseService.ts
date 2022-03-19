@@ -6,7 +6,7 @@ const db = getFirestore();
 export async function getExerciseById(id: string) {
     const q = query(collection(db, "exercises"), where("id", "==", id));
     const querySnapshot = await getDocs(q);
-    return Promise.resolve(querySnapshot.docs[0].data() as Exercise)
+    return querySnapshot.docs[0].data() as Exercise
 }
 //TODO:memoization
 export async function getExercisesByIds(ids: Array<string>) {
@@ -16,7 +16,7 @@ export async function getExercisesByIds(ids: Array<string>) {
 
 export const getExercises = async () => {
     const exercises: Array<Exercise> = []
-    const q = query(collection(db, "exercises"), limit(5));
+    const q = query(collection(db, "exercises"), limit(15));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
         exercises.push(doc.data() as Exercise);
@@ -45,7 +45,7 @@ export async function searchExercises(searchValue: string) {
         collection(db, "exercises"),
         orderBy('name'),
         where('name', '>=', searchValue),
-        limit(10));
+        limit(15));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
         exercises.push(doc.data() as Exercise);

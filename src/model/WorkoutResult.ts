@@ -1,6 +1,9 @@
+import {ExerciseResult} from "@/model/ExerciseResult";
+
 export interface WorkoutResult{
-    dayOfWorkout:Date,
-    exerciseResults:Map<string, Array<number>>,
-    timeOfWorkout:number,
-    workoutId:string
+    dayOfWorkout: Date,
+    exerciseResults: ExerciseResult[],
+    timeOfWorkout: number,
+    workoutId: string,
+    userId: string
 }

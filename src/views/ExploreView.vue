@@ -29,7 +29,10 @@ export default defineComponent({
   <div class="wrapper">
   <SearchBar @searchClicked="onSearchClicked"/>
   <suspense>
-    <ExerciseTable :exercises-to-display="exercises"/>
+    <div>
+<!--<h3>Explore exercises</h3>-->
+      <ExerciseTable :exercises-to-display="exercises"/>
+    </div>
   </suspense>
   </div>
 </template>
@@ -40,7 +43,7 @@ export default defineComponent({
   align-items: center;
   justify-content: space-between;
   text-align: center;
-  height: 95vh;
+  height: 87vh;
 }
 
 @media screen and (min-width: 700px) {

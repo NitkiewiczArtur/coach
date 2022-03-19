@@ -130,7 +130,6 @@ export default defineComponent({
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
-    margin-bottom: 1rem;
     background: v.$primary-color;
     color: v.$secondary-color;
     margin-top: 0;

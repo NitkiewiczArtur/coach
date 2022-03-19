@@ -1,7 +1,7 @@
 <template>
   <div class="modal">
     <div class="modal__content">
-      <h2>{{ detailedWorkout.name }}:</h2>
+      <h2>{{ detailedWorkout.name }}</h2>
       <exercise-table :exercises-to-display="detailedExercises"/>
       <button class="button button--cancel"
            @click="closeWorkoutDetailsModal">

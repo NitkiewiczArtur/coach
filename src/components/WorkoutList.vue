@@ -1,6 +1,5 @@
 <template>
   <div class="list-container">
-    WORKOUT LIST
     <div class="list">
       <div v-for="workout in workoutsToDisplay"
            :key="workout.id"
@@ -35,7 +34,6 @@ import {getExercisesByIds} from "@/services/exerciseService"
 import WorkoutDetails from "@/components/modals/WorkoutDetails.vue";
 import {Exercise} from "@/model/Exercise";
 import {useRouter} from "vue-router";
-import {currentUser} from "@/services/authService"
 
 const props = defineProps({
   workoutsToDisplay: {
@@ -88,6 +86,7 @@ const onCloseWorkoutDetailsModalClicked = () => {
     justify-content: space-between;
     align-items: center;
     border-radius: 15px;
+    font-weight: bold;
 
     span {
       margin-left: 2rem;
@@ -96,6 +95,11 @@ const onCloseWorkoutDetailsModalClicked = () => {
     .button {
       margin-right: 1rem;
     }
+  }
+}
+@media screen and (min-width: 700px) {
+  .list-container {
+    margin-top: 1rem;
   }
 }
 </style>

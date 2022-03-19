@@ -1,5 +1,5 @@
 <template>
-  <div class="table-container">
+  <div class="table-wrapper">
     <table>
       <thead>
       <tr>
@@ -23,8 +23,8 @@
           />
         </td>
         <td>{{ exercise.id }}</td>
-        <td class="show-in-mobile-row margin-left">{{ exercise.name }}</td>
-        <td class="show-in-mobile-row margin-right dont-show-in-desktop">
+        <td class="margin-left-on-mobile">{{ exercise.name }}</td>
+        <td class="margin-right-on-mobile">
           <button class="button button--triangle" @click="showDetails(exercise)">▼</button>
         </td>
         <td>{{ exercise.target }}</td>
@@ -69,8 +69,23 @@ const onCloseExerciseDetailsModalClicked = () => {
 <style lang="scss" scoped>
 @use "../styles/components/table";
 @use "../styles/components/button" as v;
+.table-wrapper{
+  font-weight: bold;
+}
 .exercise-image {
   border-radius: 25px;
   width: 10vw;
+}
+
+@media screen and (max-width:700px){
+  tbody tr td:nth-child(1) { display : none}
+  tbody tr td:nth-child(2) { display : none}
+  tbody tr td:nth-child(5) { display : none}
+  tbody tr td:nth-child(6) { display : none}
+  tbody tr td:nth-child(7) { display : none}
+}
+
+@media screen and (min-width:700px) {
+  tbody tr td:nth-child(4) { display : none}
 }
 </style>

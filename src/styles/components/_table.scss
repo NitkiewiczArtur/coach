@@ -3,17 +3,18 @@
 
 .table-container {
   @include mixins.flex-column-center;
-  margin-top: 2rem;
 }
 
 table {
   width: 90vw;
   margin: 1rem 0 1rem 0;
+  text-align: center;
 }
 
 .modal table{
   width: 85vw;
 }
+
 th {
   background-color: v.$primary-color;
   height: 3.5rem;
@@ -30,6 +31,7 @@ table th:last-of-type {
 
 td {
   background-color: v.$third-color;
+
 }
 
 tbody tr:first-of-type td:first-of-type {
@@ -56,6 +58,7 @@ tbody tr:last-of-type td:last-of-type {
   table {
     width: 95vw;
     display: block;
+    margin: 0;
   }
 
   thead {
@@ -67,7 +70,6 @@ tbody tr:last-of-type td:last-of-type {
   }
 
   td {
-    display: none;
     background-color: v.$third-color;
   }
 
@@ -79,6 +81,7 @@ tbody tr:last-of-type td:last-of-type {
     width: 93vw;
     justify-content: space-between;
     align-items: center;
+    font-weight: bold;
   }
 
   .tbody-row:first-of-type {
@@ -95,19 +98,11 @@ tbody tr:last-of-type td:last-of-type {
     width: 88vw;
   }
 
-  .show-in-mobile-row {
-    display: unset;
-  }
-
-  .dont-show-in-desktop {
-    display: unset;
-  }
-
-  .margin-left{
+  .margin-left-on-mobile{
     margin-left: 1rem;
   }
 
-  .margin-right{
+  .margin-right-on-mobile{
     margin-right: 1rem;
   }
 }

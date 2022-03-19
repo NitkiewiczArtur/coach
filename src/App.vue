@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import {RouterView} from "vue-router";
-import NavBar from "@/components/NavBar.vue";
-</script>
+import NavBar from "@/components/NavBar.vue";</script>
 
 <template>
   <div class="app-wrapper">
@@ -31,6 +29,7 @@ import NavBar from "@/components/NavBar.vue";
 }
 
 .content {
+  overflow: auto;
 }
 
 @media screen and (max-width: 700px) {
@@ -38,12 +37,16 @@ import NavBar from "@/components/NavBar.vue";
     position: fixed;
     bottom: 0;
     width: 100%;
+    z-index: 100;
+  }
+  .content {
+    padding-top: 2rem;
+    padding-bottom: 3rem;
   }
 }
 
 @media screen and (min-width: 700px) {
   .app-wrapper {
-    font-family: "Poppins", sans-serif;
     font-size: 16px;
     width: 100%;
     display: grid;
@@ -62,11 +65,7 @@ import NavBar from "@/components/NavBar.vue";
   .content {
     grid-column: 1 / 12;
     grid-row: 2 / 12;
-    overflow: auto;
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
+    padding-top: 1rem;
   }
 }
 
