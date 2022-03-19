@@ -16,27 +16,24 @@
         <h4 class="exercise-info-wrapper__equipment__value">
           {{ detailedExercise.equipment.toUpperCase() }}</h4>
       </div>
-      <div class="button button--cancel" @click="closeExerciseDetailsModal">close</div>
+      <button class="button button--cancel" @click="closeExerciseDetailsModal">close</button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {Exercise} from "@/model/Exercise";
 
-
-// eslint-disable-next-line no-undef
 const props = defineProps({
   isExerciseDetailsVisible: {
     type: Boolean,
     required: true,
   },
   detailedExercise: {
-    type: Exercise,
+    type: Object,
     required: true,
   }
 });
-// eslint-disable-next-line no-undef
+
 const emit = defineEmits(['closeExerciseDetailsModalClicked'])
 const closeExerciseDetailsModal = () => {
   emit('closeExerciseDetailsModalClicked')

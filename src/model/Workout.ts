@@ -1,7 +1,6 @@
-import {Exercise} from "@/model/Exercise";
-
 export interface Workout {
     userId: string,
-    exercises: Array<string | Exercise>,
+    exercises: Array<string>,
     name: string,
+    id:string,
 }

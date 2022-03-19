@@ -1,26 +1,20 @@
 <template>
-  <div class="modal" v-if="isWorkoutDetailsVisible">
+  <div class="modal">
     <div class="modal__content">
       <h2>{{ detailedWorkout.name }}:</h2>
       <exercise-table :exercises-to-display="detailedExercises"/>
-      <div class="button button--cancel"
+      <button class="button button--cancel"
            @click="closeWorkoutDetailsModal">
         close
-      </div>
+      </button>
     </div>
 </div>
 </template>
 
 <script setup lang="ts">
-import {Ref, ref} from "vue";
-import {Exercise} from "@/model/Exercise";
 import ExerciseTable from "@/components/ExerciseTable.vue";
-// eslint-disable-next-line no-undef
+
 const props = defineProps({
-  isWorkoutDetailsVisible: {
-    type: Boolean,
-    required: true,
-  },
   detailedWorkout: {
     type: Object,
     required: true,
@@ -30,19 +24,10 @@ const props = defineProps({
     required: true,
   },
 });
-const detailedExercise: Ref<Exercise> = ref({} as Exercise)
-const isExerciseDetailsVisible = ref(false)
-// eslint-disable-next-line no-undef
+
 const emit = defineEmits(['closeWorkoutDetailsModalClicked'])
 const closeWorkoutDetailsModal = () => {
   emit('closeWorkoutDetailsModalClicked')
-}
-const showExerciseDetails = (exerciseToShow) => {
-  detailedExercise.value = exerciseToShow
-  isExerciseDetailsVisible.value = true
-}
-const onCloseExerciseDetailsModalClicked = () => {
-  isExerciseDetailsVisible.value = false
 }
 </script>
 

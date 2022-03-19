@@ -11,7 +11,6 @@ describe('RegisterView.vue', () => {
     beforeEach(() => {
         wrapper = shallowMount(RegisterView)
     });
-    afterEach(() => jest.clearAllMocks())
 
     it('renders properly', () => {
         const buttons = wrapper.findAll(".button")

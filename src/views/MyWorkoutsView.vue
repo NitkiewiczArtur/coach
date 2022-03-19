@@ -29,12 +29,12 @@ export default defineComponent({
 
 <template>
   <div class="wrapper">
-    <!--  <search-bar search-keys="[Name]"></search-bar>-->
     <SearchBar @searchClicked="onSearchClicked"/>
     <WorkoutList :workouts-to-display="workouts"></WorkoutList>
   </div>
 </template>
-<style lang="scss">
+
+<style scoped lang="scss">
 .wrapper {
   display: flex;
   flex-direction: column-reverse;

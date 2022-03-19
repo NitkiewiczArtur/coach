@@ -7,34 +7,36 @@
            class="list__item">
         <span>{{ workout.name }}</span>
         <div class="button-group">
-          <div class="button button--primary"
-               @click="showResults(workout)">results
-          </div>
-          <div class="button button--submit"
-               @click="startTraining(workout)">start
-          </div>
-          <div class="button button--triangle"
-               @click="showDetails(workout)">▼
-          </div>
+          <button class="button button--primary"
+                  @click="showResults(workout)">results
+          </button>
+          <button class="button button--submit"
+                  @click="startTraining(workout)">start
+          </button>
+          <button class="button button--triangle"
+                  @click="showDetails(workout)">▼
+          </button>
         </div>
       </div>
     </div>
-    <workout-details :detailed-exercises="detailedExercises"
-                     :detailed-workout="detailedWorkout"
-                     :is-workout-details-visible="isWorkoutDetailsVisible"
-                     @closeWorkoutDetailsModalClicked="onCloseWorkoutDetailsModalClicked"
-    />
+    <div v-if="isWorkoutDetailsVisible">
+      <workout-details :detailed-exercises="detailedExercises"
+                       :detailed-workout="detailedWorkout"
+                       @closeWorkoutDetailsModalClicked="onCloseWorkoutDetailsModalClicked"
+      />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import {ref, Ref} from "vue";
 import {Workout} from "@/model/Workout";
-import {getExerciseById, getExercisesByIds} from "@/services/exerciseService"
-import {Exercise} from "@/model/Exercise";
+import {getExercisesByIds} from "@/services/exerciseService"
 import WorkoutDetails from "@/components/modals/WorkoutDetails.vue";
-import router from "@/router";
-// eslint-disable-next-line no-undef
+import {Exercise} from "@/model/Exercise";
+import {useRouter} from "vue-router";
+import {currentUser} from "@/services/authService"
+
 const props = defineProps({
   workoutsToDisplay: {
     type: Array,
@@ -45,22 +47,24 @@ const props = defineProps({
   },
 })
 
+const router = useRouter();
 const isWorkoutDetailsVisible = ref(false);
 const detailedWorkout: Ref<Workout> = ref({} as Workout);
-const detailedExercises: Ref<Array<Exercise | undefined>> = ref([]);
+const detailedExercises:Ref<Array<Exercise>> = ref([]);
+
 const startTraining = (workout: Workout) => {
   console.log("TRAINING START")
 }
 const showResults = (workout: Workout) => {
-  router.push("/workoutResults")
+  router.push({path:"/workoutResults", params:{ workoutId: workout.id}})
 }
-
 const showDetails = async (workoutToShow: Workout) => {
   detailedWorkout.value = workoutToShow
   const exercises = await getExercisesByIds(workoutToShow.exercises)
   detailedExercises.value = [...exercises]
   isWorkoutDetailsVisible.value = true
 }
+
 const onCloseWorkoutDetailsModalClicked = () => {
   isWorkoutDetailsVisible.value = false
 }

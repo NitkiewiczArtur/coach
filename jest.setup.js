@@ -10,6 +10,7 @@ const router = createRouterMock()
 beforeEach(() => {
     injectRouterMock(router)
 })
+afterEach(() => jest.clearAllMocks())
 
 // Add properties to the wrapper
 config.plugins.VueWrapper.install(VueRouterMock)

@@ -17,7 +17,6 @@
 import {ref, computed} from "vue";
 
 const searchValue = ref('')
-// eslint-disable-next-line no-undef
 const emit = defineEmits(['searchClicked'])
 const onSearchFromStart = () => {
   emit('searchClicked', searchValue.value)

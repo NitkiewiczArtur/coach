@@ -25,7 +25,7 @@
         <td>{{ exercise.id }}</td>
         <td class="show-in-mobile-row margin-left">{{ exercise.name }}</td>
         <td class="show-in-mobile-row margin-right dont-show-in-desktop">
-          <div class="button button--triangle" @click="showDetails(exercise)">▼</div>
+          <button class="button button--triangle" @click="showDetails(exercise)">▼</button>
         </td>
         <td>{{ exercise.target }}</td>
         <td> {{ exercise.bodyPart }}</td>
@@ -44,7 +44,7 @@
 import {ref, Ref} from "vue";
 import {Exercise} from "@/model/Exercise";
 import ExerciseDetails from "@/components/modals/ExerciseDetails.vue";
-// eslint-disable-next-line no-undef
+
 const props = defineProps({
   exercisesToDisplay: {
     type: Array,

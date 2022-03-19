@@ -46,6 +46,7 @@ export default defineComponent({
 @media screen and (min-width: 700px) {
   .wrapper{
     flex-direction: column;
+    justify-content: flex-start;
   }
 }
 </style>

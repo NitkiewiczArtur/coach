@@ -2,18 +2,16 @@ import {shallowMount} from '@vue/test-utils'
 import LoginView from '@/views/LoginView.vue'
 import {signIn} from "@/services/authService";
 import {getRouter} from "vue-router-mock";
-import SearchBar from "@/components/SearchBar.vue";
 
 let wrapper
 const TEST_EMAIL = "test@test.pl";
 const TEST_PASSWORD = "testPassword";
 jest.mock('@/services/authService');
 
-describe('SearchBar.vue', () => {
+describe('LoginView.vue', () => {
     beforeEach(() => {
-        wrapper = shallowMount(SearchBar)
+        wrapper = shallowMount(LoginView)
     });
-    afterEach(() => jest.clearAllMocks())
 
     it('renders ', () => {
         const buttons = wrapper.findAll(".button")
