@@ -5,8 +5,15 @@ const db = getFirestore();
 
 export async function getExerciseById(id: string) {
     const q = query(collection(db, "exercises"), where("id", "==", id));
-    const querySnapshot = await getDocs(q);
-    return querySnapshot.docs[0].data() as Exercise
+    try {
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.docs[0].exists()) {
+            return querySnapshot.docs[0].data() as Exercise
+        }
+        console.log("Exercise with id " + id + " does not exist")
+    } catch (e) {
+        console.log("Error while getting exercise from firestore:" + e)
+    }
 }
 //TODO:memoization
 export async function getExercisesByIds(ids: Array<string>) {
@@ -32,10 +39,14 @@ export async function searchExercisesStrict(searchValue: string) {
         startAt(searchValue),
         endAt(searchValue + '~'),
         limit(10));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-        exercises.push(doc.data() as Exercise);
-    });
+    try {
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            exercises.push(doc.data() as Exercise);
+        });
+    }catch (e){
+        console.log("Error while getting exercises from firestore:" + e)
+    }
     return exercises;
 }
 
@@ -46,9 +57,13 @@ export async function searchExercises(searchValue: string) {
         orderBy('name'),
         where('name', '>=', searchValue),
         limit(15));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-        exercises.push(doc.data() as Exercise);
-    });
+    try {
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            exercises.push(doc.data() as Exercise);
+        });
+    } catch (e) {
+        console.log("Error while getting exercises from firestore:" + e)
+    }
     return exercises;
 }

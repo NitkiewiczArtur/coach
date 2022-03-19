@@ -6,13 +6,19 @@ import {getExerciseById} from "@/services/exerciseService";
 export async function getExerciseResultData(exerciseId: string, workoutResults: WorkoutResult[]) {
     const volumePerDay = getVolumePerDay(exerciseId, workoutResults)
     const maxPerDay = getMaxPerDay(exerciseId, workoutResults)
-    const exercise = await getExerciseById(exerciseId)
-    return {
-        volumePerDay,
-        maxPerDay,
-        exerciseName: exercise.name,
-        gifUrl: exercise.gifUrl
-    } as ExerciseResultData
+    try {
+        const exercise = await getExerciseById(exerciseId)
+        if (exercise) {
+            return {
+                volumePerDay,
+                maxPerDay,
+                exerciseName: exercise.name,
+                gifUrl: exercise.gifUrl
+            } as ExerciseResultData
+        }
+    } catch (e) {
+        console.log("Error while getting exercise from firestore:" + e)
+    }
 }
 
 function getVolumePerDay(exerciseId: string, workoutResults: WorkoutResult[]) {

@@ -2,11 +2,11 @@
   <div class="search-bar-wrapper">
     <div class="search-bar">
       <div class="filters">
-        filters {{ isMobileScreen ? "▲" : "▼" }}
+        name {{ isMobileScreen ? "▲" : "▼" }}
       </div>
       <input v-model="searchValue"/>
       <div @click="onSearchFromStart"
-           class="button button--submit">
+           class="button button--purple">
         search
       </div>
     </div>

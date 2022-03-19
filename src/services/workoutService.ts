@@ -9,7 +9,7 @@ export async function getWorkoutById(id: string) {
         if (snap.exists()) {
             return snap.data() as Workout
         }
-        console.log("No workout with id = " + id)
+        console.log("Workout with id = " + id + "does not exists")
     } catch (e) {
         console.log("Error while getting workout from firestore:" + e)
     }

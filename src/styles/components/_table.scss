@@ -54,7 +54,7 @@ tbody tr:last-of-type td:last-of-type {
   display: none
 }
 
-@media screen and (max-width: 590px) {
+@media screen and (max-width: 700px) {
   table {
     width: 95vw;
     display: block;
@@ -104,5 +104,8 @@ tbody tr:last-of-type td:last-of-type {
 
   .margin-right-on-mobile{
     margin-right: 1rem;
+  }
+  .hide-for-mobile {
+    display: none;
   }
 }

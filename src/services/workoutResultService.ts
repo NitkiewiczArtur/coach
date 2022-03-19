@@ -1,4 +1,4 @@
-import {collection, getDocs, getFirestore, limit, orderBy, query, where} from "firebase/firestore";
+import {collection, getDocs, getFirestore, limit, query, where} from "firebase/firestore";
 import {WorkoutResult} from "@/model/WorkoutResult";
 import {ExerciseResult} from "@/model/ExerciseResult";
 
@@ -10,11 +10,15 @@ export async function getResultsByWorkoutId(id: string) {
         collection(db, "workout_results"),
         where('workout_id', '==', id),
         limit(30));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-        const result = mapToWorkoutResult(doc.data())
-        workoutResults.push(result);
-    });
+    try {
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            const workoutResult = mapToWorkoutResult(doc.data())
+            workoutResults.push(workoutResult);
+        });
+    } catch (e) {
+        console.log("Error while getting workouts from firestore:" + e)
+    }
     return workoutResults;
 }
 

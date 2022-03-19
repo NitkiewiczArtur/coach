@@ -42,7 +42,7 @@ const submitForm = () => {
   if (!errors.value.length) {
     signUp(email.value, password.value)
         .then(() => {
-          router.push("/explore")
+          router.push({name: "explore"})
         })
         .catch((error) => {
           errors.value.push(error.message);

@@ -41,6 +41,9 @@
   &--cancel{
     background-color: v.$danger;
   }
+  &--purple{
+    background-color: v.$info;
+  }
   &--triangle {
     background-color:unset;
     color: v.$primary-color;

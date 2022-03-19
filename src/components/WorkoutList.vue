@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref, Ref} from "vue";
+import {PropType, ref, Ref} from "vue";
 import {Workout} from "@/model/Workout";
 import {getExercisesByIds} from "@/services/exerciseService"
 import WorkoutDetails from "@/components/modals/WorkoutDetails.vue";
@@ -37,7 +37,7 @@ import {useRouter} from "vue-router";
 
 const props = defineProps({
   workoutsToDisplay: {
-    type: Array,
+    type: Array as PropType<Workout[]>,
     required: true,
   },
   error: {
@@ -48,14 +48,16 @@ const props = defineProps({
 const router = useRouter();
 const isWorkoutDetailsVisible = ref(false);
 const detailedWorkout: Ref<Workout> = ref({} as Workout);
-const detailedExercises:Ref<Array<Exercise>> = ref([]);
+//TODO: ex | undef ???
+const detailedExercises:Ref<Array<Exercise | undefined>> = ref([]);
 
 const startTraining = (workout: Workout) => {
   console.log("TRAINING START")
 }
 const showResults = (workout: Workout) => {
-  router.push({path:"/workoutResults", params:{ workoutId: workout.id}})
+  router.push({name:"workoutResults", params:{ workoutId: workout.id}})
 }
+
 const showDetails = async (workoutToShow: Workout) => {
   detailedWorkout.value = workoutToShow
   const exercises = await getExercisesByIds(workoutToShow.exercises)
