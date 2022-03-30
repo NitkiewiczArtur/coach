@@ -1,3 +1,5 @@
+import {getAuth, onAuthStateChanged} from "firebase/auth";
+
 const firebaseApp = {}
 
 const db = {}
@@ -13,3 +15,7 @@ export const signUp = jest.fn(() => {
 export const currentUser = jest.fn(() => {
     return {}
 });
+
+export const onAuthStateChange = (nextOrObserver) => {
+    return {}
+}

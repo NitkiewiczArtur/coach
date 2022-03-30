@@ -24,10 +24,14 @@ export async function getExercisesByIds(ids: Array<string>) {
 export const getExercises = async () => {
     const exercises: Array<Exercise> = []
     const q = query(collection(db, "exercises"), limit(15));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-        exercises.push(doc.data() as Exercise);
-    });
+    try {
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            exercises.push(doc.data() as Exercise);
+        });
+    } catch (e) {
+        console.log("Error while getting exercises from firestore:" + e)
+    }
     return exercises;
 };
 

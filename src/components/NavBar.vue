@@ -1,27 +1,27 @@
 <script lang="ts">
-import {computed, defineComponent, onMounted, ref} from "vue";
-import {onAuthStateChange, logOut} from "@/services/authService";
+import {defineComponent, onMounted, ref} from "vue";
+import {onAuthStateChange, signOutUser} from "@/services/authService";
 import router from "@/router";
+import {isMobileScreen} from "@/utils/utils";
 
 export default defineComponent({
   setup() {
     const isModalOpen = ref(false);
-    const isMobileScreen = computed(() => window.innerWidth < 700);
     const isNavHidden = ref(false);
     const loggedIn = ref(false);
     const currentUser = ref(null)
     const toggleShowNav = () => {
-      if (isMobileScreen.value) {
+      if (isMobileScreen) {
         isNavHidden.value = !isNavHidden.value;
       }
     };
     const signOut = () => {
-      logOut().then(() => {
+      signOutUser().then(() => {
         router.push("/")
       }).catch((error) => console.log(error))
     };
     onMounted(() => {
-      if (isMobileScreen.value) {
+      if (isMobileScreen) {
         toggleShowNav();
       }
       //TODO: check if should be created
@@ -39,7 +39,8 @@ export default defineComponent({
       isModalOpen,
       isMobileScreen,
       isNavHidden,
-      loggedIn, currentUser,
+      loggedIn,
+      currentUser,
       toggleShowNav,
       signOut
     };
@@ -59,8 +60,6 @@ export default defineComponent({
       >
         {{isNavHidden? "▲": "▼"}}
       </button>
-<!--      <div class="button-44 button-44&#45;&#45;triangle">▼</div>-->
-<!--      <div class="user-miniature">{{currentUser? currentUser.email.charAt(0): ""}}</div>-->
     </div>
     <div class="nav-button-group" v-show="!isNavHidden">
       <router-link class="nav-link" to="/explore">
@@ -72,7 +71,7 @@ export default defineComponent({
       <router-link v-if="!currentUser" class="nav-link" to="/register">
         <div class="nav-button" @click="toggleShowNav">Sign up</div>
       </router-link>
-      <div v-if="currentUser" class="nav-button" @click="signOut">Sign out</div>
+      <div v-else class="nav-button" @click="signOut">Sign out</div>
     </div>
   </div>
 </template>

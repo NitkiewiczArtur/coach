@@ -33,10 +33,12 @@
       </tr>
       </tbody>
     </table>
-    <exercise-details :is-exercise-details-visible="isExerciseDetailsVisible"
-                      :detailed-exercise="detailedExercise"
-                      @closeExerciseDetailsModalClicked="onCloseExerciseDetailsModalClicked"
-    />
+    <div v-if="isExerciseDetailsVisible">
+      <exercise-details
+          :detailed-exercise="detailedExercise"
+          @closeExerciseDetailsModalClicked="onCloseExerciseDetailsModalClicked"
+      />
+    </div>
   </div>
 </template>
 

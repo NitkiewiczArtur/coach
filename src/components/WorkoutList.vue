@@ -7,10 +7,10 @@
         <span>{{ workout.name }}</span>
         <div class="button-group">
           <button class="button button--primary"
-                  @click="showResults(workout)">results
+                  @click="showResults(workout.id)">results
           </button>
           <button class="button button--submit"
-                  @click="startTraining(workout)">start
+                  @click="startTraining(workout.id)">start
           </button>
           <button class="button button--triangle"
                   @click="showDetails(workout)">▼
@@ -34,6 +34,7 @@ import {getExercisesByIds} from "@/services/exerciseService"
 import WorkoutDetails from "@/components/modals/WorkoutDetails.vue";
 import {Exercise} from "@/model/Exercise";
 import {useRouter} from "vue-router";
+import {useCoachRouter} from "@/composable/useRouter";
 
 const props = defineProps({
   workoutsToDisplay: {
@@ -45,17 +46,18 @@ const props = defineProps({
   },
 })
 
-const router = useRouter();
+const {navigateToWorkoutResults, navigateToDoExercise} = useCoachRouter()
 const isWorkoutDetailsVisible = ref(false);
 const detailedWorkout: Ref<Workout> = ref({} as Workout);
 //TODO: ex | undef ???
 const detailedExercises:Ref<Array<Exercise | undefined>> = ref([]);
 
-const startTraining = (workout: Workout) => {
+const startTraining = (workoutId: string) => {
   console.log("TRAINING START")
+  navigateToDoExercise(workoutId)
 }
-const showResults = (workout: Workout) => {
-  router.push({name:"workoutResults", params:{ workoutId: workout.id}})
+const showResults = (workoutId: string) => {
+  navigateToWorkoutResults(workoutId)
 }
 
 const showDetails = async (workoutToShow: Workout) => {

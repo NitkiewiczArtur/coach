@@ -1,9 +1,10 @@
 <script lang="ts">
 import {defineComponent, ref} from "vue";
-import {getWorkouts} from "@/services/workoutService"
+import {getWorkoutsByUserId} from "@/services/workoutService"
 import SearchBar from "@/components/SearchBar.vue";
 import WorkoutList from "@/components/WorkoutList.vue";
 import {Workout} from "@/model/Workout";
+import {currentUser} from "@/services/authService";
 
 export default defineComponent({
   components: {
@@ -12,8 +13,10 @@ export default defineComponent({
   },
   async setup() {
     const workouts = ref<Array<Workout>>([]);
-
-    workouts.value = await getWorkouts();
+    const userId = currentUser()?.uid as string
+    if(userId){
+      workouts.value = await getWorkoutsByUserId(userId);
+    }
     const onSearchClicked = async (searchValue: string) => {
     //  workouts.value = await searchExercises(searchValue)
     }

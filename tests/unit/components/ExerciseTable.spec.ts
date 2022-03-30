@@ -2,7 +2,6 @@ import {mount} from '@vue/test-utils'
 import ExerciseTable from '@/components/ExerciseTable.vue'
 import {getTestExercises} from "../../utils/testHelper";
 
-jest.mock('@/services/authService');
 let wrapper
 
 const mountFunction = (options = {}) => {
@@ -19,11 +18,10 @@ describe('ExerciseTable.vue', () => {
             }
         })
     });
-
+//TODO: expand mobile/desktop view and values for 1 record.
     it('displays given exercises', async () => {
         const tableRows = wrapper.findAll('tr')
-        console.log(wrapper.html())
-        // +1 for tabl header row
+        // +1 for table header row
         expect(tableRows.length).toBe(getTestExercises().length + 1)
     });
 
@@ -34,6 +32,7 @@ describe('ExerciseTable.vue', () => {
 
         await showDetailsButton.trigger('click')
         detailsModal = wrapper.find('.modal')
+
         expect(detailsModal.exists()).toBeTruthy()
     });
 

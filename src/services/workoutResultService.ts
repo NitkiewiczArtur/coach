@@ -4,12 +4,12 @@ import {ExerciseResult} from "@/model/ExerciseResult";
 
 const db = getFirestore();
 
-export async function getResultsByWorkoutId(id: string) {
+export async function getResultsByWorkoutId(id: string, resultLimit:number) {
     const workoutResults: Array<WorkoutResult> = []
     const q = query(
         collection(db, "workout_results"),
         where('workout_id', '==', id),
-        limit(30));
+        limit(resultLimit));
     try {
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {

@@ -6,7 +6,6 @@ import {getRouter} from "vue-router-mock";
 let wrapper
 const TEST_EMAIL = "test@test.pl";
 const TEST_PASSWORD = "testPassword";
-jest.mock('@/services/authService');
 
 describe('LoginView.vue', () => {
     beforeEach(() => {

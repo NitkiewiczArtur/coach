@@ -13,14 +13,17 @@
 
 <script setup lang="ts">
 import ExerciseTable from "@/components/ExerciseTable.vue";
+import {Workout} from "@/model/Workout";
+import {PropType} from "vue";
+import {Exercise} from "@/model/Exercise";
 
 const props = defineProps({
   detailedWorkout: {
-    type: Object,
+    type: Object as PropType<Workout>,
     required: true,
   },
   detailedExercises: {
-    type: Array,
+    type: Array as PropType<Exercise[]>,
     required: true,
   },
 });

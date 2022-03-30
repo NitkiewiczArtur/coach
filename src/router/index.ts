@@ -6,6 +6,7 @@ import ExploreView from "@/views/ExploreView.vue";
 import {currentUser} from "@/services/authService";
 import MyWorkoutsView from "@/views/MyWorkoutsView.vue";
 import WorkoutResultsView from "@/views/WorkoutResultsView.vue";
+import NotFound from "@/views/NotFound.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -52,6 +53,7 @@ const routes: Array<RouteRecordRaw> = [
         name: "logIn",
         component: LoginView,
     },
+    { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound },
 ]
 
 const router = createRouter({

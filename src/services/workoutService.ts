@@ -1,5 +1,6 @@
 import {Workout} from "@/model/Workout";
-import {collection, doc, getDoc, getDocs, getFirestore, limit, query} from "firebase/firestore";
+import {collection, doc, getDoc, getDocs, getFirestore, limit, query, where, Query} from "firebase/firestore";
+
 
 const db = getFirestore();
 
@@ -15,11 +16,20 @@ export async function getWorkoutById(id: string) {
     }
 }
 
-export async function getWorkouts() {
-    const workouts: Array<Workout> = []
+export async function getWorkoutsByUserId(userId: string) {
+    const q = query(collection(db, "workouts"), where("userId", "==", userId));
+    return getWorkoutsForQuery(q)
+}
+
+export async function getSomeWorkouts() {
     const q = query(collection(db, "workouts"), limit(5));
+    return getWorkoutsForQuery(q)
+}
+
+export async function getWorkoutsForQuery(query: Query) {
+    const workouts: Array<Workout> = []
     try {
-        const querySnapshot = await getDocs(q);
+        const querySnapshot = await getDocs(query);
         querySnapshot.forEach((doc) => {
             const workout = doc.data() as Workout;
             workout.id = doc.id;

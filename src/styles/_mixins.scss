@@ -4,6 +4,12 @@
   align-items: center;
   text-align: center;
 }
+@mixin flex-column-reverse-center {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  text-align: center;
+}
 @mixin flex-row-center {
   display: flex;
   flex-direction: row;

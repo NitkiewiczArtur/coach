@@ -20,7 +20,7 @@ export const signIn = (email, password) => {
     const auth = getAuth();
     return signInWithEmailAndPassword(auth, email, password)
 }
-export const logOut = () => {
+export const signOutUser = () => {
     const auth = getAuth();
     return signOut(auth)
 }
