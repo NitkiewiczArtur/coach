@@ -1,10 +1,10 @@
 import {createLogger, createStore} from 'vuex'
-import exercise from "@/store/modules/exercise";
+import workoutResult from "@/store/modules/workoutResult";
 
 const debug = process.env.NODE_ENV !== "production";
 
 export const store = createStore({
-  modules: {exercise},
+  modules: {workoutResult},
   strict: debug,
   plugins: debug ? [createLogger()] : [],
 })

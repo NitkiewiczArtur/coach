@@ -38,3 +38,6 @@ export const onAuthStateChange = (nextOrObserver) => {
 export const currentUser = () => {
     return getAuth().currentUser
 }
+export const currentUserId = () => {
+    return getAuth().currentUser?.uid
+}

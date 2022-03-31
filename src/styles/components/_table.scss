@@ -78,7 +78,7 @@ tbody tr:last-of-type td:last-of-type {
     height: 2rem;
     background-color: v.$third-color;
     border-bottom: v.$background solid 3px;
-    width: 93vw;
+    width: v.$content-width;
     justify-content: space-between;
     align-items: center;
     font-weight: bold;

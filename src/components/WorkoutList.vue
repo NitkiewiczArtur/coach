@@ -53,7 +53,6 @@ const detailedWorkout: Ref<Workout> = ref({} as Workout);
 const detailedExercises:Ref<Array<Exercise | undefined>> = ref([]);
 
 const startTraining = (workoutId: string) => {
-  console.log("TRAINING START")
   navigateToDoExercise(workoutId)
 }
 const showResults = (workoutId: string) => {

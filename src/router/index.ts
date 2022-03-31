@@ -7,7 +7,7 @@ import {currentUser} from "@/services/authService";
 import MyWorkoutsView from "@/views/MyWorkoutsView.vue";
 import WorkoutResultsView from "@/views/WorkoutResultsView.vue";
 import NotFound from "@/views/NotFound.vue";
-import DoExercise from "@/views/DoExercise.vue";
+import DoExercise from "@/views/DoWorkout.vue";
 
 
 const routes: Array<RouteRecordRaw> = [

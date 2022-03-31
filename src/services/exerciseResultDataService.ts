@@ -8,9 +8,9 @@ export async function getExerciseResultData(exerciseId: string, workoutResults: 
     const maxRepPerDay = getExerciseMaxRepPerDay(exerciseId, workoutResults)
     //TODO: getLastWorkoutResult.. data!
     const lastWorkoutResult = workoutResults[workoutResults.length - 1]
-    const lastExerciseResult = lastWorkoutResult.exerciseResults
-        .find(exerciseResult => exerciseResult.exercise_id === exerciseId)
-    console.log("lastExerciseResult", lastExerciseResult);
+    const lastExerciseResult = lastWorkoutResult?.exerciseResults
+        .find(exerciseResult => exerciseResult.exerciseId === exerciseId)
+
     try {
         const exercise = await getExerciseById(exerciseId)
         if (exercise) {
@@ -32,7 +32,7 @@ export async function getExerciseResultData(exerciseId: string, workoutResults: 
 function getExerciseVolumePerDay(exerciseId: string, workoutResults: WorkoutResult[]) {
     return new Map(workoutResults.map(workoutResult => {
         const exerciseResult = workoutResult.exerciseResults
-            .find(exerciseResult => exerciseResult.exercise_id == exerciseId)
+            .find(exerciseResult => exerciseResult.exerciseId == exerciseId)
         const volume = getExerciseVolume(exerciseResult)
         return [getDateString(workoutResult.dayOfWorkout), volume]
     }))
@@ -40,7 +40,7 @@ function getExerciseVolumePerDay(exerciseId: string, workoutResults: WorkoutResu
 
 function getExerciseVolume(exerciseResult: ExerciseResult | undefined) {
     if (exerciseResult) {
-        return exerciseResult.load.reduce((total, amount, index) => {
+        return exerciseResult.loads.reduce((total, amount, index) => {
             total += amount * exerciseResult.reps[index]
             return total
         }, 0)
@@ -50,8 +50,8 @@ function getExerciseVolume(exerciseResult: ExerciseResult | undefined) {
 function getExerciseMaxRepPerDay(exerciseId: string, workoutResults: WorkoutResult[]) {
     return new Map(workoutResults.map(workoutResult => {
         const exerciseResult = workoutResult.exerciseResults
-            .find(exerciseResult => exerciseResult.exercise_id == exerciseId)
-        const max = exerciseResult ? Math.max(...exerciseResult.load) : undefined
+            .find(exerciseResult => exerciseResult.exerciseId == exerciseId)
+        const max = exerciseResult ? Math.max(...exerciseResult.loads) : undefined
         return [getDateString(workoutResult.dayOfWorkout), max]
     }))
 }

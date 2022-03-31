@@ -1,0 +1,15 @@
+.input {
+  font-size: 1.5rem;
+  text-align: center;
+
+  &--load {
+    width: 20vw;
+  }
+
+  &--reps {
+    width: 10vw;
+  }
+  &--time {
+    width: 12vw;
+  }
+}

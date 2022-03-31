@@ -50,7 +50,7 @@ const submitForm = () => {
   }
 };
 </script>
-<style lang="scss">
+<style scoped lang="scss">
 @use "../styles/variables" as v;
 
 .wrapper {
@@ -76,7 +76,6 @@ input:focus {
   border: none;
 
   &:hover {
-    background-color: #336699;
   }
 }
 </style>

@@ -76,7 +76,6 @@ input:focus {
   border: none;
 
   &:hover {
-    background-color: #336699;
   }
 }
 </style>

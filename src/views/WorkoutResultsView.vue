@@ -3,7 +3,7 @@
     <h1>{{ workout.name }}</h1>
     <div class="workout-result-wrapper__content-wrapper">
       <suspense>
-        <workout-result-table :workout="workout" :results-to-display="workoutResults"/>
+        <workout-result-table :results-datas-to-display="exerciseResultDataList"/>
       </suspense>
       <div class="button-wrapper">
         <button class="button button--primary"
@@ -16,14 +16,24 @@
 
 <script setup lang="ts">
 import {getResultsByWorkoutId} from "@/services/workoutResultService";
-import WorkoutResultTable from "@/components/WorkoutResultTable.vue";
+import WorkoutResultTable from "@/components/ExerciseResultTable.vue";
 import {getWorkoutById} from "@/services/workoutService";
 import {useCoachRouter} from "@/composable/useRouter";
+import {ExerciseResultData} from "@/model/ExerciseResultData";
+import {getExerciseResultData} from "@/services/exerciseResultDataService";
 
 const {workoutIdFromRoute, navigateBackward} = useCoachRouter()
 
 const workout = await getWorkoutById(workoutIdFromRoute)
 const workoutResults = await getResultsByWorkoutId(workoutIdFromRoute, 30)
+
+const exerciseResultDataPromises: Promise<ExerciseResultData | undefined>[] = []
+if(workout){
+  workout.exercises.forEach(exerciseId => {
+    exerciseResultDataPromises.push(getExerciseResultData(exerciseId, workoutResults))
+  })
+}
+const exerciseResultDataList = await Promise.all(exerciseResultDataPromises)
 
 </script>
 <style scoped lang="scss">

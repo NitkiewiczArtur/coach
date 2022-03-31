@@ -1,5 +1,5 @@
 export interface ExerciseResult {
-    exercise_id: string,
-    load: number[],
+    exerciseId: string,
+    loads: number[],
     reps: number[]
 }

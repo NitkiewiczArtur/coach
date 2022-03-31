@@ -8,7 +8,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="exerciseResultData in exerciseResultDataList"
+      <tr v-for="exerciseResultData in resultsDatasToDisplay"
           :key="exerciseResultData.exerciseName"
           class="tbody-row">
         <td class="hide-for-mobile" align=Center>
@@ -36,20 +36,13 @@
 
 <script setup lang="ts">
 import {PropType, ref} from "vue";
-import {WorkoutResult} from "@/model/WorkoutResult";
 import WorkoutResultChart from "@/components/ExerciseResultChart.vue";
 import {ExerciseResultData} from "@/model/ExerciseResultData";
-import {getExerciseResultData} from "@/services/exerciseResultDataService";
 import {useChartInTable} from "@/composable/useChartInTable";
-import {Workout} from "@/model/Workout";
 
 const props = defineProps({
-  resultsToDisplay: {
-    type: Array as PropType<WorkoutResult[]>,
-    required: true,
-  },
-  workout:{
-    type: Object as PropType<Workout>,
+  resultsDatasToDisplay: {
+    type: Array as PropType<ExerciseResultData[]>,
     required: true,
   },
   error: {
@@ -59,13 +52,7 @@ const props = defineProps({
 const chartHeight = ref(0)
 const chartWidth = ref(0)
 const {initializeChart} = useChartInTable(chartWidth, chartHeight);
-const exerciseIds = ref(props.workout.exercises)
-const exerciseResultDataPromises: Promise<ExerciseResultData | undefined>[] = []
 
-exerciseIds.value.forEach(exerciseId => {
-  exerciseResultDataPromises.push(getExerciseResultData(exerciseId, props.resultsToDisplay))
-})
-const exerciseResultDataList = await Promise.all(exerciseResultDataPromises)
 
 initializeChart();
 

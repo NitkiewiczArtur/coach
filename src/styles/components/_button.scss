@@ -24,22 +24,31 @@
   word-break: break-word;
   border: 0;
 
-  &:active,
-  &:focus {
+  &:hover {
     border-bottom-style: none;
     border-color: #dadada;
     box-shadow: rgba(0, 0, 0, .3) 0 3px 3px inset;
     outline: 0;
   }
-  &:hover {
-    border-bottom-style: none;
-    border-color: #dadada;
-  }
   &--submit{
     background-color: v.$submit;
+    &--round{
+      border-radius: 100%;
+      padding: 0;
+      height:2rem;
+      width:2rem;
+      font-size:2rem;
+    }
   }
   &--cancel{
     background-color: v.$danger;
+    &--round{
+      border-radius: 100%;
+      padding: 0;
+      height:2rem;
+      width:2rem;
+      font-size:2rem;
+    }
   }
   &--purple{
     background-color: v.$info;

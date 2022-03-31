@@ -15,6 +15,11 @@
   flex-direction: row;
   align-items: center;
 }
+@mixin flex-row-end {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
 @mixin fill-all{
   margin: 0;
   padding: 0;

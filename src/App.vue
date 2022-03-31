@@ -31,6 +31,28 @@ import NavBar from "@/components/NavBar.vue";</script>
 .content {
   overflow: auto;
 }
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+/*
+@media screen and (min-width: 700px) {
+  .hide-for-desktop{
+    display:unset;
+  }
+}
+@media screen and (max-width: 700px) {
+  .hide-for-desktop{
+    display:none;
+  }
+}*/
 
 @media screen and (max-width: 700px) {
   .navbar {

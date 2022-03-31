@@ -1,14 +1,12 @@
 <script lang="ts">
 import {defineComponent, ref} from "vue";
 import {getWorkoutsByUserId} from "@/services/workoutService"
-import SearchBar from "@/components/SearchBar.vue";
 import WorkoutList from "@/components/WorkoutList.vue";
 import {Workout} from "@/model/Workout";
 import {currentUser} from "@/services/authService";
 
 export default defineComponent({
   components: {
-    SearchBar,
     WorkoutList,
   },
   async setup() {
@@ -17,12 +15,8 @@ export default defineComponent({
     if(userId){
       workouts.value = await getWorkoutsByUserId(userId);
     }
-    const onSearchClicked = async (searchValue: string) => {
-    //  workouts.value = await searchExercises(searchValue)
-    }
     return {
       workouts,
-      onSearchClicked
     };
   },
 });
@@ -30,7 +24,6 @@ export default defineComponent({
 
 <template>
   <div class="wrapper">
-    <SearchBar @searchClicked="onSearchClicked"/>
     <WorkoutList :workouts-to-display="workouts"></WorkoutList>
   </div>
 </template>

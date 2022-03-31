@@ -8,18 +8,25 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="exerciseResultData in exerciseResultDataList"
-          :key="exerciseResultData.exerciseName"
+      <tr v-for="exerciseResultData in resultsDataListToDisplay"
+          :key="resultsDataListToDisplay.indexOf(exerciseResultData)"
           class="tbody-row">
-        <td>
-          <span class="hide-for-desktop">{{exerciseResultData.exerciseName}}</span>
+        <td align=Center>
+          <div class="hide-for-desktop">
+            <span>{{ exerciseResultData.exerciseName.toUpperCase() }}</span>
+          </div>
           <workout-result-chart v-if="chartHeight"
                                 :exercise-result-data="exerciseResultData"
                                 :height="chartHeight"
                                 :width="chartWidth"/>
-          <exercise-result-input :lastExerciseResult="exerciseResultData.lastExerciseResult"/>
+          <exercise-result-creation-fragment
+              :lastExerciseResult="exerciseResultData.lastExerciseResult"
+              class="hide-for-desktop"/>
+
         </td>
-        <td class="hide-for-mobile"><exercise-result-input :lastExerciseResult="exerciseResultData.lastExerciseResult"/></td>
+        <td class="hide-for-mobile" align=Center>
+          <exercise-result-creation-fragment :lastExerciseResult="exerciseResultData.lastExerciseResult"/>
+        </td>
       </tr>
       </tbody>
     </table>
@@ -28,21 +35,14 @@
 
 <script setup lang="ts">
 import {PropType, ref} from "vue";
-import {WorkoutResult} from "@/model/WorkoutResult";
 import WorkoutResultChart from "@/components/ExerciseResultChart.vue";
 import {ExerciseResultData} from "@/model/ExerciseResultData";
-import {getExerciseResultData} from "@/services/exerciseResultDataService";
 import {useChartInTable} from "@/composable/useChartInTable";
-import ExerciseResultInput from "@/components/ExerciseResultInput.vue";
-import {Workout} from "@/model/Workout";
+import ExerciseResultCreationFragment from "@/components/ExerciseResultCreationFragment.vue";
 
 const props = defineProps({
-  resultsToDisplay: {
-    type: Array as PropType<WorkoutResult[]>,
-    required: true,
-  },
-  workout:{
-    type: Object as PropType<Workout>,
+  resultsDataListToDisplay: {
+    type: Array as PropType<ExerciseResultData[]>,
     required: true,
   },
   error: {
@@ -53,13 +53,6 @@ const props = defineProps({
 const chartHeight = ref(0)
 const chartWidth = ref(0)
 const {initializeChart} = useChartInTable(chartWidth, chartHeight);
-const exerciseIds = ref(props.workout.exercises)
-const exerciseResultDataPromises: Promise<ExerciseResultData | undefined>[] = []
-
-exerciseIds.value.forEach(exerciseId => {
-  exerciseResultDataPromises.push(getExerciseResultData(exerciseId, props.resultsToDisplay))
-})
-const exerciseResultDataList = await Promise.all(exerciseResultDataPromises)
 
 initializeChart();
 
@@ -67,8 +60,10 @@ initializeChart();
 
 <style lang="scss" scoped>
 @use "../styles/components/table";
-@use "../styles/components/button" as v;
+@use "../styles/components/button";
 @use "../styles/mixins";
+@use "../styles/components/input";
+@use "../styles/variables" as v;
 
 .exercise-result-image {
   border-radius: 25px;
@@ -76,17 +71,15 @@ initializeChart();
   height: 28vh;
 }
 
-.exercise-info-cell {
-  @include mixins.flex-column-center;
-  justify-content: center;
-  font-weight: bold;
-  padding: 2rem 0 2rem 0;
-  width: 20vw;
-  height: 30vh;
-  span {
-    margin: 0.5rem 0 0.5rem 0;
-  }
+.exercise-result-panel {
+  width: v.$content-width;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
 }
+
 .hide-for-desktop{
   display:none;
 }
@@ -101,5 +94,11 @@ initializeChart();
   .hide-for-desktop{
     display:unset;
   }
+  span{
+    padding-top:1rem;
+    display: inline-block;
+    width: 85vw;
+  }
 }
+
 </style>

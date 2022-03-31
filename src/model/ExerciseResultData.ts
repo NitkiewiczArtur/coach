@@ -1,4 +1,3 @@
-import {WorkoutResult} from "@/model/WorkoutResult";
 import {ExerciseResult} from "@/model/ExerciseResult";
 
 export interface ExerciseResultData {

@@ -1,5 +1,6 @@
 import {Exercise} from "@/model/Exercise";
 import {Workout} from "@/model/Workout";
+import {SetResult} from "@/model/SetResult";
 
 export function getTestExercises(): Array<Exercise> {
     return [{
@@ -63,6 +64,13 @@ export function getTestWorkouts(): Array<Workout> {
 
 export function getTestWorkout() {
     return {"exercises": ["1", "2"], "userId": "1", "name": "trening 1", "id": "1"} as Workout
+}
+export function getTestSetResult() {
+    return {
+        load: 100,
+        reps: 5,
+        index:0
+    } as SetResult
 }
 
 export function getEmittedEventValue(event: []) {
