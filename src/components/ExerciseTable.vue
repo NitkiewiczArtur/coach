@@ -43,13 +43,13 @@
 </template>
 
 <script setup lang="ts">
-import {ref, Ref} from "vue";
+import {PropType, ref, Ref} from "vue";
 import {Exercise} from "@/model/Exercise";
 import ExerciseDetails from "@/components/modals/ExerciseDetails.vue";
 
 const props = defineProps({
   exercisesToDisplay: {
-    type: Array,
+    type: Array as PropType<Exercise[]>,
     required: true,
   },
   error: {

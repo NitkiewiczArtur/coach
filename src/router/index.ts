@@ -7,6 +7,8 @@ import {currentUser} from "@/services/authService";
 import MyWorkoutsView from "@/views/MyWorkoutsView.vue";
 import WorkoutResultsView from "@/views/WorkoutResultsView.vue";
 import NotFound from "@/views/NotFound.vue";
+import DoExercise from "@/views/DoExercise.vue";
+
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -40,6 +42,13 @@ const routes: Array<RouteRecordRaw> = [
         path: "/workoutResults",
         name: "workoutResults",
         component: WorkoutResultsView,
+        meta: {requiresAuth: true}
+
+    },
+    {
+        path: "/doExercise",
+        name: "doExercise",
+        component: DoExercise,
         meta: {requiresAuth: true}
 
     },

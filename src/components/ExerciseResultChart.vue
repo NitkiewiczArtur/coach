@@ -14,20 +14,23 @@ export default defineComponent({
       required: true,
     },
     width:{
-      type: Number
+      type: Number,
+      required: true,
     },
     height:{
-      type:Number
-    }
+      type:Number,
+      required: true,
+    },
   },
   data() {
     return {
       options: {
         chart: {
-          id: 'vuechart-example'
+          id: 'vuechart-example',
+          height: this.height+2110,
         },
         xaxis: {
-          categories: [...this.exerciseResultData.maxPerDay.keys()],
+          categories: [...this.exerciseResultData.maxRepPerDay.keys()],
           convertedCatToNumeric: false,
         },
         colors: ['#8c44ff', '#0098fd'],
@@ -38,6 +41,7 @@ export default defineComponent({
                 colors: '#8c44ff'
               }
             },
+            min:this.exerciseResultData.smallestMax - 5
           },
           {
             opposite: true,
@@ -46,13 +50,14 @@ export default defineComponent({
                 colors: '#0098fd'
               }
             },
+            min:this.exerciseResultData.smallestVolume - 5
           }
         ],
       },
       series: [{
         name: 'MAX SERIES',
         type:'line',
-        data: [...this.exerciseResultData.maxPerDay.values()],
+        data: [...this.exerciseResultData.maxRepPerDay.values()],
       },
         {
           name: 'VOLUME',

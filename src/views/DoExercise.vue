@@ -1,9 +1,9 @@
 <template>
-  <div class="workout-result-wrapper">
-    <h1>{{ workout.name }}</h1>
-    <div class="workout-result-wrapper__content-wrapper">
+  <div class="do-exercise-wrapper">
+    <h2>{{ workout.name }}</h2>
+    <div class="do-exercise-wrapper__content-wrapper">
       <suspense>
-        <workout-result-table :workout="workout" :results-to-display="workoutResults"/>
+        <do-exercise-table :workout="workout" :results-to-display="workoutResults"/>
       </suspense>
       <div class="button-wrapper">
         <button class="button button--primary"
@@ -16,14 +16,14 @@
 
 <script setup lang="ts">
 import {getResultsByWorkoutId} from "@/services/workoutResultService";
-import WorkoutResultTable from "@/components/WorkoutResultTable.vue";
+import DoExerciseTable from "@/components/DoExerciseTable.vue";
 import {getWorkoutById} from "@/services/workoutService";
 import {useCoachRouter} from "@/composable/useRouter";
 
 const {workoutIdFromRoute, navigateBackward} = useCoachRouter()
 
+const workoutResults =  await getResultsByWorkoutId(workoutIdFromRoute, 5)
 const workout = await getWorkoutById(workoutIdFromRoute)
-const workoutResults = await getResultsByWorkoutId(workoutIdFromRoute, 30)
 
 </script>
 <style scoped lang="scss">
@@ -31,7 +31,7 @@ const workoutResults = await getResultsByWorkoutId(workoutIdFromRoute, 30)
 @use "../styles/mixins" as m;
 @use "../styles/components/button";
 
-.workout-result-wrapper {
+.do-exercise-wrapper {
   @include m.flex-column-center;
 
   &__content-wrapper {

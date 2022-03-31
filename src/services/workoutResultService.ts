@@ -26,7 +26,7 @@ function mapToWorkoutResult(response) {
     return{
         userId: response.user_id,
         workoutId: response.workout_id,
-        dayOfWorkout: response.day_of_workout,
+        dayOfWorkout: new Date(response.day_of_workout),
         timeOfWorkout: response.time_of_Workout,
         exerciseResults: response.exercise_results as ExerciseResult[]
     } as WorkoutResult

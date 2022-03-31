@@ -4,16 +4,24 @@ import {ExerciseResult} from "@/model/ExerciseResult";
 import {getExerciseById} from "@/services/exerciseService";
 
 export async function getExerciseResultData(exerciseId: string, workoutResults: WorkoutResult[]) {
-    const volumePerDay = getVolumePerDay(exerciseId, workoutResults)
-    const maxPerDay = getMaxPerDay(exerciseId, workoutResults)
+    const volumePerDay = getExerciseVolumePerDay(exerciseId, workoutResults)
+    const maxRepPerDay = getExerciseMaxRepPerDay(exerciseId, workoutResults)
+    //TODO: getLastWorkoutResult.. data!
+    const lastWorkoutResult = workoutResults[workoutResults.length - 1]
+    const lastExerciseResult = lastWorkoutResult.exerciseResults
+        .find(exerciseResult => exerciseResult.exercise_id === exerciseId)
+    console.log("lastExerciseResult", lastExerciseResult);
     try {
         const exercise = await getExerciseById(exerciseId)
         if (exercise) {
             return {
                 volumePerDay,
-                maxPerDay,
+                maxRepPerDay,
                 exerciseName: exercise.name,
-                gifUrl: exercise.gifUrl
+                gifUrl: exercise.gifUrl,
+                smallestMax: getMinValue(maxRepPerDay),
+                smallestVolume: getMinValue(volumePerDay),
+                lastExerciseResult: lastExerciseResult
             } as ExerciseResultData
         }
     } catch (e) {
@@ -21,16 +29,16 @@ export async function getExerciseResultData(exerciseId: string, workoutResults: 
     }
 }
 
-function getVolumePerDay(exerciseId: string, workoutResults: WorkoutResult[]) {
+function getExerciseVolumePerDay(exerciseId: string, workoutResults: WorkoutResult[]) {
     return new Map(workoutResults.map(workoutResult => {
         const exerciseResult = workoutResult.exerciseResults
             .find(exerciseResult => exerciseResult.exercise_id == exerciseId)
-        const volume = getVolume(exerciseResult)
-        return [workoutResult.dayOfWorkout, volume]
+        const volume = getExerciseVolume(exerciseResult)
+        return [getDateString(workoutResult.dayOfWorkout), volume]
     }))
 }
 
-function getVolume(exerciseResult: ExerciseResult | undefined) {
+function getExerciseVolume(exerciseResult: ExerciseResult | undefined) {
     if (exerciseResult) {
         return exerciseResult.load.reduce((total, amount, index) => {
             total += amount * exerciseResult.reps[index]
@@ -39,11 +47,21 @@ function getVolume(exerciseResult: ExerciseResult | undefined) {
     }
 }
 
-function getMaxPerDay(exerciseId: string, workoutResults: WorkoutResult[]) {
+function getExerciseMaxRepPerDay(exerciseId: string, workoutResults: WorkoutResult[]) {
     return new Map(workoutResults.map(workoutResult => {
         const exerciseResult = workoutResult.exerciseResults
             .find(exerciseResult => exerciseResult.exercise_id == exerciseId)
         const max = exerciseResult ? Math.max(...exerciseResult.load) : undefined
-        return [workoutResult.dayOfWorkout, max]
+        return [getDateString(workoutResult.dayOfWorkout), max]
     }))
+}
+
+function getMinValue(map: Map<string, number | undefined>) {
+    const values = [...map.values()]
+    const numberOnlyValues = values.filter(value => value) as number[]
+    return Math.min(...numberOnlyValues)
+}
+
+function getDateString(date: Date) {
+    return date.getDate() + ':' + (date.getMonth() + 1)
 }
