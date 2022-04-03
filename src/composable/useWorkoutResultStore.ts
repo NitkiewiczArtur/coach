@@ -2,12 +2,11 @@ import {useStore} from "vuex";
 import {getCurrentDateString} from "@/utils/utils";
 import {getLastWorkoutResultsExerciseResults, getResultsByWorkoutId} from "@/services/workoutResultService";
 import {currentUserId} from "@/services/authService";
-import {useCoachRouter} from "@/composable/useRouter";
+import {useCoachRouter} from "@/composable/useCoachRouter";
 import {SetResult} from "@/model/SetResult";
 import {ExerciseSetPayload} from "@/store/modules/workoutResult";
 import {ExerciseResult} from "@/model/ExerciseResult";
-
-const DEFAULT_TIME_OF_WORKOUT = 65
+import {DEFAULT_TIME_OF_WORKOUT} from "@/utils/globalParameters";
 
 export function useWorkoutResultStore() {
     const store = useStore()
@@ -59,6 +58,7 @@ export function useWorkoutResultStore() {
     const removeExerciseSet = (exerciseId: string) =>{
         store.commit('workoutResult/removeSet', exerciseId)
     }
+
     return {
         initNewWorkoutResult,
         finishWorkout,

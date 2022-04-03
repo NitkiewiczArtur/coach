@@ -8,8 +8,8 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="exerciseResultData in resultsDataListToDisplay"
-          :key="resultsDataListToDisplay.indexOf(exerciseResultData)"
+      <tr v-for="(exerciseResultData, index) in resultsDataListToDisplay"
+          :key="index"
           class="tbody-row">
         <td align=Center>
           <div class="hide-for-desktop">
@@ -22,7 +22,6 @@
           <exercise-result-creation-fragment
               :lastExerciseResult="exerciseResultData.lastExerciseResult"
               class="hide-for-desktop"/>
-
         </td>
         <td class="hide-for-mobile" align=Center>
           <exercise-result-creation-fragment :lastExerciseResult="exerciseResultData.lastExerciseResult"/>
@@ -34,11 +33,11 @@
 </template>
 
 <script setup lang="ts">
-import {PropType, ref} from "vue";
+import {PropType} from "vue";
 import WorkoutResultChart from "@/components/ExerciseResultChart.vue";
 import {ExerciseResultData} from "@/model/ExerciseResultData";
-import {useChartInTable} from "@/composable/useChartInTable";
 import ExerciseResultCreationFragment from "@/components/ExerciseResultCreationFragment.vue";
+import {isMobileScreen} from "@/utils/utils";
 
 const props = defineProps({
   resultsDataListToDisplay: {
@@ -50,11 +49,16 @@ const props = defineProps({
   },
 })
 
-const chartHeight = ref(0)
-const chartWidth = ref(0)
-const {initializeChart} = useChartInTable(chartWidth, chartHeight);
+let chartHeight
+let chartWidth
 
-initializeChart();
+if (isMobileScreen) {
+  chartWidth = window.innerWidth * 0.9
+  chartHeight = window.innerHeight * 0.4
+} else {
+  chartWidth = window.innerWidth * 0.7
+  chartHeight = window.innerHeight * 0.6
+}
 
 </script>
 
@@ -65,34 +69,10 @@ initializeChart();
 @use "../styles/components/input";
 @use "../styles/variables" as v;
 
-.exercise-result-image {
-  border-radius: 25px;
-  width: 15vw;
-  height: 28vh;
-}
-
-.exercise-result-panel {
-  width: v.$content-width;
-  margin-bottom: 1rem;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-.hide-for-desktop{
-  display:none;
-}
-
 @media screen and (max-width: 700px) {
   .tbody-row{
     height:unset;
-  }
-  .hide-for-mobile{
-    display:none;
-  }
-  .hide-for-desktop{
-    display:unset;
+
   }
   span{
     padding-top:1rem;
@@ -100,5 +80,9 @@ initializeChart();
     width: 85vw;
   }
 }
-
+@media screen and (min-width: 700px) {
+  td {
+    padding-right: 1rem;
+  }
+}
 </style>

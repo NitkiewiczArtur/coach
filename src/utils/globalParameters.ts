@@ -1,0 +1,1 @@
+export const DEFAULT_TIME_OF_WORKOUT = 65

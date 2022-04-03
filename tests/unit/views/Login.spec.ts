@@ -1,5 +1,5 @@
 import {shallowMount} from '@vue/test-utils'
-import LoginView from '@/views/LoginView.vue'
+import LoginView from '@/views/LogIn.vue'
 import {signIn} from "@/services/authService";
 import {getRouter} from "vue-router-mock";
 
@@ -7,7 +7,7 @@ let wrapper
 const TEST_EMAIL = "test@test.pl";
 const TEST_PASSWORD = "testPassword";
 
-describe('LoginView.vue', () => {
+describe('LogIn.vue', () => {
     beforeEach(() => {
         wrapper = shallowMount(LoginView)
     });

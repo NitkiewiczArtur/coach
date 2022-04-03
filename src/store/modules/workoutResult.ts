@@ -40,10 +40,10 @@ const mutations = {
         exerciseResultToEdit.reps.pop()
     }
 };
+
 const actions = {
     async finishWorkout({state}) {
-        console.log("state.newWorkoutResult");
-        console.log(state.newWorkoutResult);
+        console.log("state.newWorkoutResult", state.newWorkoutResult);
         await saveWorkoutResult(state.newWorkoutResult)
     }
 };

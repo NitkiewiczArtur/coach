@@ -1,9 +1,9 @@
 <template>
-  <div class="do-exercise-wrapper">
+  <div class="workout-result-wrapper">
     <h2>{{ workout.name }}</h2>
-    <div class="do-exercise-wrapper__content-wrapper">
+    <div class="workout-result-wrapper__content-wrapper">
       <suspense>
-        <do-exercise-table :workout="workout" :results-to-display="workoutResults"/>
+        <workout-result-table :results-data-list-to-display="exerciseResultDataList"/>
       </suspense>
       <div class="button-wrapper">
         <button class="button button--primary"
@@ -16,14 +16,24 @@
 
 <script setup lang="ts">
 import {getResultsByWorkoutId} from "@/services/workoutResultService";
-import DoExerciseTable from "@/components/DoExerciseTable.vue";
+import WorkoutResultTable from "@/components/ExerciseResultTable.vue";
 import {getWorkoutById} from "@/services/workoutService";
-import {useCoachRouter} from "@/composable/useRouter";
+import {useCoachRouter} from "@/composable/useCoachRouter";
+import {ExerciseResultData} from "@/model/ExerciseResultData";
+import {getExerciseResultData} from "@/services/exerciseResultDataService";
 
 const {workoutIdFromRoute, navigateBackward} = useCoachRouter()
 
-const workoutResults =  await getResultsByWorkoutId(workoutIdFromRoute, 5)
 const workout = await getWorkoutById(workoutIdFromRoute)
+const workoutResults = await getResultsByWorkoutId(workoutIdFromRoute, 30)
+
+const exerciseResultDataPromises: Promise<ExerciseResultData | undefined>[] = []
+if(workout){
+  workout.exercises.forEach(exerciseId => {
+    exerciseResultDataPromises.push(getExerciseResultData(exerciseId, workoutResults))
+  })
+}
+const exerciseResultDataList = await Promise.all(exerciseResultDataPromises)
 
 </script>
 <style scoped lang="scss">
@@ -31,7 +41,7 @@ const workout = await getWorkoutById(workoutIdFromRoute)
 @use "../styles/mixins" as m;
 @use "../styles/components/button";
 
-.do-exercise-wrapper {
+.workout-result-wrapper {
   @include m.flex-column-center;
 
   &__content-wrapper {

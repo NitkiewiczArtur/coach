@@ -8,8 +8,8 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="exerciseResultData in resultsDatasToDisplay"
-          :key="exerciseResultData.exerciseName"
+      <tr v-for="(exerciseResultData, index) in resultsDataListToDisplay"
+          :key="index"
           class="tbody-row">
         <td class="hide-for-mobile" align=Center>
           <div class="exercise-info-cell">
@@ -22,7 +22,9 @@
           </div>
         </td>
         <td>
-          <span class="hide-for-desktop">{{ exerciseResultData.exerciseName }}</span>
+          <div class="hide-for-desktop">
+            <span>{{ exerciseResultData.exerciseName }}</span>
+          </div>
           <workout-result-chart v-if="chartHeight"
                                 :exercise-result-data="exerciseResultData"
                                 :height="chartHeight"
@@ -39,9 +41,10 @@ import {PropType, ref} from "vue";
 import WorkoutResultChart from "@/components/ExerciseResultChart.vue";
 import {ExerciseResultData} from "@/model/ExerciseResultData";
 import {useChartInTable} from "@/composable/useChartInTable";
+import {isMobileScreen} from "@/utils/utils";
 
 const props = defineProps({
-  resultsDatasToDisplay: {
+  resultsDataListToDisplay: {
     type: Array as PropType<ExerciseResultData[]>,
     required: true,
   },
@@ -49,12 +52,16 @@ const props = defineProps({
     type: Error,
   },
 })
-const chartHeight = ref(0)
-const chartWidth = ref(0)
-const {initializeChart} = useChartInTable(chartWidth, chartHeight);
+let chartHeight
+let chartWidth
 
-
-initializeChart();
+if (isMobileScreen) {
+  chartWidth = window.innerWidth * 0.9
+  chartHeight = window.innerHeight * 0.4
+} else {
+  chartWidth = window.innerWidth * 0.75
+  chartHeight = window.innerHeight * 0.4
+}
 
 </script>
 
@@ -63,8 +70,6 @@ initializeChart();
 @use "../styles/components/button" as v;
 @use "../styles/mixins";
 
-td{
-}
 .exercise-result-image {
   border-radius: 25px;
   width: 15vw;
@@ -84,19 +89,14 @@ td{
   }
 }
 
-.hide-for-desktop {
-  display: none;
-}
-
 @media screen and (max-width: 700px) {
   .tbody-row {
     height: unset;
   }
-  .hide-for-mobile {
-    display: none;
-  }
-  .hide-for-desktop {
-    display: unset;
+  span{
+    padding-top:1rem;
+    display: inline-block;
+    width: 85vw;
   }
 }
 </style>

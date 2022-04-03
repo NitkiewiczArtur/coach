@@ -42,18 +42,24 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
-/*
+
 @media screen and (min-width: 700px) {
-  .hide-for-desktop{
-    display:unset;
-  }
-}
-@media screen and (max-width: 700px) {
   .hide-for-desktop{
     display:none;
   }
-}*/
+}
+@media screen and (max-width: 700px) {
+  .hide-for-mobile {
+    display:none;
+  }
+}
 
+@media screen and (max-width: 700px) {
+  h2{
+    font-size: 2rem;
+    margin: 0;
+  }
+}
 @media screen and (max-width: 700px) {
   .navbar {
     position: fixed;

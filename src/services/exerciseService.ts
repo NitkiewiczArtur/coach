@@ -23,7 +23,7 @@ export async function getExercisesByIds(ids: Array<string>) {
 
 export const getExercises = async () => {
     const exercises: Array<Exercise> = []
-    const q = query(collection(db, "exercises"), limit(15));
+    const q = query(collection(db, "exercises"), limit(10));
     try {
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
@@ -60,7 +60,7 @@ export async function searchExercises(searchValue: string) {
         collection(db, "exercises"),
         orderBy('name'),
         where('name', '>=', searchValue),
-        limit(15));
+        limit(10));
     try {
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {

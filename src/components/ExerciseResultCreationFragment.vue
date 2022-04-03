@@ -10,7 +10,7 @@
           <span>
             INCR BY:
           </span>
-      <input v-model="incrementAmount" class="input input--load" type="number"/>
+      <input v-model="incrementAmount" class="input input--increment" type="number"/>
       <div>
         <button @click="addSet"
                 class="button button--submit">ADD SET

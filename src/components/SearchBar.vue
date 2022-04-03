@@ -1,9 +1,9 @@
 <template>
   <div class="search-bar-wrapper">
     <div class="search-bar">
-      <div class="filters">
+<!--      <div class="filters">
         name {{ isMobileScreen ? "▲" : "▼" }}
-      </div>
+      </div>-->
       <input v-model="searchValue"/>
       <div @click="onSearchFromStart"
            class="button button--purple">
@@ -15,7 +15,6 @@
 
 <script setup lang="ts">
 import {ref} from "vue";
-import {isMobileScreen} from "@/utils/utils";
 
 const searchValue = ref('')
 const emit = defineEmits(['searchClicked'])
@@ -34,9 +33,7 @@ const onSearchFromStart = () => {
 }
 
 .search-bar {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  @include mixins.flex-row-center;
   background-color: v.$primary-color;
   color: v.$secondary-color;
   padding: 0 1rem 0 1rem;

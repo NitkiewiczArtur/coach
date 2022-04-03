@@ -29,7 +29,7 @@
 import {getResultsByWorkoutId} from "@/services/workoutResultService";
 import DoExerciseTable from "@/components/DoExerciseTable.vue";
 import {getWorkoutById} from "@/services/workoutService";
-import {useCoachRouter} from "@/composable/useRouter";
+import {useCoachRouter} from "@/composable/useCoachRouter";
 import {ExerciseResultData} from "@/model/ExerciseResultData";
 import {getExerciseResultData} from "@/services/exerciseResultDataService";
 import {useWorkoutResultStore} from "@/composable/useWorkoutResultStore";
@@ -37,7 +37,6 @@ import {ref, watch} from "vue";
 
 const {initNewWorkoutResult, finishWorkout, setWorkoutTime} = useWorkoutResultStore()
 const {workoutIdFromRoute, navigateBackward} = useCoachRouter()
-
 
 const exerciseResultDataPromises: Promise<ExerciseResultData | undefined>[] = []
 const workoutResults = await getResultsByWorkoutId(workoutIdFromRoute, 5)
@@ -48,9 +47,9 @@ workout?.exercises.forEach(exerciseId => {
 })
 
 const exerciseResultDataList = ref(await Promise.all(exerciseResultDataPromises))
-
 const newWorkoutResultSnapshot = await initNewWorkoutResult()
 const timeOfWorkout = ref(newWorkoutResultSnapshot.timeOfWorkout)
+
 watch(timeOfWorkout, (newTimeOfWorkout) => {
   setWorkoutTime(newTimeOfWorkout)
 })
@@ -82,10 +81,7 @@ watch(timeOfWorkout, (newTimeOfWorkout) => {
   width: 100%;
   margin: 0 0 1rem 0;
 }
-@media screen and (max-width: 700px) {
-  h2{
-    font-size: 2rem;
-    margin: 0;
-  }
+h2{
+  font-size:2rem;
 }
 </style>

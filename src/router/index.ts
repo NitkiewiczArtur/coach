@@ -1,13 +1,13 @@
 import {createRouter, createWebHashHistory, RouteRecordRaw} from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import RegisterView from "@/views/RegisterView.vue";
-import LoginView from "@/views/LoginView.vue";
-import ExploreView from "@/views/ExploreView.vue";
+import RegisterView from "@/views/RegisterUser.vue";
+import LogIn from "@/views/LogIn.vue";
+import ExploreExercises from "@/views/ExploreExercises.vue";
 import {currentUser} from "@/services/authService";
-import MyWorkoutsView from "@/views/MyWorkoutsView.vue";
-import WorkoutResultsView from "@/views/WorkoutResultsView.vue";
+import MyWorkoutsView from "@/views/MyWorkouts.vue";
+import WorkoutResultsView from "@/views/MyWorkoutResults.vue";
 import NotFound from "@/views/NotFound.vue";
-import DoExercise from "@/views/DoWorkout.vue";
+import DoWorkout from "@/views/DoWorkout.vue";
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -25,9 +25,9 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
     },
     {
-        path: "/explore",
-        name: "explore",
-        component: ExploreView,
+        path: "/exploreExercises",
+        name: "exploreExercises",
+        component: ExploreExercises,
         meta: {requiresAuth: true}
 
     },
@@ -48,7 +48,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: "/doExercise",
         name: "doExercise",
-        component: DoExercise,
+        component: DoWorkout,
         meta: {requiresAuth: true}
 
     },
@@ -60,7 +60,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: "/logIn",
         name: "logIn",
-        component: LoginView,
+        component: LogIn,
     },
     { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound },
 ]

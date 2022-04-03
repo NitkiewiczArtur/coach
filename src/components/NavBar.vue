@@ -62,7 +62,7 @@ export default defineComponent({
       </button>
     </div>
     <div class="nav-button-group" v-show="!isNavHidden">
-      <router-link class="nav-link" to="/explore">
+      <router-link class="nav-link" to="/exploreExercises">
         <div class="nav-button" @click="toggleShowNav">Explore</div>
       </router-link>
       <router-link class="nav-link" to="/myWorkouts">

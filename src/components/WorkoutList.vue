@@ -13,7 +13,7 @@
                   @click="startTraining(workout.id)">start
           </button>
           <button class="button button--triangle"
-                  @click="showDetails(workout)">▼
+                  @click="showExercises(workout)">▼
           </button>
         </div>
       </div>
@@ -33,8 +33,7 @@ import {Workout} from "@/model/Workout";
 import {getExercisesByIds} from "@/services/exerciseService"
 import WorkoutDetails from "@/components/modals/WorkoutDetails.vue";
 import {Exercise} from "@/model/Exercise";
-import {useRouter} from "vue-router";
-import {useCoachRouter} from "@/composable/useRouter";
+import {useCoachRouter} from "@/composable/useCoachRouter";
 
 const props = defineProps({
   workoutsToDisplay: {
@@ -59,7 +58,7 @@ const showResults = (workoutId: string) => {
   navigateToWorkoutResults(workoutId)
 }
 
-const showDetails = async (workoutToShow: Workout) => {
+const showExercises = async (workoutToShow: Workout) => {
   detailedWorkout.value = workoutToShow
   const exercises = await getExercisesByIds(workoutToShow.exercises)
   detailedExercises.value = [...exercises]
