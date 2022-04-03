@@ -46,8 +46,8 @@ const routes: Array<RouteRecordRaw> = [
 
     },
     {
-        path: "/doExercise",
-        name: "doExercise",
+        path: "/doWorkout",
+        name: "doWorkout",
         component: DoWorkout,
         meta: {requiresAuth: true}
 

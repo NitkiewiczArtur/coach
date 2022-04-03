@@ -37,10 +37,9 @@
 </template>
 
 <script setup lang="ts">
-import {PropType, ref} from "vue";
+import {PropType} from "vue";
 import WorkoutResultChart from "@/components/ExerciseResultChart.vue";
 import {ExerciseResultData} from "@/model/ExerciseResultData";
-import {useChartInTable} from "@/composable/useChartInTable";
 import {isMobileScreen} from "@/utils/utils";
 
 const props = defineProps({
@@ -97,6 +96,10 @@ if (isMobileScreen) {
     padding-top:1rem;
     display: inline-block;
     width: 85vw;
+  }
+  td{
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
   }
 }
 </style>

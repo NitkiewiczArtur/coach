@@ -1,39 +1,36 @@
 <template>
   <div class="list-container">
     <div class="list">
-      <div v-for="workout in workoutsToDisplay"
-           :key="workout.id"
-           class="list__item">
-        <span>{{ workout.name }}</span>
-        <div class="button-group">
-          <button class="button button--primary"
-                  @click="showResults(workout.id)">results
-          </button>
-          <button class="button button--submit"
-                  @click="startTraining(workout.id)">start
-          </button>
-          <button class="button button--triangle"
-                  @click="showExercises(workout)">▼
-          </button>
+      <div v-for="(workout, index) in workoutsToDisplay"
+           :key="index">
+        <div class="list__item">
+          <span>{{ workout.name }}</span>
+          <div class="button-group">
+            <button class="button button--primary"
+                    @click="showResults(workout.id)">results
+            </button>
+            <button class="button button--submit"
+                    @click="startTraining(workout.id)">start
+            </button>
+            <button class="button button--triangle"
+                    @click="toggleShowExercises(index)">{{ isWorkoutExercisesHidden[index] ? '▼' : '▲' }}
+            </button>
+          </div>
         </div>
+        <exercise-table v-if="workoutsExercises.length" v-show="!isWorkoutExercisesHidden[index]"
+                        :exercises-to-display="workoutsExercises[index]"/>
       </div>
-    </div>
-    <div v-if="isWorkoutDetailsVisible">
-      <workout-details :detailed-exercises="detailedExercises"
-                       :detailed-workout="detailedWorkout"
-                       @closeWorkoutDetailsModalClicked="onCloseWorkoutDetailsModalClicked"
-      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {PropType, ref, Ref} from "vue";
+import {PropType, reactive, Ref, ref} from "vue";
 import {Workout} from "@/model/Workout";
-import {getExercisesByIds} from "@/services/exerciseService"
-import WorkoutDetails from "@/components/modals/WorkoutDetails.vue";
-import {Exercise} from "@/model/Exercise";
+import {getWorkoutsExercises} from "@/services/exerciseService"
+import ExerciseTable from "@/components/ExerciseTable.vue";
 import {useCoachRouter} from "@/composable/useCoachRouter";
+import {Exercise} from "@/model/Exercise";
 
 const props = defineProps({
   workoutsToDisplay: {
@@ -45,28 +42,27 @@ const props = defineProps({
   },
 })
 
-const {navigateToWorkoutResults, navigateToDoExercise} = useCoachRouter()
-const isWorkoutDetailsVisible = ref(false);
-const detailedWorkout: Ref<Workout> = ref({} as Workout);
-//TODO: ex | undef ???
-const detailedExercises:Ref<Array<Exercise | undefined>> = ref([]);
+const {navigateToWorkoutResults, navigateToDoWorkout} = useCoachRouter()
+const mapWorkoutsToIsHiddenExercises = (workouts: Workout[]) => {
+  return workouts.map(workout => true)
+}
+
+const isWorkoutExercisesHidden = reactive(mapWorkoutsToIsHiddenExercises(props.workoutsToDisplay))
+//TODO: Test utils doesnt work for setup with async await
+const workoutsExercises:Ref<(Exercise | undefined)[][]> = ref([])
+getWorkoutsExercises(props.workoutsToDisplay)
+    .then(workoutsExercisesResponse => {
+      workoutsExercises.value = workoutsExercisesResponse
+    })
 
 const startTraining = (workoutId: string) => {
-  navigateToDoExercise(workoutId)
+  navigateToDoWorkout(workoutId)
 }
 const showResults = (workoutId: string) => {
   navigateToWorkoutResults(workoutId)
 }
-
-const showExercises = async (workoutToShow: Workout) => {
-  detailedWorkout.value = workoutToShow
-  const exercises = await getExercisesByIds(workoutToShow.exercises)
-  detailedExercises.value = [...exercises]
-  isWorkoutDetailsVisible.value = true
-}
-
-const onCloseWorkoutDetailsModalClicked = () => {
-  isWorkoutDetailsVisible.value = false
+const toggleShowExercises = (workoutIndex: number) => {
+  isWorkoutExercisesHidden[workoutIndex] = !isWorkoutExercisesHidden[workoutIndex]
 }
 </script>
 

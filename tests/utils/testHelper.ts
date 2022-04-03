@@ -52,16 +52,18 @@ export function getTestExercise() {
     } as Exercise
 }
 
-export function getTestWorkouts(): Array<Workout> {
+export function getTestWorkouts() {
     return [
         {"exercises": ["1", "2"], "userId": "1", "name": "trening 1", "id": "1"},
         {"exercises": ["3", "4"], "userId": "1", "name": "trening 2", "id": "2"},
         {"exercises": ["5", "1"], "userId": "1", "name": "trening 3", "id": "3"},
         {"exercises": ["2", "3"], "userId": "1", "name": "trening 4", "id": "4"},
         {"exercises": ["4", "5"], "userId": "1", "name": "trening 5", "id": "5"},
-    ]
+    ] as Workout[]
 }
-
+export function getTestWorkoutExercises() {
+    return [getTestExercises(), getTestExercises(), getTestExercises(), getTestExercises(), getTestExercises()]
+}
 export function getTestWorkout() {
     return {"exercises": ["1", "2"], "userId": "1", "name": "trening 1", "id": "1"} as Workout
 }

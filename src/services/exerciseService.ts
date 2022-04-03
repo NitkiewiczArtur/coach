@@ -1,5 +1,6 @@
 import {collection, endAt, getDocs, getFirestore, limit, orderBy, query, startAt, where} from "firebase/firestore";
 import {Exercise} from "@/model/Exercise";
+import {Workout} from "@/model/Workout";
 
 const db = getFirestore();
 
@@ -70,4 +71,10 @@ export async function searchExercises(searchValue: string) {
         console.log("Error while getting exercises from firestore:" + e)
     }
     return exercises;
+}
+
+export async function getWorkoutsExercises(workouts: Workout[]) {
+    const exercisePromises = workouts.map(workout => getExercisesByIds(workout.exercises))
+    console.log(exercisePromises);
+    return Promise.all(exercisePromises)
 }
