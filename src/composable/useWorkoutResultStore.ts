@@ -1,73 +1,44 @@
 import {useStore} from "vuex";
-import {getCurrentDateString} from "@/utils/utils";
-import {getLastWorkoutResultsExerciseResults, getResultsByWorkoutId} from "@/services/workoutResultService";
-import {currentUserId} from "@/services/authService";
 import {useCoachRouter} from "@/composable/useCoachRouter";
-import {SetResult} from "@/model/SetResult";
 import {ExerciseSetPayload} from "@/store/modules/workoutResult";
-import {ExerciseResult} from "@/model/ExerciseResult";
-import {DEFAULT_TIME_OF_WORKOUT} from "@/utils/globalParameters";
 
 export function useWorkoutResultStore() {
     const store = useStore()
     const {workoutIdFromRoute} = useCoachRouter()
 
-    const getSetResults = (exerciseResult: ExerciseResult) => {
-        return exerciseResult.loads.map((load, index) => {
-            return {
-                load,
-                reps: exerciseResult.reps[index] as number,
-                index: index as number
-            } as SetResult
-        })
+    const dispatchInitNewWorkoutResult = async () => {
+        return store.dispatch('workoutResult/initNewWorkoutResult', workoutIdFromRoute);
     }
-    const initNewWorkoutResult = async () => {
-        const workoutResults = await getResultsByWorkoutId(workoutIdFromRoute, 5)
-        const newWorkoutResult = {
-            dayOfWorkout: getCurrentDateString(),
-            exerciseResults: getLastWorkoutResultsExerciseResults(workoutResults),
-            timeOfWorkout: DEFAULT_TIME_OF_WORKOUT,
-            workoutId: workoutIdFromRoute,
-            userId: currentUserId(),
-        }
-        store.commit('workoutResult/setWorkoutResult', newWorkoutResult)
-        return newWorkoutResult;
-    }
-    const finishWorkout = () => {
+    const dispatchFinishWorkout = () => {
         return store.dispatch('workoutResult/finishWorkout');
     }
-    const setWorkoutTime = (timeOfWorkout: number) => {
+    const commitSetWorkoutTime = (timeOfWorkout: number) => {
         store.commit('workoutResult/setWorkoutTime', timeOfWorkout);
     }
-    const commitAddSet = (exerciseId: string, setResult: SetResult) => {
-        const payload = {
-            exerciseId,
-            newSetResult: setResult
-        }
-        store.commit('workoutResult/addSet', payload)
-    }
-    const setExerciseSetLoad = (payload: ExerciseSetPayload) => {
+    const commitSetExerciseSetLoad = (payload: ExerciseSetPayload) => {
         store.commit('workoutResult/setExerciseSetLoad', payload)
     }
-    const setExerciseSetReps = (payload: ExerciseSetPayload) => {
+    const commitSetExerciseSetReps = (payload: ExerciseSetPayload) => {
         store.commit('workoutResult/setExerciseSetReps', payload)
     }
-    const addExerciseSet = (payload: ExerciseSetPayload) =>{
+    const commitAddExerciseSet = (payload: ExerciseSetPayload) =>{
         store.commit('workoutResult/addSet', payload)
     }
-    const removeExerciseSet = (exerciseId: string) =>{
+    const commitRemoveExerciseSet = (exerciseId: string) =>{
         store.commit('workoutResult/removeSet', exerciseId)
+    }
+    const getNewWorkoutResultsTimeOfWorkout= () =>{
+        return store.state.workoutResult.newWorkoutResult.timeOfWorkout as number
     }
 
     return {
-        initNewWorkoutResult,
-        finishWorkout,
-        setWorkoutTime,
-        commitAddSet,
-        setExerciseSetLoad,
-        setExerciseSetReps,
-        addExerciseSet,
-        removeExerciseSet,
-        getSetResults
+        getNewWorkoutResultsTimeOfWorkout,
+        dispatchInitNewWorkoutResult,
+        dispatchFinishWorkout,
+        commitSetWorkoutTime,
+        commitSetExerciseSetLoad,
+        commitSetExerciseSetReps,
+        commitAddExerciseSet,
+        commitRemoveExerciseSet,
     }
 }

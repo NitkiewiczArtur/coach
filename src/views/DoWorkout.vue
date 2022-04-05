@@ -35,7 +35,7 @@ import {getExerciseResultData} from "@/services/exerciseResultDataService";
 import {useWorkoutResultStore} from "@/composable/useWorkoutResultStore";
 import {ref, watch} from "vue";
 
-const {initNewWorkoutResult, finishWorkout, setWorkoutTime} = useWorkoutResultStore()
+const {dispatchInitNewWorkoutResult, dispatchFinishWorkout, commitSetWorkoutTime, getNewWorkoutResultsTimeOfWorkout} = useWorkoutResultStore()
 const {workoutIdFromRoute, navigateBackward} = useCoachRouter()
 
 const exerciseResultDataPromises: Promise<ExerciseResultData | undefined>[] = []
@@ -47,11 +47,11 @@ workout?.exercises.forEach(exerciseId => {
 })
 
 const exerciseResultDataList = ref(await Promise.all(exerciseResultDataPromises))
-const newWorkoutResultSnapshot = await initNewWorkoutResult()
-const timeOfWorkout = ref(newWorkoutResultSnapshot.timeOfWorkout)
+await dispatchInitNewWorkoutResult()
+const timeOfWorkout = ref(getNewWorkoutResultsTimeOfWorkout())
 
 watch(timeOfWorkout, (newTimeOfWorkout) => {
-  setWorkoutTime(newTimeOfWorkout)
+  commitSetWorkoutTime(newTimeOfWorkout)
 })
 
 </script>

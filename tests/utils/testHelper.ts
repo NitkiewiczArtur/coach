@@ -1,6 +1,8 @@
 import {Exercise} from "@/model/Exercise";
 import {Workout} from "@/model/Workout";
 import {SetResult} from "@/model/SetResult";
+import {ExerciseResult} from "@/model/ExerciseResult";
+import {createStore} from "vuex";
 
 export function getTestExercises(): Array<Exercise> {
     return [{
@@ -61,18 +63,49 @@ export function getTestWorkouts() {
         {"exercises": ["4", "5"], "userId": "1", "name": "trening 5", "id": "5"},
     ] as Workout[]
 }
+
 export function getTestWorkoutExercises() {
     return [getTestExercises(), getTestExercises(), getTestExercises(), getTestExercises(), getTestExercises()]
 }
+
 export function getTestWorkout() {
     return {"exercises": ["1", "2"], "userId": "1", "name": "trening 1", "id": "1"} as Workout
 }
+
 export function getTestSetResult() {
     return {
-        load: 100,
-        reps: 5,
-        index:0
+        load: 200,
+        reps: 10,
+        index: 0
     } as SetResult
+}
+
+export function getTestSetResults() {
+    return [
+        {
+            load: 100,
+            reps: 5,
+            index: 0
+        },
+        {
+            load: 100,
+            reps: 5,
+            index: 0
+        },
+        {
+            load: 100,
+            reps: 5,
+            index: 0
+        }
+    ] as SetResult[]
+}
+
+export function getTestExerciseResult() {
+    return {
+        exerciseId: "1",
+        loads: [1, 2, 3, 4],
+        reps: [4, 3, 2, 1]
+    } as ExerciseResult
 }
 
 export function getEmittedEventValue(event: []) {
@@ -83,4 +116,10 @@ export function getEmittedEventValue(event: []) {
 
 export function getEventEmitCount(event: []) {
     return event.length;
+}
+export function createMockStore () {
+    const store = createStore({})
+    store.dispatch = jest.fn()
+    store.commit = jest.fn()
+    return store;
 }

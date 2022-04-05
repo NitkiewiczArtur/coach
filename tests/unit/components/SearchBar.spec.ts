@@ -25,7 +25,7 @@ describe('SearchBar.vue', () => {
         await input.setValue(TEST_VALUE)
         await searchButton.trigger('click')
 
-        const searchClickedEvent = wrapper.emitted().searchClicked
+        const searchClickedEvent = wrapper.emitted('searchClicked')
         expect(searchClickedEvent).toBeTruthy()
         expect(getEmittedEventValue(searchClickedEvent)).toBe(TEST_VALUE)
     });

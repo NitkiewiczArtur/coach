@@ -14,9 +14,9 @@ export const searchExercise = async (id: number) => {
 export const getWorkoutsExercises = async (workouts: Workout[]) => {
     return new Promise((resolve) => resolve(getTestWorkoutExercises()));
 };
-export const getExercisesByIds = jest.fn((ids: Array<string>) => {
+export const getExercisesByIds = (ids: Array<string>) => {
     return new Promise((resolve) => resolve(getTestExercises()));
-});
+};
 export const getExercises = async () => {
     return new Promise((resolve) => resolve(null));
 };

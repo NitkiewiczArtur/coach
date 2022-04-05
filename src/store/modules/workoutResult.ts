@@ -1,6 +1,13 @@
 import {WorkoutResult} from "@/model/WorkoutResult";
 import {SetResult} from "@/model/SetResult";
-import {saveWorkoutResult} from "@/services/workoutResultService";
+import {
+    getLastWorkoutResultsExerciseResults,
+    getResultsByWorkoutId,
+    saveWorkoutResult
+} from "@/services/workoutResultService";
+import {getCurrentDateString} from "@/utils/utils";
+import {DEFAULT_TIME_OF_WORKOUT} from "@/utils/globalParameters";
+import {currentUserId} from "@/services/authService";
 
 const state = {
     newWorkoutResult: {},
@@ -42,9 +49,21 @@ const mutations = {
 };
 
 const actions = {
+    //TODO: getLast? do firebase
+    async initNewWorkoutResult({commit}, workoutId) {
+        const workoutResults = await getResultsByWorkoutId(workoutId, 5)
+        const newWorkoutResult = {
+            dayOfWorkout: getCurrentDateString(),
+            exerciseResults: getLastWorkoutResultsExerciseResults(workoutResults),
+            timeOfWorkout: DEFAULT_TIME_OF_WORKOUT,
+            workoutId: workoutId,
+            userId: currentUserId(),
+        }
+        commit('setWorkoutResult', newWorkoutResult)
+    },
     async finishWorkout({state}) {
         console.log("state.newWorkoutResult", state.newWorkoutResult);
-        await saveWorkoutResult(state.newWorkoutResult)
+        return saveWorkoutResult(state.newWorkoutResult)
     }
 };
 

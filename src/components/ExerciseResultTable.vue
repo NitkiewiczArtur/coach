@@ -25,11 +25,14 @@
           <div class="hide-for-desktop">
             <span>{{ exerciseResultData.exerciseName }}</span>
           </div>
-          <workout-result-chart v-if="chartHeight"
-                                :exercise-result-data="exerciseResultData"
-                                :height="chartHeight"
-                                :width="chartWidth"/>
-        </td>
+          <div v-if="chartHeight">
+            <workout-result-chart v-if="chartHeight"
+                                  :exercise-result-data="exerciseResultData"
+                                  :height="chartHeight"
+                                  :width="chartWidth"/>
+
+          </div>
+          </td>
       </tr>
       </tbody>
     </table>

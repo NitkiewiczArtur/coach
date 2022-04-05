@@ -27,7 +27,7 @@
 
 import {computed, PropType, ref} from "vue";
 import {ExerciseResult} from "@/model/ExerciseResult";
-import {SetResult} from "@/model/SetResult";
+import {getSetResults, SetResult} from "@/model/SetResult";
 import ExerciseSetResultInput from "@/components/ExerciseSetResultInput.vue";
 import {useWorkoutResultStore} from "@/composable/useWorkoutResultStore";
 
@@ -41,9 +41,10 @@ const props = defineProps({
   },
 })
 const {
-  setExerciseSetLoad, setExerciseSetReps, addExerciseSet,
-  removeExerciseSet, getSetResults
+  commitSetExerciseSetLoad, commitSetExerciseSetReps, commitAddExerciseSet,
+  commitRemoveExerciseSet
 } = useWorkoutResultStore()
+
 const exerciseId = ref(props.lastExerciseResult.exerciseId)
 const incrementAmount = ref(1)
 const setResults = ref(getSetResults(props.lastExerciseResult))
@@ -53,30 +54,30 @@ const lastSetResult = computed(() => {
 
 const addSet = () => {
   setResults.value.push(lastSetResult.value);
-  const payload = {
+  const storePayload = {
     exerciseId: exerciseId.value,
     newSetResult: lastSetResult.value,
   }
-  addExerciseSet(payload);
+  commitAddExerciseSet(storePayload);
 }
 const removeSet = () => {
   setResults.value.pop();
-  removeExerciseSet(exerciseId.value);
+  commitRemoveExerciseSet(exerciseId.value);
 }
 
 const onLoadChanged = (newSetResult: SetResult) => {
-  const payload = {
+  const storePayload = {
     newSetResult,
     exerciseId: exerciseId.value
   }
-  setExerciseSetLoad(payload);
+  commitSetExerciseSetLoad(storePayload);
 }
 const onRepsChanged = (newSetResult: SetResult) => {
-  const payload = {
+  const storePayload = {
     newSetResult,
     exerciseId: exerciseId.value
   }
-  setExerciseSetReps(payload);
+  commitSetExerciseSetReps(storePayload);
 }
 </script>
 
