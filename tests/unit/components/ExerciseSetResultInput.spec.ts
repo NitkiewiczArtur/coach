@@ -18,7 +18,7 @@ describe('ExerciseSetResultInput.vue', () => {
         wrapper = mountFunction({
                 propsData: {
                     setResult: getTestSetResult(),
-                    incrementValue: CHANGE_VALUE,
+                    incrementAmount: CHANGE_VALUE,
                 }
             }
         )
@@ -33,72 +33,87 @@ describe('ExerciseSetResultInput.vue', () => {
     });
 
     it('emits loadChanged and passes new load value when increment button pressed', async () => {
-        const incrementButton = wrapper.find('.button--increment')
-        const loadInput = wrapper.find('.set-result-input--load')
+        const incrementButton = wrapper.find('.button--submit--round')
+        const loadInput = wrapper.find('.input--load')
         await loadInput.trigger('focus')
         await incrementButton.trigger('click')
+        const expectedSet = getTestSetResult()
+        expectedSet.load += CHANGE_VALUE
 
         const loadChangedEvent = wrapper.emitted().loadChanged
         expect(loadChangedEvent).toBeTruthy()
         expect(getEmittedEventValue(loadChangedEvent))
-            .toBe(CHANGE_VALUE + getTestSetResult().load)
+            .toStrictEqual(expectedSet)
     });
     it('emits loadChanged and passes new load value when decrement button pressed', async () => {
-        const decrementButton = wrapper.find('.button--decrement')
-        const loadInput = wrapper.find('.set-result-input--load')
+        const decrementButton = wrapper.find('.button--cancel--round')
+        const loadInput = wrapper.find('.input--load')
+        const expectedSet = getTestSetResult()
+        expectedSet.load -= CHANGE_VALUE
+
         await loadInput.trigger('focus')
         await decrementButton.trigger('click')
 
         const loadChangedEvent = wrapper.emitted().loadChanged
         expect(loadChangedEvent).toBeTruthy()
         expect(getEmittedEventValue(loadChangedEvent))
-            .toBe(getTestSetResult().load - CHANGE_VALUE)
+            .toStrictEqual(expectedSet)
     });
 
     it('emits loadChanged and passes new load value when the value from input changed by input typing',
         async () => {
-            const input = wrapper.find('.set-result-input--load')
+            const input = wrapper.find('.input--load')
+            const expectedSet = getTestSetResult()
+            expectedSet.load = LOAD_TEST_INPUT_VALUE
 
             await input.setValue(LOAD_TEST_INPUT_VALUE)
 
             const loadChangedEvent = wrapper.emitted().loadChanged
             expect(loadChangedEvent).toBeTruthy()
             expect(getEmittedEventValue(loadChangedEvent))
-                .toBe(LOAD_TEST_INPUT_VALUE)
+                .toStrictEqual(expectedSet)
         });
 
     it('emits repsChanged and passes new reps value when increment button pressed', async () => {
-        const incrementButton = wrapper.find('.button--increment')
-        const repsInput = wrapper.find('.set-result-input--reps')
+        const incrementButton = wrapper.find('.button--submit--round')
+        const repsInput = wrapper.find('.input--reps')
+        const expectedSet = getTestSetResult()
+        expectedSet.reps += CHANGE_VALUE
+
         await repsInput.trigger('focus')
         await incrementButton.trigger('click')
 
         const repsChangedEvent = wrapper.emitted().repsChanged
         expect(repsChangedEvent).toBeTruthy()
         expect(getEmittedEventValue(repsChangedEvent))
-            .toBe(getTestSetResult().reps + CHANGE_VALUE)
+            .toStrictEqual(expectedSet)
     });
     it('emits repsChanged and passes new reps value when decrement button pressed', async () => {
-        const decrementButton = wrapper.find('.button--decrement')
-        const repsInput = wrapper.find('.set-result-input--reps')
+        const decrementButton = wrapper.find('.button--cancel--round')
+        const repsInput = wrapper.find('.input--reps')
+        const expectedSet = getTestSetResult()
+        expectedSet.reps -= CHANGE_VALUE
+
         await repsInput.trigger('focus')
         await decrementButton.trigger('click')
 
         const repsChangedEvent = wrapper.emitted().repsChanged
         expect(repsChangedEvent).toBeTruthy()
         expect(getEmittedEventValue(repsChangedEvent))
-            .toBe(getTestSetResult().reps - CHANGE_VALUE)
+            .toStrictEqual(expectedSet)
     });
 
     it('emits repsChanged and passes new reps value when the value from input changed by input typing',
         async () => {
-            const input = wrapper.find('.set-result-input--reps')
+            const input = wrapper.find('.input--reps')
+            const expectedSet = getTestSetResult()
+            expectedSet.reps = REPS_TEST_INPUT_VALUE
 
             await input.setValue(REPS_TEST_INPUT_VALUE)
 
             const repsChangedEvent = wrapper.emitted().repsChanged
             expect(repsChangedEvent).toBeTruthy()
             expect(getEmittedEventValue(repsChangedEvent))
-                .toBe(REPS_TEST_INPUT_VALUE)
+                .toStrictEqual(expectedSet)
         });
 })

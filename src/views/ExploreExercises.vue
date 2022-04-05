@@ -26,7 +26,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="wrapper">
+  <div class="explore-exercise-wrapper">
   <SearchBar @searchClicked="onSearchClicked"/>
   <suspense>
       <ExerciseTable :exercises-to-display="exercises"/>
@@ -34,20 +34,15 @@ export default defineComponent({
   </div>
 </template>
 <style lang="scss">
+@use "../styles/mixins";
 
-.wrapper {
-  display: flex;
-  flex-direction: column-reverse;
-  align-items: center;
-  justify-content: space-between;
-  text-align: center;
-  height: 87vh;
+.explore-exercise-wrapper {
+  @include mixins.reverse-column-content-wrapper
 }
 
 @media screen and (min-width: 700px) {
-  .wrapper{
-    flex-direction: column;
-    justify-content: flex-start;
+  .explore-exercise-wrapper{
+    @include mixins.justify-start-column;
   }
 }
 </style>

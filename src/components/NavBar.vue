@@ -6,7 +6,6 @@ import {isMobileScreen} from "@/utils/utils";
 
 export default defineComponent({
   setup() {
-    const isModalOpen = ref(false);
     const isNavHidden = ref(false);
     const loggedIn = ref(false);
     const currentUser = ref(null)
@@ -36,7 +35,6 @@ export default defineComponent({
       })
     });
     return {
-      isModalOpen,
       isMobileScreen,
       isNavHidden,
       loggedIn,
@@ -78,18 +76,13 @@ export default defineComponent({
 
 <style scoped lang="scss">
 @use "../styles/variables" as v;
+@use "../styles/mixins";
 
 .logo {
   display: inline-flex;
   align-items: center;
   font-size: 2rem;
   font-weight: 700;
-}
-.color-info{
-  color: v.$info;
-}
-.user-miniature{
-  font-size: 1rem;
 }
 .toggle-nav-button {
   background: transparent;
@@ -98,12 +91,10 @@ export default defineComponent({
 }
 
 .navbar-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  @include mixins.flex-column-center;
   background: v.$primary-color;
   color: v.$secondary-color;
-  margin-top: 1rem;
+  min-height: 3rem;
 }
 
 .nav-button-group {
@@ -131,7 +122,6 @@ export default defineComponent({
     padding: 1rem;
     background: v.$primary-color;
     color: v.$secondary-color;
-    margin-top: 0;
   }
 
   .toggle-nav-button {

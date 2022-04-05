@@ -39,7 +39,7 @@ const onSearchFromStart = () => {
   padding: 0 1rem 0 1rem;
   border-radius: 10px;
   height: 3rem;
-
+  margin-bottom: 0.2rem;
   input {
     margin: 0 1rem 0 1rem;
     padding: 0.25rem;

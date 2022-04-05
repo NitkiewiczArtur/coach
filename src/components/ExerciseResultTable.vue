@@ -40,7 +40,7 @@
 import {PropType} from "vue";
 import WorkoutResultChart from "@/components/ExerciseResultChart.vue";
 import {ExerciseResultData} from "@/model/ExerciseResultData";
-import {isMobileScreen} from "@/utils/utils";
+import {useChart} from "@/composable/useChart";
 
 const props = defineProps({
   resultsDataListToDisplay: {
@@ -51,16 +51,7 @@ const props = defineProps({
     type: Error,
   },
 })
-let chartHeight
-let chartWidth
-
-if (isMobileScreen) {
-  chartWidth = window.innerWidth * 0.9
-  chartHeight = window.innerHeight * 0.4
-} else {
-  chartWidth = window.innerWidth * 0.75
-  chartHeight = window.innerHeight * 0.4
-}
+const {chartHeight, chartWidth} = useChart()
 
 </script>
 

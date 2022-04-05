@@ -1,5 +1,5 @@
 <template>
-  <div class="table-wrapper">
+  <div class="exercise-table-wrapper">
     <table>
       <thead>
       <tr>
@@ -71,7 +71,7 @@ const onCloseExerciseDetailsModalClicked = () => {
 <style lang="scss" scoped>
 @use "../styles/components/table";
 @use "../styles/components/button" as v;
-.table-wrapper{
+.exercise-table-wrapper{
   font-weight: bold;
 }
 .exercise-image {

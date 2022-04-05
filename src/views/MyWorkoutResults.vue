@@ -43,12 +43,14 @@ const exerciseResultDataList = await Promise.all(exerciseResultDataPromises)
 
 .workout-result-wrapper {
   @include m.flex-column-center;
-
+  height:94vh;
+  overflow:auto;
   &__content-wrapper {
     @include m.flex-column-center;
   }
 
   @media screen and (min-width: 700px) {
+    height: 90vh;
     &__content-wrapper {
       @include m.flex-column-reverse-center;
     }

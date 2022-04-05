@@ -63,9 +63,13 @@ watch(timeOfWorkout, (newTimeOfWorkout) => {
 
 .do-exercise-wrapper {
   @include m.flex-column-center;
-
+  overflow:auto;
+  height: 94vh;
   &__content-wrapper {
     @include m.flex-column-center;
+  }
+  @media screen and (min-width: 700px) {
+    height: 87vh;
   }
 }
 
@@ -81,7 +85,5 @@ watch(timeOfWorkout, (newTimeOfWorkout) => {
   width: 100%;
   margin: 0 0 1rem 0;
 }
-h2{
-  font-size:2rem;
-}
+
 </style>

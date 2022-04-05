@@ -68,7 +68,8 @@ const emitRepsChanged = (newSetResult: SetResult) => {
 watch(load, (newLoad) => {
   const newSetResult = {
     index: props.setResult.index,
-    load: newLoad
+    load: newLoad,
+    reps: props.setResult.reps
   } as SetResult
   emitLoadChanged(newSetResult)
 })
@@ -76,6 +77,7 @@ watch(load, (newLoad) => {
 watch(reps, (newReps) => {
   const newSetResult = {
     index: props.setResult.index,
+    load: props.setResult.load,
     reps: newReps
   } as SetResult
   emitRepsChanged(newSetResult)

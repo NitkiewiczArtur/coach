@@ -27,40 +27,16 @@ import NavBar from "@/components/NavBar.vue";</script>
   display: flex;
   flex-direction: column;
 }
-
-.content {
-  overflow: auto;
-}
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
-}
-
-@media screen and (min-width: 700px) {
-  .hide-for-desktop{
-    display:none;
-  }
+h2 {
+  font-size: 2rem;
 }
 @media screen and (max-width: 700px) {
   .hide-for-mobile {
-    display:none;
+    display: none;
   }
-}
-
-@media screen and (max-width: 700px) {
-  h2{
-    font-size: 2rem;
+  h2 {
     margin: 0;
   }
-}
-@media screen and (max-width: 700px) {
   .navbar {
     position: fixed;
     bottom: 0;
@@ -68,7 +44,6 @@ input[type=number] {
     z-index: 100;
   }
   .content {
-    padding-top: 2rem;
     padding-bottom: 3rem;
   }
 }
@@ -94,6 +69,9 @@ input[type=number] {
     grid-column: 1 / 12;
     grid-row: 2 / 12;
     padding-top: 1rem;
+  }
+  .hide-for-desktop{
+    display:none;
   }
 }
 
@@ -123,5 +101,16 @@ a.nav-link {
   background-color: yellow;
   border-radius: 5px;
   padding: 5px;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
 </style>
