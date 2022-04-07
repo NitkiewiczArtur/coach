@@ -27,7 +27,6 @@ export default defineComponent({
       options: {
         chart: {
           id: 'vuechart-example',
-          height: this.height+2110,
         },
         xaxis: {
           categories: [...this.exerciseResultData.maxRepPerDay.keys()],

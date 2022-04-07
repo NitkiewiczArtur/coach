@@ -11,11 +11,23 @@ export function useCoachRouter(){
         router.push({name: "workoutResults", params: {workoutId: workoutId}})
     const navigateToDoWorkout = (workoutId) =>
         router.push({name: "doWorkout", params: {workoutId: workoutId}})
+    const navigateToLogin = () =>
+        router.push({name: "logIn"})
+    const navigateToSignup= () =>
+        router.push({name: "signUp"})
+    const navigateToExploreExercises= () =>
+        router.push({name: "exploreExercises"})
+    const navigateToMyWorkouts= () =>
+        router.push({name: "myWorkouts"})
     return {
         workoutIdFromRoute,
         navigateBackward,
         navigateHome,
         navigateToWorkoutResults,
-        navigateToDoWorkout
+        navigateToDoWorkout,
+        navigateToLogin,
+        navigateToSignup,
+        navigateToExploreExercises,
+        navigateToMyWorkouts
     }
 }

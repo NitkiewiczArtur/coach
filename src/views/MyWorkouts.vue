@@ -1,27 +1,11 @@
-<script lang="ts">
-import {defineComponent, onMounted, Ref, ref} from "vue";
+<script setup lang="ts">
+import {ref} from "vue";
 import {getWorkoutsByUserId} from "@/services/workoutService"
 import WorkoutList from "@/components/WorkoutList.vue";
-import {Workout} from "@/model/Workout";
 import {currentUser} from "@/services/authService";
 
-export default defineComponent({
-  components: {
-    WorkoutList,
-  },
-  async setup() {
-    const workouts = ref<Array<Workout>>([]);
-    const userId = currentUser()?.uid as string
-
-    if(userId){
-      workouts.value = await getWorkoutsByUserId(userId);
-    }
-
-    return {
-      workouts
-    };
-  },
-});
+const userId = currentUser()?.uid as string
+const workouts = ref(await getWorkoutsByUserId(userId));
 </script>
 
 <template>

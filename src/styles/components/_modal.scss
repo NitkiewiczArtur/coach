@@ -10,6 +10,8 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.2);
   overflow-y: auto;
+  @include mixins.flex-column-center;
+  justify-content:center;
   tr{
     width: 80vw;
   }
@@ -17,7 +19,6 @@
   &__content {
     @include mixins.flex-column-center;
     text-align: left;
-    margin: 5% auto;
     padding: 20px;
     width: 85vw;
     background-color: v.$third-color;

@@ -22,5 +22,9 @@ npm run lint
 https://github.com/posva/vue-router-mock 
 I used it to mock my router and to test if correct routes are being pushed.
 ```
-#### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+#### Stuff to implement in the future.
+```
+1.directives for hiding in mobile/desktop screens.
+2.workout creation panel.
+
+```

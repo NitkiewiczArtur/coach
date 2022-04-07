@@ -1,58 +1,45 @@
-<script lang="ts">
-import {defineComponent, onMounted, ref} from "vue";
+<script setup lang="ts">
+import {onMounted, ref} from "vue";
 import {onAuthStateChange, signOutUser} from "@/services/authService";
-import router from "@/router";
 import {isMobileScreen} from "@/utils/utils";
+import {useCoachRouter} from "@/composable/useCoachRouter";
 
-export default defineComponent({
-  setup() {
-    const isNavHidden = ref(false);
-    const loggedIn = ref(false);
-    const currentUser = ref(null)
-    const toggleShowNav = () => {
-      if (isMobileScreen) {
-        isNavHidden.value = !isNavHidden.value;
-      }
-    };
-    const signOut = () => {
-      signOutUser().then(() => {
-        router.push("/")
-      }).catch((error) => console.log(error))
-    };
-    onMounted(() => {
-      if (isMobileScreen) {
-        toggleShowNav();
-      }
-      //TODO: check if should be created
-      onAuthStateChange((user) => {
-        if (user) {
-          currentUser.value = user
-          loggedIn.value = true
-        } else {
-          currentUser.value = null
-          loggedIn.value = false
-        }
-      })
-    });
-    return {
-      isMobileScreen,
-      isNavHidden,
-      loggedIn,
-      currentUser,
-      toggleShowNav,
-      signOut
-    };
-  },
+const {navigateHome} = useCoachRouter()
+const isNavHidden = ref(false);
+const loggedIn = ref(false);
+const currentUser = ref(null)
+const toggleShowNav = () => {
+  isNavHidden.value = !isNavHidden.value;
+};
+const signOut = () => {
+  signOutUser().then(() => {
+    navigateHome();
+  }).catch((error) => console.log(error))
+};
+const initMobile = () => toggleShowNav();
+onMounted(() => {
+  if (isMobileScreen) {
+    initMobile();
+  }
+  onAuthStateChange((user) => {
+    if (user) {
+      currentUser.value = user
+      loggedIn.value = true
+    } else {
+      currentUser.value = null
+      loggedIn.value = false
+    }
+  })
 });
 </script>
 
 <template>
   <div class="navbar-wrapper">
-    <div class="logo">
+    <div class="logo-wrapper">
       <span><img src="../assets/hantel.svg" alt="logo"/></span>
-      <span class="color-info">C</span><span>OACH</span>
+      <span class="purple">C</span><span>OACH</span>
       <button
-          class="toggle-nav-button"
+          class="button button--triangle button--triangle--white"
           v-if="isMobileScreen"
           @click="toggleShowNav"
       >
@@ -66,8 +53,8 @@ export default defineComponent({
       <router-link class="nav-link" to="/myWorkouts">
         <div class="nav-button" @click="toggleShowNav">My Workouts</div>
       </router-link>
-      <router-link v-if="!currentUser" class="nav-link" to="/register">
-        <div class="nav-button" @click="toggleShowNav">Sign up</div>
+      <router-link v-if="!currentUser" class="nav-link" to="/logIn">
+        <div class="nav-button" @click="toggleShowNav">Sign in</div>
       </router-link>
       <div v-else class="nav-button" @click="signOut">Sign out</div>
     </div>
@@ -77,18 +64,6 @@ export default defineComponent({
 <style scoped lang="scss">
 @use "../styles/variables" as v;
 @use "../styles/mixins";
-
-.logo {
-  display: inline-flex;
-  align-items: center;
-  font-size: 2rem;
-  font-weight: 700;
-}
-.toggle-nav-button {
-  background: transparent;
-  border: none !important;
-  color: v.$secondary-color;
-}
 
 .navbar-wrapper {
   @include mixins.flex-column-center;
@@ -102,23 +77,22 @@ export default defineComponent({
   flex-direction: column;
   justify-content: space-around;
   height: 16rem;
-}
 
-.nav-button {
-  text-align: center;
-  padding: 1rem;
-  &:hover{
-    color: v.$info;
-    cursor: pointer;
+  .nav-button {
+    text-align: center;
+    padding: 1rem;
+
+    &:hover {
+      color: v.$info;
+      cursor: pointer;
+    }
   }
 }
 
 @media screen and (min-width: 700px) {
   .navbar-wrapper {
-    display: flex;
-    flex-direction: row;
+    @include mixins.flex-row-center;
     justify-content: space-between;
-    align-items: center;
     padding: 1rem;
     background: v.$primary-color;
     color: v.$secondary-color;
@@ -134,4 +108,19 @@ export default defineComponent({
     height: auto;
   }
 }
+
+.logo-wrapper {
+  display: inline-flex;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.purple{
+  color: v.$info;
+}
+button {
+  margin-left: 0.5rem;
+}
+
 </style>

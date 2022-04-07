@@ -1,9 +1,6 @@
 <template>
   <div class="search-bar-wrapper">
     <div class="search-bar">
-<!--      <div class="filters">
-        name {{ isMobileScreen ? "▲" : "▼" }}
-      </div>-->
       <input v-model="searchValue"/>
       <div @click="onSearchFromStart"
            class="button button--purple">

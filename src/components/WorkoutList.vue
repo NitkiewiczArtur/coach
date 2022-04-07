@@ -46,9 +46,9 @@ const {navigateToWorkoutResults, navigateToDoWorkout} = useCoachRouter()
 const mapWorkoutsToIsHiddenExercises = (workouts: Workout[]) => {
   return workouts.map(workout => true)
 }
-
 const isWorkoutExercisesHidden = reactive(mapWorkoutsToIsHiddenExercises(props.workoutsToDisplay))
-//TODO: Test utils doesnt work for setup with async await
+
+//TODO: Test utils doesnt work for setup with async await, now recommended is Vitest so I postpone resolving this 'issue'
 const workoutsExercises:Ref<(Exercise | undefined)[][]> = ref([])
 getWorkoutsExercises(props.workoutsToDisplay)
     .then(workoutsExercisesResponse => {
