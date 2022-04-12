@@ -19,7 +19,7 @@ import {getResultsByWorkoutId} from "@/services/workoutResultService";
 import WorkoutResultTable from "@/components/ExerciseResultTable.vue";
 import {getWorkoutById} from "@/services/workoutService";
 import {useCoachRouter} from "@/composable/useCoachRouter";
-import {ExerciseResultData} from "@/model/ExerciseResultData";
+import ExerciseResultData from "@/model/ExerciseResultData";
 import {getExerciseResultData} from "@/services/exerciseResultDataService";
 
 const {workoutIdFromRoute, navigateBackward} = useCoachRouter()

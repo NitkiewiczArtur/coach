@@ -2,14 +2,14 @@ import {mount, shallowMount} from '@vue/test-utils'
 import ExerciseResultCreationFragment from '@/components/ExerciseResultCreationFragment.vue'
 import ExerciseSetResultInput from '@/components/ExerciseSetResultInput.vue'
 import {createMockStore, getTestExerciseResult, getTestSetResult} from "../../utils/testHelper";
-import {getSetResults} from "@/model/SetResult";
+import {mapToSetResults} from "@/model/SetResult";
 
 let wrapper
 const CHANGE_VALUE = 1
 const LOAD_TEST_INPUT_VALUE = 110
 const REPS_TEST_INPUT_VALUE = 7
 const lastExerciseResult = getTestExerciseResult()
-const setResults = getSetResults(lastExerciseResult)
+const setResults = mapToSetResults(lastExerciseResult)
 const lastSetResult = setResults[setResults.length - 1]
 const INITIAL_EXERCISE_SET_RESULT_INPUT_COUNT = lastExerciseResult.loads.length
 const exerciseId = lastExerciseResult.exerciseId

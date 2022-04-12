@@ -1,6 +1,6 @@
 import {collection, endAt, getDocs, getFirestore, limit, orderBy, query, startAt, where} from "firebase/firestore";
-import {Exercise} from "@/model/Exercise";
-import {Workout} from "@/model/Workout";
+import Exercise from "@/model/Exercise";
+import Workout from "@/model/Workout";
 
 const db = getFirestore();
 
@@ -16,10 +16,10 @@ export async function getExerciseById(id: string) {
         console.log("Error while getting exercise from firestore:" + e)
     }
 }
-//TODO:memoization
+
 export async function getExercisesByIds(ids: Array<string>) {
     const exercisePromises = ids.map(exerciseId => getExerciseById(exerciseId))
-    return await Promise.all(exercisePromises)
+    return Promise.all(exercisePromises)
 }
 
 export const getExercises = async () => {
@@ -75,6 +75,5 @@ export async function searchExercises(searchValue: string) {
 
 export async function getWorkoutsExercises(workouts: Workout[]) {
     const exercisePromises = workouts.map(workout => getExercisesByIds(workout.exercises))
-    console.log(exercisePromises);
     return Promise.all(exercisePromises)
 }

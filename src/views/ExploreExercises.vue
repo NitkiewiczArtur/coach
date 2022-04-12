@@ -3,7 +3,7 @@ import {defineComponent, ref} from "vue";
 import ExerciseTable from "@/components/ExerciseTable.vue";
 import {getExercises, searchExercises} from "@/services/exerciseService"
 import SearchBar from "@/components/SearchBar.vue";
-import {Exercise} from "@/model/Exercise";
+import Exercise from "@/model/Exercise";
 
 export default defineComponent({
   components: {
@@ -11,9 +11,8 @@ export default defineComponent({
     ExerciseTable,
   },
   async setup() {
-    const exercises = ref<Array<Exercise>>([]);
+    const exercises = ref(await getExercises());
 
-    exercises.value = await getExercises();
     const onSearchClicked = async (searchValue: string) =>{
       exercises.value = await searchExercises(searchValue)
     }

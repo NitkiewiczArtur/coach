@@ -1,4 +1,4 @@
-import {Workout} from "@/model/Workout";
+import Workout from "@/model/Workout";
 import {collection, doc, getDoc, getDocs, getFirestore, limit, query, where, Query} from "firebase/firestore";
 
 

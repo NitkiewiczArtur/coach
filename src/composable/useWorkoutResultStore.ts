@@ -27,12 +27,18 @@ export function useWorkoutResultStore() {
     const commitRemoveExerciseSet = (exerciseId: string) =>{
         store.commit('workoutResult/removeSet', exerciseId)
     }
-    const getNewWorkoutResultsTimeOfWorkout= () =>{
+    const timeOfWorkoutState = () => {
         return store.state.workoutResult.newWorkoutResult.timeOfWorkout as number
+    }
+    const newWorkoutResultState = () => {
+        return store.state.workoutResult.newWorkoutResult
+    }
+    const getExerciseResultByIdGetter = (id: string) => {
+        return store.getters["workoutResult/getExerciseResultById"](id)
     }
 
     return {
-        getNewWorkoutResultsTimeOfWorkout,
+        timeOfWorkoutState,
         dispatchInitNewWorkoutResult,
         dispatchFinishWorkout,
         commitSetWorkoutTime,
@@ -40,5 +46,7 @@ export function useWorkoutResultStore() {
         commitSetExerciseSetReps,
         commitAddExerciseSet,
         commitRemoveExerciseSet,
+        getExerciseResultByIdGetter,
+        newWorkoutResultState
     }
 }

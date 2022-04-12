@@ -13,9 +13,9 @@
 
 <script setup lang="ts">
 import ExerciseTable from "@/components/ExerciseTable.vue";
-import {Workout} from "@/model/Workout";
+import Workout from "@/model/Workout";
 import {PropType} from "vue";
-import {Exercise} from "@/model/Exercise";
+import Exercise from "@/model/Exercise";
 
 const props = defineProps({
   detailedWorkout: {

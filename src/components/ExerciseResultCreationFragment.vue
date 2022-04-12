@@ -25,57 +25,55 @@
 
 <script setup lang="ts">
 
-import {computed, PropType, ref} from "vue";
-import {ExerciseResult} from "@/model/ExerciseResult";
-import {getSetResults, SetResult} from "@/model/SetResult";
+import {computed, ref} from "vue";
+import SetResult, {mapToSetResults} from "@/model/SetResult";
 import ExerciseSetResultInput from "@/components/ExerciseSetResultInput.vue";
 import {useWorkoutResultStore} from "@/composable/useWorkoutResultStore";
 
 const props = defineProps({
-  lastExerciseResult: {
-    type: Object as PropType<ExerciseResult>,
+  exerciseId: {
+    type: String,
     required: true,
-  },
-  error: {
-    type: Error,
-  },
+  }
 })
 const {
   commitSetExerciseSetLoad, commitSetExerciseSetReps, commitAddExerciseSet,
-  commitRemoveExerciseSet
+  commitRemoveExerciseSet, getExerciseResultByIdGetter
 } = useWorkoutResultStore()
 
-const exerciseId = ref(props.lastExerciseResult.exerciseId)
 const incrementAmount = ref(1)
-const setResults = ref(getSetResults(props.lastExerciseResult))
-const lastSetResult = computed(() => {
-  return setResults.value[setResults.value.length - 1]
-})
+const exerciseResult = getExerciseResultByIdGetter(props.exerciseId)
+const setResults = computed(() => mapToSetResults(exerciseResult))
 
 const addSet = () => {
-  setResults.value.push(lastSetResult.value);
+  const lastSet = setResults.value[setResults.value.length - 1]
+  const newSetResult = lastSet
+      ? {...lastSet, index: lastSet.index + 1}
+      : {load: 0, reps: 0, index: 0} as SetResult
+  setResults.value.push(newSetResult);
   const storePayload = {
-    exerciseId: exerciseId.value,
-    newSetResult: lastSetResult.value,
+    exerciseId: props.exerciseId,
+    newSetResult: newSetResult,
   }
   commitAddExerciseSet(storePayload);
 }
+
 const removeSet = () => {
   setResults.value.pop();
-  commitRemoveExerciseSet(exerciseId.value);
+  commitRemoveExerciseSet(props.exerciseId);
 }
 
 const onLoadChanged = (newSetResult: SetResult) => {
   const storePayload = {
     newSetResult,
-    exerciseId: exerciseId.value
+    exerciseId: props.exerciseId
   }
   commitSetExerciseSetLoad(storePayload);
 }
 const onRepsChanged = (newSetResult: SetResult) => {
   const storePayload = {
     newSetResult,
-    exerciseId: exerciseId.value
+    exerciseId: props.exerciseId
   }
   commitSetExerciseSetReps(storePayload);
 }
@@ -84,14 +82,12 @@ const onRepsChanged = (newSetResult: SetResult) => {
 <style lang="scss" scoped>
 @use "../styles/variables" as v;
 @use "../styles/components/input";
-
+@use "../styles/mixins" as m;
 .exercise-result-panel {
+  @include m.flex-row-center;
+  justify-content: flex-end;
   width: v.$content-width -1rem;
   margin-bottom: 1rem;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
 
   button:first-of-type {
     margin-bottom: 0.25rem;

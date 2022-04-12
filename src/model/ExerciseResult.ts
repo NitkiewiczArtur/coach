@@ -1,4 +1,4 @@
-export interface ExerciseResult {
+export default interface ExerciseResult {
     exerciseId: string,
     loads: number[],
     reps: number[]

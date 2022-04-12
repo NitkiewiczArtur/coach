@@ -1,7 +1,7 @@
-import {Exercise} from "@/model/Exercise";
-import {Workout} from "@/model/Workout";
-import {SetResult} from "@/model/SetResult";
-import {ExerciseResult} from "@/model/ExerciseResult";
+import Exercise from "@/model/Exercise";
+import Workout from "@/model/Workout";
+import SetResult from "@/model/SetResult";
+import ExerciseResult from "@/model/ExerciseResult";
 import {createStore} from "vuex";
 
 export function getTestExercises(): Array<Exercise> {

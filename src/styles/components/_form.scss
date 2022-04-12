@@ -1,5 +1,4 @@
 @use "../mixins";
-@use "../variables" as v;
 
 form {
   @include mixins.flex-column-center;
@@ -7,10 +6,5 @@ form {
   input {
     padding: 1rem;
     margin: 1rem;
-  }
-
-  input:focus {
-    border: v.$info 5px solid;
-    outline: none;
   }
 }

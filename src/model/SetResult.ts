@@ -1,11 +1,11 @@
-import {ExerciseResult} from "@/model/ExerciseResult";
+import ExerciseResult from "@/model/ExerciseResult";
 
-export interface SetResult {
+export default interface SetResult {
     load: number,
     reps: number,
     index: number
 }
-export const getSetResults = (exerciseResult: ExerciseResult) => {
+export const mapToSetResults = (exerciseResult: ExerciseResult) => {
     return exerciseResult.loads.map((load, index) => {
         return {
             load,

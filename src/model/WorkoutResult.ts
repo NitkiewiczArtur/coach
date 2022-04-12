@@ -1,6 +1,6 @@
-import {ExerciseResult} from "@/model/ExerciseResult";
+import ExerciseResult from "@/model/ExerciseResult";
 
-export interface WorkoutResult{
+export default interface WorkoutResult{
     dayOfWorkout: Date,
     exerciseResults: ExerciseResult[],
     timeOfWorkout: number,

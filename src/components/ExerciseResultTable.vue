@@ -42,7 +42,7 @@
 <script setup lang="ts">
 import {PropType} from "vue";
 import WorkoutResultChart from "@/components/ExerciseResultChart.vue";
-import {ExerciseResultData} from "@/model/ExerciseResultData";
+import ExerciseResultData from "@/model/ExerciseResultData";
 import {useChart} from "@/composable/useChart";
 
 const props = defineProps({

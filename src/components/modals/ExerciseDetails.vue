@@ -24,7 +24,7 @@
 <script setup lang="ts">
 
 import {PropType} from "vue";
-import {Exercise} from "@/model/Exercise";
+import Exercise from "@/model/Exercise";
 
 const props = defineProps({
   detailedExercise: {

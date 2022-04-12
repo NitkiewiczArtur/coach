@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import {ExerciseResultData} from "@/model/ExerciseResultData";
+import ExerciseResultData from "@/model/ExerciseResultData";
 import {defineComponent, PropType} from "vue";
 
 export default defineComponent({

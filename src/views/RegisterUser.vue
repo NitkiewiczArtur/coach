@@ -26,9 +26,7 @@ import {signUp} from "@/services/authService";
 import {useCoachRouter} from "@/composable/useCoachRouter";
 
 const {navigateToLogin, navigateToMyWorkouts} = useCoachRouter();
-const errors = ref([]);
-const email = ref("");
-const password = ref("");
+
 const submitForm = () => {
   errors.value = [];
   if (!email.value) {

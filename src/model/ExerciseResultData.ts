@@ -1,13 +1,11 @@
-import {ExerciseResult} from "@/model/ExerciseResult";
-
-export interface ExerciseResultData {
+export default interface ExerciseResultData {
     exerciseName: string,
     gifUrl: string,
     volumePerDay: Map<string, number>,
     maxRepPerDay: Map<string, number>,
     smallestVolume: number,
     smallestMax:number,
-    lastExerciseResult: ExerciseResult,
+    exerciseId: string,
 }
 
 type DayOfMonth = keyof string

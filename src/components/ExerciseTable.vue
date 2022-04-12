@@ -44,7 +44,7 @@
 
 <script setup lang="ts">
 import {PropType, ref, Ref} from "vue";
-import {Exercise} from "@/model/Exercise";
+import Exercise from "@/model/Exercise";
 import ExerciseDetails from "@/components/modals/ExerciseDetails.vue";
 
 const props = defineProps({

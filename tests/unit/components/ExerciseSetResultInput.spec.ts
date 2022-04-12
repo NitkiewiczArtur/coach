@@ -111,4 +111,16 @@ describe('ExerciseSetResultInput.vue', () => {
             expect(getEmittedEventValue(repsChangedEvent))
                 .toStrictEqual(initialSet)
         });
+    it('throws error when new reps value input is less than 0',
+        async () => {
+            const input = wrapper.find('.input--reps')
+            initialSet.reps = REPS_TEST_INPUT_VALUE
+
+            await input.setValue(REPS_TEST_INPUT_VALUE)
+
+            const repsChangedEvent = wrapper.emitted().repsChanged
+            expect(repsChangedEvent).toBeTruthy()
+            expect(getEmittedEventValue(repsChangedEvent))
+                .toStrictEqual(initialSet)
+        });
 })

@@ -20,11 +20,11 @@
                                 :height="chartHeight"
                                 :width="chartWidth"/>
           <exercise-result-creation-fragment
-              :lastExerciseResult="exerciseResultData.lastExerciseResult"
+              :exerciseId="exerciseResultData.exerciseId"
               class="hide-for-desktop"/>
         </td>
         <td class="hide-for-mobile" align=Center>
-          <exercise-result-creation-fragment :lastExerciseResult="exerciseResultData.lastExerciseResult"/>
+          <exercise-result-creation-fragment :exerciseId="exerciseResultData.exerciseId"/>
         </td>
       </tr>
       </tbody>
@@ -35,7 +35,7 @@
 <script setup lang="ts">
 import {PropType} from "vue";
 import WorkoutResultChart from "@/components/ExerciseResultChart.vue";
-import {ExerciseResultData} from "@/model/ExerciseResultData";
+import ExerciseResultData from "@/model/ExerciseResultData";
 import ExerciseResultCreationFragment from "@/components/ExerciseResultCreationFragment.vue";
 import {useChart} from "@/composable/useChart";
 

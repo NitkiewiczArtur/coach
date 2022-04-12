@@ -1,6 +1,6 @@
 import {collection, doc, getDocs, getFirestore, limit, query, addDoc, where} from "firebase/firestore";
-import {WorkoutResult} from "@/model/WorkoutResult";
-import {ExerciseResult} from "@/model/ExerciseResult";
+import WorkoutResult from "@/model/WorkoutResult";
+import ExerciseResult from "@/model/ExerciseResult";
 
 const db = getFirestore();
 
@@ -39,7 +39,7 @@ function mapToWorkoutResult(response) {
         exerciseResults: response.exercise_results as ExerciseResult[]
     } as WorkoutResult
 }
-
+//TODO: get Real LAST WORKOUT RESULT!
 export function getLastWorkoutResultsExerciseResults(workoutResults: WorkoutResult[]) {
     return workoutResults[workoutResults.length - 1].exerciseResults
 }

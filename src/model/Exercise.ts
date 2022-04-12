@@ -1,4 +1,4 @@
-export interface Exercise {
+export default interface Exercise {
     name:string,
     gifUrl:string,
     bodyPart:string,

@@ -26,11 +26,11 @@
 
 <script setup lang="ts">
 import {PropType, reactive, Ref, ref} from "vue";
-import {Workout} from "@/model/Workout";
+import Workout from "@/model/Workout";
 import {getWorkoutsExercises} from "@/services/exerciseService"
 import ExerciseTable from "@/components/ExerciseTable.vue";
 import {useCoachRouter} from "@/composable/useCoachRouter";
-import {Exercise} from "@/model/Exercise";
+import Exercise from "@/model/Exercise";
 
 const props = defineProps({
   workoutsToDisplay: {

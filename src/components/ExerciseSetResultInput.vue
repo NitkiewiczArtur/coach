@@ -1,12 +1,12 @@
 <template>
   <div class="exercise-set-result-input-wrapper">
-    <input v-model="load"
-           @focus="setLoadAsTarget"
-           class="input input--load" type="number"/>
+    <load-input v-model:value="load"
+                :showErrors="true"
+                @setLoadAsTarget="setLoadAsTarget"/>
     X
-    <input v-model="reps"
-           @focus="setRepsAsTarget"
-           class="input input--reps" type="number"/>
+    <reps-input v-model:value="reps"
+                :showErrors="true"
+                @setRepsAsTarget="setRepsAsTarget"/>
     <div class="button-wrapper">
       <button
           @click="increment"
@@ -22,7 +22,9 @@
 
 <script setup lang="ts">
 import {PropType, ref, watch} from "vue";
-import {SetResult} from "@/model/SetResult";
+import SetResult from "@/model/SetResult";
+import LoadInput from "@/components/inputs/LoadInput.vue";
+import RepsInput from "@/components/inputs/RepsInput.vue";
 
 const props = defineProps({
   setResult: {
@@ -69,7 +71,7 @@ watch(load, (newLoad) => {
   const newSetResult = {
     index: props.setResult.index,
     load: newLoad,
-    reps: props.setResult.reps
+    reps: reps.value
   } as SetResult
   emitLoadChanged(newSetResult)
 })
@@ -77,7 +79,7 @@ watch(load, (newLoad) => {
 watch(reps, (newReps) => {
   const newSetResult = {
     index: props.setResult.index,
-    load: props.setResult.load,
+    load: load.value,
     reps: newReps
   } as SetResult
   emitRepsChanged(newSetResult)

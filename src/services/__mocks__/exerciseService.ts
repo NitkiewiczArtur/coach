@@ -1,5 +1,5 @@
 import {getTestExercises, getTestWorkoutExercises} from "../../../tests/utils/testHelper";
-import {Workout} from "@/model/Workout";
+import Workout from "@/model/Workout";
 
 const firebaseApp = {}
 
