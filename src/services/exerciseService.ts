@@ -75,6 +75,5 @@ export async function searchExercises(searchValue: string) {
 
 export async function getWorkoutsExercises(workouts: Workout[]) {
     const exercisePromises = workouts.map(workout => getExercisesByIds(workout.exercises))
-    console.log(exercisePromises);
     return Promise.all(exercisePromises)
 }

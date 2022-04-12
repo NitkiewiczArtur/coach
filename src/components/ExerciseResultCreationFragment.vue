@@ -25,15 +25,14 @@
 
 <script setup lang="ts">
 
-import {computed, PropType, ref} from "vue";
-import {ExerciseResult} from "@/model/ExerciseResult";
-import {getSetResults, SetResult} from "@/model/SetResult";
+import {computed, reactive, ref} from "vue";
+import {mapToSetResults, SetResult} from "@/model/SetResult";
 import ExerciseSetResultInput from "@/components/ExerciseSetResultInput.vue";
 import {useWorkoutResultStore} from "@/composable/useWorkoutResultStore";
 
 const props = defineProps({
-  lastExerciseResult: {
-    type: Object as PropType<ExerciseResult>,
+  exerciseId: {
+    type: String,
     required: true,
   },
   error: {
@@ -42,40 +41,42 @@ const props = defineProps({
 })
 const {
   commitSetExerciseSetLoad, commitSetExerciseSetReps, commitAddExerciseSet,
-  commitRemoveExerciseSet
+  commitRemoveExerciseSet, getExerciseResultById
 } = useWorkoutResultStore()
 
-const exerciseId = ref(props.lastExerciseResult.exerciseId)
 const incrementAmount = ref(1)
-const setResults = ref(getSetResults(props.lastExerciseResult))
-const lastSetResult = computed(() => {
-  return setResults.value[setResults.value.length - 1]
-})
+const exerciseResult = getExerciseResultById(props.exerciseId)
 
+const setResults = reactive(mapToSetResults(exerciseResult))
+
+const lastSetResult = computed(() => {
+  return setResults[setResults.length - 1]
+})
+const errors = ref([])
 const addSet = () => {
-  setResults.value.push(lastSetResult.value);
+  setResults.push(lastSetResult.value);
   const storePayload = {
-    exerciseId: exerciseId.value,
+    exerciseId: props.exerciseId,
     newSetResult: lastSetResult.value,
   }
   commitAddExerciseSet(storePayload);
 }
 const removeSet = () => {
-  setResults.value.pop();
-  commitRemoveExerciseSet(exerciseId.value);
+  setResults.pop();
+  commitRemoveExerciseSet(props.exerciseId);
 }
 
 const onLoadChanged = (newSetResult: SetResult) => {
   const storePayload = {
     newSetResult,
-    exerciseId: exerciseId.value
+    exerciseId: props.exerciseId
   }
   commitSetExerciseSetLoad(storePayload);
 }
 const onRepsChanged = (newSetResult: SetResult) => {
   const storePayload = {
     newSetResult,
-    exerciseId: exerciseId.value
+    exerciseId: props.exerciseId
   }
   commitSetExerciseSetReps(storePayload);
 }

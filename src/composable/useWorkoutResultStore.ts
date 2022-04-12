@@ -6,6 +6,9 @@ export function useWorkoutResultStore() {
     const store = useStore()
     const {workoutIdFromRoute} = useCoachRouter()
 
+    const getNewWorkoutResultFromStore = () => {
+        return store.state.workoutResult.newWorkoutResult
+    }
     const dispatchInitNewWorkoutResult = async () => {
         return store.dispatch('workoutResult/initNewWorkoutResult', workoutIdFromRoute);
     }
@@ -27,8 +30,11 @@ export function useWorkoutResultStore() {
     const commitRemoveExerciseSet = (exerciseId: string) =>{
         store.commit('workoutResult/removeSet', exerciseId)
     }
-    const getNewWorkoutResultsTimeOfWorkout= () =>{
+    const getNewWorkoutResultsTimeOfWorkout = () => {
         return store.state.workoutResult.newWorkoutResult.timeOfWorkout as number
+    }
+    const getExerciseResultById = (id: string) => {
+        return store.getters["workoutResult/getExerciseResultById"](id)
     }
 
     return {
@@ -40,5 +46,7 @@ export function useWorkoutResultStore() {
         commitSetExerciseSetReps,
         commitAddExerciseSet,
         commitRemoveExerciseSet,
+        getExerciseResultById,
+        getNewWorkoutResultFromStore
     }
 }

@@ -5,7 +5,7 @@ export interface SetResult {
     reps: number,
     index: number
 }
-export const getSetResults = (exerciseResult: ExerciseResult) => {
+export const mapToSetResults = (exerciseResult: ExerciseResult) => {
     return exerciseResult.loads.map((load, index) => {
         return {
             load,

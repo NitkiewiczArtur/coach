@@ -39,7 +39,7 @@ function mapToWorkoutResult(response) {
         exerciseResults: response.exercise_results as ExerciseResult[]
     } as WorkoutResult
 }
-
+//TODO: get Real LAST WORKOUT RESULT!
 export function getLastWorkoutResultsExerciseResults(workoutResults: WorkoutResult[]) {
     return workoutResults[workoutResults.length - 1].exerciseResults
 }

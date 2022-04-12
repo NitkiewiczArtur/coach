@@ -15,16 +15,16 @@
           <div class="hide-for-desktop">
             <span>{{ exerciseResultData.exerciseName.toUpperCase() }}</span>
           </div>
-          <workout-result-chart v-if="chartHeight"
+<!--          <workout-result-chart v-if="chartHeight"
                                 :exercise-result-data="exerciseResultData"
                                 :height="chartHeight"
-                                :width="chartWidth"/>
+                                :width="chartWidth"/>-->
           <exercise-result-creation-fragment
-              :lastExerciseResult="exerciseResultData.lastExerciseResult"
+              :exerciseId="exerciseResultData.exerciseId"
               class="hide-for-desktop"/>
         </td>
         <td class="hide-for-mobile" align=Center>
-          <exercise-result-creation-fragment :lastExerciseResult="exerciseResultData.lastExerciseResult"/>
+          <exercise-result-creation-fragment :exerciseId="exerciseResultData.exerciseId"/>
         </td>
       </tr>
       </tbody>

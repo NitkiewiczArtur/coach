@@ -1,17 +1,22 @@
 <template>
   <div class="login-wrapper">
-    <form>
+    <form novalidate @submit.prevent="onSubmit">
       <h3>Logging in</h3>
-      <template v-for="error in errors" :key="error">
-        <div class="error">{{ error }}</div>
-      </template>
-      <div>
-        <input class="input" type="email" v-model="email" placeholder="email"/>
-      </div>
-      <div>
-        <input class="input" type="password" v-model="password" placeholder="password"/>
-      </div>
-      <button class="button" type="submit" @click="submitForm">Log in</button>
+      <!--      <template v-for="error in errors" :key="error">
+              <div class="error">{{ error }}</div>
+            </template>
+            <div>
+              <div v-if="errors.length">
+                <p v-for="emailError in errors" :key="emailError">{{ emailError }}</p>
+              </div>
+              <input class="input" type="email" v-model="email" placeholder="email"/>
+            </div>
+            <div>
+              <input class="input" type="password" v-model="password" placeholder="password"/>
+            </div>-->
+      <email-input v-model:value="email" v-model:isValid="isEmailValid" :showErrors="showErrors"/>
+      <password-input v-model:value="password" v-model:isValid="isPasswordValid" :showErrors="showErrors"/>
+      <button class="button" type="submit">Log in</button>
     </form>
     <div>
       <h4>You dont have an account?</h4>
@@ -22,33 +27,30 @@
 
 <script setup>
 import {ref} from "vue";
-import {signIn} from "@/services/authService";
 import {useCoachRouter} from "@/composable/useCoachRouter";
+import PasswordInput from "@/components/inputs/PasswordInput";
+import EmailInput from "@/components/inputs/EmailInput";
+import {signIn} from "@/services/authService";
 
 const {navigateToSignup, navigateToMyWorkouts} = useCoachRouter();
-const errors = ref([]);
-const email = ref("");
+const showErrors = ref(false)
 const password = ref("");
-const submitForm = () => {
-  errors.value = [];
-  if (!email.value) {
-    errors.value.push("Email required!");
-  }
-  if (!password.value) {
-    errors.value.push("Password required");
-  }
-  if (!errors.value.length) {
+const email = ref("")
+const isEmailValid = ref(false)
+const isPasswordValid = ref(false)
+
+const onSubmit = () => {
+  if (isEmailValid.value && isPasswordValid.value) {
     signIn(email.value, password.value)
         .then(() => {
           navigateToMyWorkouts()
         })
-        .catch((error) => {
-          errors.value.push(error.message);
-        });
+  } else {
+    showErrors.value = true
   }
-};
+}
 </script>
-<style lang="scss">
+<style scoped lang="scss">
 @use "../styles/mixins";
 @use "../styles/components/form";
 

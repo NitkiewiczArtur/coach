@@ -7,9 +7,9 @@ export async function getExerciseResultData(exerciseId: string, workoutResults: 
     const volumePerDay = getExerciseVolumePerDay(exerciseId, workoutResults)
     const maxRepPerDay = getExerciseMaxRepPerDay(exerciseId, workoutResults)
     //TODO: getLastWorkoutResult.. data!
-    const lastWorkoutResult = workoutResults[workoutResults.length - 1]
+   /* const lastWorkoutResult = workoutResults[workoutResults.length - 1]
     const lastExerciseResult = lastWorkoutResult?.exerciseResults
-        .find(exerciseResult => exerciseResult.exerciseId === exerciseId)
+        .find(exerciseResult => exerciseResult.exerciseId === exerciseId)*/
 
     try {
         const exercise = await getExerciseById(exerciseId)
@@ -21,7 +21,7 @@ export async function getExerciseResultData(exerciseId: string, workoutResults: 
                 gifUrl: exercise.gifUrl,
                 smallestMax: getMinValue(maxRepPerDay),
                 smallestVolume: getMinValue(volumePerDay),
-                lastExerciseResult: lastExerciseResult
+                exerciseId: exerciseId
             } as ExerciseResultData
         }
     } catch (e) {
@@ -30,11 +30,11 @@ export async function getExerciseResultData(exerciseId: string, workoutResults: 
 }
 
 function getExerciseVolumePerDay(exerciseId: string, workoutResults: WorkoutResult[]) {
-    return new Map(workoutResults.map(workoutResult => {
-        const exerciseResult = workoutResult.exerciseResults
+    return new Map(workoutResults.map(({exerciseResults, dayOfWorkout}) => {
+        const exerciseResult = exerciseResults
             .find(exerciseResult => exerciseResult.exerciseId == exerciseId)
         const volume = getExerciseVolume(exerciseResult)
-        return [getDateString(workoutResult.dayOfWorkout), volume]
+        return [getDateString(dayOfWorkout), volume]
     }))
 }
 
@@ -48,11 +48,11 @@ function getExerciseVolume(exerciseResult: ExerciseResult | undefined) {
 }
 
 function getExerciseMaxRepPerDay(exerciseId: string, workoutResults: WorkoutResult[]) {
-    return new Map(workoutResults.map(workoutResult => {
-        const exerciseResult = workoutResult.exerciseResults
+    return new Map(workoutResults.map(({exerciseResults, dayOfWorkout}) => {
+        const exerciseResult = exerciseResults
             .find(exerciseResult => exerciseResult.exerciseId == exerciseId)
         const max = exerciseResult ? Math.max(...exerciseResult.loads) : undefined
-        return [getDateString(workoutResult.dayOfWorkout), max]
+        return [getDateString(dayOfWorkout), max]
     }))
 }
 

@@ -10,9 +10,16 @@ import {DEFAULT_TIME_OF_WORKOUT} from "@/utils/globalParameters";
 import {currentUserId} from "@/services/authService";
 
 const state = {
-    newWorkoutResult: {},
+    newWorkoutResult: {} as WorkoutResult
 };
-const getters = {};
+const getters = {
+    getExerciseResultById: (state) => (id: string) => {
+        return state.newWorkoutResult.exerciseResults.find((result) => result.exerciseId === id)
+    },
+    isNewWorkoutResultValid: (state) =>{
+      state.newWorkoutResult.timeOfWorkout
+    }
+};
 const mutations = {
     setWorkoutResult(state, workoutResult: WorkoutResult) {
         state.newWorkoutResult = workoutResult;

@@ -7,7 +7,7 @@ export interface ExerciseResultData {
     maxRepPerDay: Map<string, number>,
     smallestVolume: number,
     smallestMax:number,
-    lastExerciseResult: ExerciseResult,
+    exerciseId: string,
 }
 
 type DayOfMonth = keyof string
