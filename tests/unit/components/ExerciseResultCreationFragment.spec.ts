@@ -1,6 +1,6 @@
 import {mount, shallowMount} from '@vue/test-utils'
 import ExerciseResultCreationFragment from '@/components/ExerciseResultCreationFragment.vue'
-import ExerciseSetResultInput from '@/components/ExerciseSetResultInput.vue'
+import ExerciseSetCreationFragment from '@/components/ExerciseSetCreationFragment.vue'
 import {createMockStore, getTestExerciseResult, getTestSetResult} from "../../utils/testHelper";
 import {mapToSetResults} from "@/model/SetResult";
 
@@ -36,7 +36,7 @@ describe('ExerciseResultCreationFragment.vue', () => {
     });
 
     it('renders properly', () => {
-        const exerciseResultSetInputs = wrapper.findAllComponents(ExerciseSetResultInput)
+        const exerciseResultSetInputs = wrapper.findAllComponents(ExerciseSetCreationFragment)
         const incrementInputs = wrapper.findAll('.input--increment')
         const addSetButtons = wrapper.findAll('.button--submit')
         const remSetButtons = wrapper.findAll('.button--cancel')
@@ -47,12 +47,12 @@ describe('ExerciseResultCreationFragment.vue', () => {
         expect(remSetButtons).toHaveLength(1)
     });
 
-    it('adds ExerciseSetResultInput and commits to store after pressing add set button', async () => {
+    it('adds ExerciseSetCreationFragment and commits to store after pressing add set button', async () => {
         const addSetButton = wrapper.find('.button--submit')
 
         await addSetButton.trigger('click')
 
-        const exerciseResultSetInputs = wrapper.findAllComponents(ExerciseSetResultInput)
+        const exerciseResultSetInputs = wrapper.findAllComponents(ExerciseSetCreationFragment)
         expect(exerciseResultSetInputs).toHaveLength(INITIAL_EXERCISE_SET_RESULT_INPUT_COUNT + 1)
         expect(store.commit).toHaveBeenCalledWith('workoutResult/addSet', {exerciseId, newSetResult: lastSetResult})
     });
@@ -61,13 +61,13 @@ describe('ExerciseResultCreationFragment.vue', () => {
 
         await remSetButton.trigger('click')
 
-        const exerciseResultSetInputs = wrapper.findAllComponents(ExerciseSetResultInput)
+        const exerciseResultSetInputs = wrapper.findAllComponents(ExerciseSetCreationFragment)
         expect(exerciseResultSetInputs).toHaveLength(INITIAL_EXERCISE_SET_RESULT_INPUT_COUNT - 1)
         expect(store.commit).toHaveBeenCalledWith('workoutResult/removeSet', exerciseId)
     });
 
     it('commits to store after receiving loadChanged event', async () => {
-        const input = wrapper.findComponent(ExerciseSetResultInput)
+        const input = wrapper.findComponent(ExerciseSetCreationFragment)
 
         await input.vm.$emit('loadChanged', newSetResult)
 
@@ -75,7 +75,7 @@ describe('ExerciseResultCreationFragment.vue', () => {
     });
 
     it('commits to store after receiving repsChanged event', async () => {
-        const input = wrapper.findComponent(ExerciseSetResultInput)
+        const input = wrapper.findComponent(ExerciseSetCreationFragment)
 
         await input.vm.$emit('repsChanged', newSetResult)
 

@@ -24,11 +24,15 @@
 </template>
 
 <script setup lang="ts">
-
 import {computed, ref} from "vue";
 import SetResult, {mapToSetResults} from "@/model/SetResult";
-import ExerciseSetResultInput from "@/components/ExerciseSetResultInput.vue";
-import {useWorkoutResultStore} from "@/composable/useWorkoutResultStore";
+import ExerciseSetResultInput from "@/components/ExerciseSetCreationFragment.vue";
+import useWorkoutResultStore from "@/composable/useWorkoutResultStore";
+
+const {
+  dispatchSetExerciseSetLoad, dispatchSetExerciseSetReps, dispatchAddExerciseSet,
+  dispatchRemoveExerciseSet, getExerciseResultByIdGetter
+} = useWorkoutResultStore()
 
 const props = defineProps({
   exerciseId: {
@@ -36,10 +40,6 @@ const props = defineProps({
     required: true,
   }
 })
-const {
-  commitSetExerciseSetLoad, commitSetExerciseSetReps, commitAddExerciseSet,
-  commitRemoveExerciseSet, getExerciseResultByIdGetter
-} = useWorkoutResultStore()
 
 const incrementAmount = ref(1)
 const exerciseResult = getExerciseResultByIdGetter(props.exerciseId)
@@ -47,20 +47,20 @@ const setResults = computed(() => mapToSetResults(exerciseResult))
 
 const addSet = () => {
   const lastSet = setResults.value[setResults.value.length - 1]
-  const newSetResult = lastSet
+  const newSetResult = (lastSet
       ? {...lastSet, index: lastSet.index + 1}
-      : {load: 0, reps: 0, index: 0} as SetResult
-  setResults.value.push(newSetResult);
+      : {load: 0, reps: 1, index: 0}) as SetResult /// Czy :SetResult?
+
+  //setResults.value.push(newSetResult)!!!!!
   const storePayload = {
     exerciseId: props.exerciseId,
     newSetResult: newSetResult,
   }
-  commitAddExerciseSet(storePayload);
+  dispatchAddExerciseSet(storePayload)
 }
 
 const removeSet = () => {
-  setResults.value.pop();
-  commitRemoveExerciseSet(props.exerciseId);
+  dispatchRemoveExerciseSet(props.exerciseId)
 }
 
 const onLoadChanged = (newSetResult: SetResult) => {
@@ -68,21 +68,22 @@ const onLoadChanged = (newSetResult: SetResult) => {
     newSetResult,
     exerciseId: props.exerciseId
   }
-  commitSetExerciseSetLoad(storePayload);
+  dispatchSetExerciseSetLoad(storePayload)
 }
 const onRepsChanged = (newSetResult: SetResult) => {
   const storePayload = {
     newSetResult,
     exerciseId: props.exerciseId
   }
-  commitSetExerciseSetReps(storePayload);
+  dispatchSetExerciseSetReps(storePayload)
 }
 </script>
 
 <style lang="scss" scoped>
 @use "../styles/variables" as v;
-@use "../styles/components/input";
 @use "../styles/mixins" as m;
+@use "../styles/components/input";
+
 .exercise-result-panel {
   @include m.flex-row-center;
   justify-content: flex-end;

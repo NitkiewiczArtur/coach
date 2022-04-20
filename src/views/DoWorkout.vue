@@ -11,13 +11,20 @@
         <do-exercise-table :results-data-list-to-display="exerciseResultDataList"/>
       </suspense>
       <div class="align-right">
-        <div class="time-of-workout-input-wrapper ">
+        <div class="input-wrapper input-wrapper--time-of-workout">
           <span>Time of workout:</span><input v-model="timeOfWorkout"
                                               class="input input--time" type="number"/>
         </div>
       </div>
+      <div class="align-right">
+        <div class="input-wrapper input-wrapper--day-of-workout">
+          <span>Day of workout:</span><input v-model="dayOfWorkout"
+                                             class="input" type="date"/>
+        </div>
+      </div>
       <p v-if="showInvalidFormCommunicate">
-        Form invalid! Correct displayed incompatibility and press finish again.</p>
+        Form invalid! Correct displayed incompatibility and press finish again.
+      </p>
       <div class="align-right">
         <button @click="onSubmit"
                 type="submit"
@@ -28,51 +35,71 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import {getResultsByWorkoutId} from "@/services/workoutResultService";
-import DoExerciseTable from "@/components/DoExerciseTable.vue";
 import ExerciseResultData from "@/model/ExerciseResultData";
 import {getWorkoutById} from "@/services/workoutService";
-import {useCoachRouter} from "@/composable/useCoachRouter";
+import useCoachRouter from "@/composable/useCoachRouter";
 import {getExerciseResultData} from "@/services/exerciseResultDataService";
-import {useWorkoutResultStore} from "@/composable/useWorkoutResultStore";
-import {ref, watch} from "vue";
+import useWorkoutResultStore from "@/composable/useWorkoutResultStore";
+import {defineComponent, ref, watch} from "vue";
 import {isValidWorkoutResult} from "@/utils/workoutResultValidator";
+import DoExerciseTable from "@/components/collections/DoExerciseTable.vue";
+import {store} from "@/store"
 
-const {
-  dispatchInitNewWorkoutResult, dispatchFinishWorkout,
-  commitSetWorkoutTime, timeOfWorkoutState,
-  newWorkoutResultState
-} = useWorkoutResultStore()
+export default defineComponent({
+  components: {DoExerciseTable},
+  async beforeRouteEnter(to) {
+    await store.dispatch('workoutResult/initNewWorkoutResult', to.params.workoutId)
+  },
+  async setup() {
+    const {
+      dispatchFinishWorkout, dayOfWorkoutState,
+      dispatchSetWorkoutTime, timeOfWorkoutState,
+      newWorkoutResultState, dispatchSetDayOfWorkout
+    } = useWorkoutResultStore()
 
-const {workoutIdFromRoute, navigateBackward} = useCoachRouter()
-const showInvalidFormCommunicate = ref(false)
+    const {workoutIdFromRoute, navigateBackward, navigateToDoneWorkout} = useCoachRouter()
+    const showInvalidFormCommunicate = ref(false)
 
-const onSubmit = () => {
-  if (isValidWorkoutResult(newWorkoutResultState())) {
-    return dispatchFinishWorkout()
+    const onSubmit = async () => {
+      if (isValidWorkoutResult(newWorkoutResultState)) {
+        await dispatchFinishWorkout()
+        return navigateToDoneWorkout(workoutIdFromRoute)
+      }
+      showInvalidFormCommunicate.value = true
+    }
+    const timeOfWorkout = ref(timeOfWorkoutState)
+    const dayOfWorkout = ref(dayOfWorkoutState)
+
+    watch(dayOfWorkout, (newDayOfWorkout) => {
+      dispatchSetDayOfWorkout(new Date(newDayOfWorkout))
+    })
+    watch(timeOfWorkout, (newTimeOfWorkout) => {
+      dispatchSetWorkoutTime(newTimeOfWorkout)
+    })
+
+    const workout = await getWorkoutById(workoutIdFromRoute)
+    const workoutResults = await getResultsByWorkoutId(workoutIdFromRoute, 5)
+
+    const exerciseResultDataPromises: Promise<ExerciseResultData | undefined> [] = []
+
+    workout?.exercises.forEach(exerciseId => {
+      exerciseResultDataPromises.push(getExerciseResultData(exerciseId, workoutResults))
+    })
+    const exerciseResultDataList = ref(await Promise.all(exerciseResultDataPromises))
+
+    return {
+      exerciseResultDataList,
+      navigateBackward,
+      workout,
+      timeOfWorkout,
+      dayOfWorkout,
+      onSubmit,
+      showInvalidFormCommunicate,
+    }
   }
-  showInvalidFormCommunicate.value = true
-}
-
-const workout = await getWorkoutById(workoutIdFromRoute)
-
-const exerciseResultDataPromises: Promise<ExerciseResultData | undefined>[] = []
-const workoutResults = await getResultsByWorkoutId(workoutIdFromRoute, 5)
-
-workout?.exercises.forEach(exerciseId => {
-  exerciseResultDataPromises.push(getExerciseResultData(exerciseId, workoutResults))
 })
-
-const exerciseResultDataList = ref(await Promise.all(exerciseResultDataPromises))
-
-await dispatchInitNewWorkoutResult()
-const timeOfWorkout = ref(timeOfWorkoutState())
-
-watch(timeOfWorkout, (newTimeOfWorkout) => {
-  commitSetWorkoutTime(newTimeOfWorkout)
-})
-
 </script>
 <style scoped lang="scss">
 @use "../styles/variables" as v;
@@ -92,18 +119,25 @@ watch(timeOfWorkout, (newTimeOfWorkout) => {
   }
 }
 
-.time-of-workout-input-wrapper {
+.input-wrapper {
   background-color: v.$third-color;
   border-radius: 10px;
   padding: 0 1rem 0 1rem;
   font-size: 1.2rem;
   margin-right: 0.25rem;
+  &--time-of-workout{
+    max-width: 50vw;
+    margin-top: 0.5rem;
+ }
+  &--day-of-workout{
+    max-width:80vw;
+  }
 }
 
 .align-right {
   @include m.flex-row-end;
   width: 100%;
-  margin: 0 0 1rem 0;
+  margin-bottom: 0.5rem;
 }
 
 </style>

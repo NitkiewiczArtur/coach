@@ -6,6 +6,9 @@ export default interface SetResult {
     index: number
 }
 export const mapToSetResults = (exerciseResult: ExerciseResult) => {
+    if(!exerciseResult){
+        return []
+    }
     return exerciseResult.loads.map((load, index) => {
         return {
             load,

@@ -23,8 +23,9 @@
               :exerciseId="exerciseResultData.exerciseId"
               class="hide-for-desktop"/>
         </td>
+<!--        Jak to rozwiązać?-->
         <td class="hide-for-mobile" align=Center>
-          <exercise-result-creation-fragment :exerciseId="exerciseResultData.exerciseId"/>
+          <exercise-result-creation-fragment v-if="!isMobileScreen" :exerciseId="exerciseResultData.exerciseId"/>
         </td>
       </tr>
       </tbody>
@@ -34,10 +35,11 @@
 
 <script setup lang="ts">
 import {PropType} from "vue";
-import WorkoutResultChart from "@/components/ExerciseResultChart.vue";
+import WorkoutResultChart from "@/components/common/ExerciseResultChart.vue";
 import ExerciseResultData from "@/model/ExerciseResultData";
 import ExerciseResultCreationFragment from "@/components/ExerciseResultCreationFragment.vue";
 import {useChart} from "@/composable/useChart";
+import {isMobileScreen} from '@/utils/utils';
 
 const props = defineProps({
   resultsDataListToDisplay: {
@@ -52,11 +54,11 @@ const {chartHeight, chartWidth} = useChart()
 </script>
 
 <style lang="scss" scoped>
-@use "../styles/components/table";
-@use "../styles/components/button";
-@use "../styles/mixins";
-@use "../styles/components/input";
-@use "../styles/variables" as v;
+@use "../../styles/components/table";
+@use "../../styles/components/button";
+@use "../../styles/mixins";
+@use "../../styles/components/input";
+@use "../../styles/variables" as v;
 
 @media screen and (max-width: 700px) {
   .tbody-row{

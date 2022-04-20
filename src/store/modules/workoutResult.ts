@@ -36,7 +36,9 @@ const mutations = {
     setWorkoutTime(state, timeOfWorkout: number) {
         state.newWorkoutResult.timeOfWorkout = timeOfWorkout;
     },
-    //TODO: Promise?
+    setDayOfWorkout(state, dayOfWorkout: Date) {
+        state.newWorkoutResult.dayOfWorkout = dayOfWorkout;
+    },
     addSet(state, payload: ExerciseSetPayload) {
         const setResult = payload.newSetResult
         const exerciseResultToEdit = state.newWorkoutResult.exerciseResults
@@ -53,9 +55,10 @@ const mutations = {
 };
 
 const actions = {
-    //TODO: getLast? do firebase
-    async initNewWorkoutResult({commit}, workoutId) {
+    async initNewWorkoutResult({commit}, workoutId: string) {
         const workoutResults = await getResultsByWorkoutId(workoutId, 5)
+        //hack, dayOfWorkout saved as String to make display date in dateInput possible.
+        // mapToSnapshot in workoutResultService handles it
         const newWorkoutResult = {
             dayOfWorkout: getCurrentDateString(),
             exerciseResults: getLastWorkoutResultsExerciseResults(workoutResults),
@@ -64,10 +67,15 @@ const actions = {
             userId: currentUserId(),
         }
         commit('setWorkoutResult', newWorkoutResult)
+        console.log('newWorkoutResult', newWorkoutResult);
+        return Promise.resolve(newWorkoutResult)
     },
     async finishWorkout({state}) {
         console.log("state.newWorkoutResult", state.newWorkoutResult);
         return saveWorkoutResult(state.newWorkoutResult)
+    },
+    setDayOfWorkout({commit}, dayOfWorkout: Date) {
+        commit('setDayOfWorkout', dayOfWorkout)
     }
 };
 

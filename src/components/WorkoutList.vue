@@ -88,6 +88,9 @@ const toggleShowExercises = (workoutIndex: number) => {
 
     span {
       margin-left: 2rem;
+      text-align: start;
+      word-wrap: break-word;
+      width: 20vw;
     }
 
     .button {
@@ -98,6 +101,9 @@ const toggleShowExercises = (workoutIndex: number) => {
 @media screen and (min-width: 700px) {
   .list-container {
     margin-top: 1rem;
+  }
+  .list:last-child {
+    margin-bottom: 4rem;
   }
 }
 </style>

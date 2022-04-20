@@ -8,17 +8,22 @@ const {navigateHome} = useCoachRouter()
 const isNavHidden = ref(false);
 const loggedIn = ref(false);
 const currentUser = ref(null)
-const toggleShowNav = () => {
-  isNavHidden.value = !isNavHidden.value;
-};
+
 const signOut = () => {
   signOutUser().then(() => {
     navigateHome();
   }).catch((error) => console.log(error))
 };
-const initMobile = () => toggleShowNav();
+const toggleShowNavIfMobile = () => {
+  if (isMobileScreen) {
+    isNavHidden.value = !isNavHidden.value;
+  }
+};
+const initMobile = () => toggleShowNavIfMobile();
+
 onMounted(() => {
   if (isMobileScreen) {
+    console.log('init Mobile')
     initMobile();
   }
   onAuthStateChange((user) => {
@@ -41,20 +46,20 @@ onMounted(() => {
       <button
           class="button button--triangle button--triangle--white"
           v-if="isMobileScreen"
-          @click="toggleShowNav"
+          @click="toggleShowNavIfMobile"
       >
         {{isNavHidden? "▲": "▼"}}
       </button>
     </div>
     <div class="nav-button-group" v-show="!isNavHidden">
       <router-link class="nav-link" to="/exploreExercises">
-        <div class="nav-button" @click="toggleShowNav">Explore</div>
+        <div class="nav-button" @click="toggleShowNavIfMobile">Explore</div>
       </router-link>
       <router-link class="nav-link" to="/myWorkouts">
-        <div class="nav-button" @click="toggleShowNav">My Workouts</div>
+        <div class="nav-button" @click="toggleShowNavIfMobile">My Workouts</div>
       </router-link>
       <router-link v-if="!currentUser" class="nav-link" to="/logIn">
-        <div class="nav-button" @click="toggleShowNav">Sign in</div>
+        <div class="nav-button" @click="toggleShowNavIfMobile">Sign in</div>
       </router-link>
       <div v-else class="nav-button" @click="signOut">Sign out</div>
     </div>

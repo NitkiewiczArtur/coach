@@ -39,10 +39,10 @@ const props = defineProps({
     type: Error,
   },
 })
-let target
 const emit = defineEmits(['loadChanged', 'repsChanged'])
 const load = ref(props.setResult.load)
 const reps = ref(props.setResult.reps)
+let target = load
 
 const setLoadAsTarget = () => {
   target = load
@@ -51,11 +51,7 @@ const setRepsAsTarget = () => {
   target = reps
 }
 const increment = () => {
-  try {
     target.value += props.incrementAmount
-  } catch (e) {
-    console.log(e)
-  }
 }
 const decrement = () => {
   target.value -= props.incrementAmount

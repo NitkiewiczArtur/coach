@@ -7,5 +7,3 @@ export default interface ExerciseResultData {
     smallestMax:number,
     exerciseId: string,
 }
-
-type DayOfMonth = keyof string

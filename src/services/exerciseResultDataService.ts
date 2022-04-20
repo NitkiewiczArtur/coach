@@ -6,11 +6,6 @@ import {getExerciseById} from "@/services/exerciseService";
 export async function getExerciseResultData(exerciseId: string, workoutResults: WorkoutResult[]) {
     const volumePerDay = getExerciseVolumePerDay(exerciseId, workoutResults)
     const maxRepPerDay = getExerciseMaxRepPerDay(exerciseId, workoutResults)
-    //TODO: getLastWorkoutResult.. data!
-   /* const lastWorkoutResult = workoutResults[workoutResults.length - 1]
-    const lastExerciseResult = lastWorkoutResult?.exerciseResults
-        .find(exerciseResult => exerciseResult.exerciseId === exerciseId)*/
-
     try {
         const exercise = await getExerciseById(exerciseId)
         if (exercise) {
@@ -41,7 +36,8 @@ function getExerciseVolumePerDay(exerciseId: string, workoutResults: WorkoutResu
 function getExerciseVolume(exerciseResult: ExerciseResult | undefined) {
     if (exerciseResult) {
         return exerciseResult.loads.reduce((total, amount, index) => {
-            total += amount * exerciseResult.reps[index]
+            const increment = amount > 0 ? amount * exerciseResult.reps[index] : exerciseResult.reps[index]
+            total += increment
             return total
         }, 0)
     }
@@ -51,7 +47,7 @@ function getExerciseMaxRepPerDay(exerciseId: string, workoutResults: WorkoutResu
     return new Map(workoutResults.map(({exerciseResults, dayOfWorkout}) => {
         const exerciseResult = exerciseResults
             .find(exerciseResult => exerciseResult.exerciseId == exerciseId)
-        const max = exerciseResult ? Math.max(...exerciseResult.loads) : undefined
+        const max = exerciseResult?.loads.length ? Math.max(...exerciseResult.loads) : 0
         return [getDateString(dayOfWorkout), max]
     }))
 }
@@ -63,5 +59,5 @@ function getMinValue(map: Map<string, number | undefined>) {
 }
 
 function getDateString(date: Date) {
-    return date.getDate() + ':' + (date.getMonth() + 1)
+    return `${date.getDate()}/${(date.getMonth() + 1)}`
 }

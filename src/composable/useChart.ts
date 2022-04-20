@@ -9,6 +9,9 @@ export function useChart() {
         if (isMobileScreen) {
             chartWidth.value = window.innerWidth * 0.9
             chartHeight.value = window.innerHeight * 0.4
+        } else if (window.innerWidth >= 700 && window.innerWidth < 1400) {
+            chartWidth.value = window.innerWidth * 0.4
+            chartHeight.value = window.innerHeight * 0.4
         } else {
             chartWidth.value = window.innerWidth * 0.7
             chartHeight.value = window.innerHeight * 0.4

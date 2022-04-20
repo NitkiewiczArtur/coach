@@ -1,6 +1,6 @@
 import {useRoute, useRouter} from "vue-router";
 
-export function useCoachRouter(){
+export function useCoachRouter() {
     const route = useRoute();
     const router = useRouter()
 
@@ -11,13 +11,15 @@ export function useCoachRouter(){
         router.push({name: "workoutResults", params: {workoutId: workoutId}})
     const navigateToDoWorkout = (workoutId) =>
         router.push({name: "doWorkout", params: {workoutId: workoutId}})
+    const navigateToDoneWorkout = (workoutId) =>
+        router.push({name: "doneWorkout", params: {workoutId: workoutId}})
     const navigateToLogin = () =>
         router.push({name: "logIn"})
-    const navigateToSignup= () =>
+    const navigateToSignup = () =>
         router.push({name: "signUp"})
-    const navigateToExploreExercises= () =>
+    const navigateToExploreExercises = () =>
         router.push({name: "exploreExercises"})
-    const navigateToMyWorkouts= () =>
+    const navigateToMyWorkouts = () =>
         router.push({name: "myWorkouts"})
     return {
         workoutIdFromRoute,
@@ -25,6 +27,7 @@ export function useCoachRouter(){
         navigateHome,
         navigateToWorkoutResults,
         navigateToDoWorkout,
+        navigateToDoneWorkout,
         navigateToLogin,
         navigateToSignup,
         navigateToExploreExercises,
