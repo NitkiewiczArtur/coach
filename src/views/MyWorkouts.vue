@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {ref} from "vue";
 import {getWorkoutsByUserId} from "@/services/workoutService"
-import WorkoutList from "@/components/WorkoutList.vue";
+import WorkoutList from "@/components/collections/WorkoutList.vue";
 import {currentUser} from "@/services/authService";
 
 const userId = currentUser()?.uid as string

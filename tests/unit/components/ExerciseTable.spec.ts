@@ -1,5 +1,5 @@
 import {mount} from '@vue/test-utils'
-import ExerciseTable from '@/components/ExerciseTable.vue'
+import ExerciseTable from '@/components/collections/ExerciseTable.vue'
 import {getTestExercises} from "../../utils/testHelper";
 
 let wrapper

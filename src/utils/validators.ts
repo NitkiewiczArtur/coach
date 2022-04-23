@@ -2,7 +2,7 @@ const minLength = (min: number) => {
     return (input: string) => input.length < min
         ? `Value must be at least ${min} characters`
         : null;
-};
+}
 
 const isEmail = (input: string) => {
     const re = /\S+@\S+\.\S+/;
@@ -10,6 +10,7 @@ const isEmail = (input: string) => {
         ? null
         : "Must be a valid email address";
 }
+
 const isPositiveNumber = (input: number) =>
     input > 0
         ? null
@@ -20,4 +21,4 @@ const isNoNegativeNumber = (input: number) =>
         ? null
         : 'Must be positive number or zero'
 
-export {minLength, isEmail, isPositiveNumber, isNoNegativeNumber};
+export {minLength, isEmail, isPositiveNumber, isNoNegativeNumber}

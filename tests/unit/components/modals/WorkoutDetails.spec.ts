@@ -1,6 +1,6 @@
 import {mount} from '@vue/test-utils'
-import WorkoutDetails from '@/components/modals/WorkoutDetails.vue'
-import ExerciseTable from '@/components/ExerciseTable.vue'
+import WorkoutDetails from '@/components/common/WorkoutDetails.vue'
+import ExerciseTable from '@/components/collections/ExerciseTable.vue'
 import {getTestExercises, getTestWorkout} from "../../../utils/testHelper";
 
 let wrapper

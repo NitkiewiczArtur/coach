@@ -1,5 +1,5 @@
 import {shallowMount} from '@vue/test-utils'
-import ExerciseSetResultInput from '@/components/ExerciseSetResultInput.vue'
+import ExerciseSetResultInput from '@/components/ExerciseSetCreationFragment.vue'
 import {getEmittedEventValue, getTestSetResult} from "../../utils/testHelper";
 
 let wrapper
@@ -14,7 +14,7 @@ const mountFunction = (options = {}) => {
     });
 };
 
-describe('ExerciseSetResultInput.vue', () => {
+describe('ExerciseSetCreationFragment.vue', () => {
     beforeEach(() => {
         wrapper = mountFunction({
                 propsData: {

@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import ExerciseTable from "@/components/ExerciseTable.vue";
+import ExerciseTable from "@/components/collections/ExerciseTable.vue";
 import Workout from "@/model/Workout";
 import {PropType} from "vue";
 import Exercise from "@/model/Exercise";
@@ -35,9 +35,9 @@ const closeWorkoutDetailsModal = () => {
 </script>
 
 <style lang="scss" scoped>
-@use "src/styles/components/modal";
-@use "src/styles/components/button";
-@use "src/styles/variables" as v;
+@use "../../styles/components/modal";
+@use "../../styles/components/button";
+@use "../../styles/variables" as v;
 
 .exercise-item {
   display: inline-flex;

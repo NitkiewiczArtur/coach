@@ -40,8 +40,8 @@ const closeExerciseDetailsModal = () => {
 </script>
 
 <style lang="scss" scoped>
-@use "src/styles/components/modal";
-@use "src/styles/components/button" as v;
+@use "../../styles/components/modal";
+@use "../../styles/components/button" as v;
 
 .exercise-info-wrapper {
   display: grid;

@@ -1,6 +1,6 @@
 import {shallowMount} from '@vue/test-utils'
-import WorkoutList from '@/components/WorkoutList.vue'
-import ExerciseTable from '@/components/ExerciseTable.vue'
+import WorkoutList from '@/components/collections/WorkoutList.vue'
+import ExerciseTable from '@/components/collections/ExerciseTable.vue'
 import {getTestWorkouts} from "../../utils/testHelper";
 import {getRouter} from "vue-router-mock";
 

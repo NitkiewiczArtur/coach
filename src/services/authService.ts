@@ -8,7 +8,7 @@ import {
 } from "firebase/auth";
 
 const firebaseApp = initializeApp({
-    apiKey: "AIzaSyCScbP0uh0vuV9aOixklfEwFAFIpXR4IAM",
+    apiKey: process.env.VUE_APP_API_KEY,
     authDomain: "coach-db-47391.firebaseapp.com",
     projectId: "coach-db-47391",
     storageBucket: "coach-db-47391.appspot.com",

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import NavBar from "@/components/NavBar.vue";</script>
+import NavBar from "@/components/common/NavBar.vue";</script>
 
 <template>
   <div class="app-wrapper">
@@ -68,7 +68,6 @@ h2 {
   .content {
     grid-column: 1 / 12;
     grid-row: 2 / 12;
-    padding-top: 1rem;
   }
   .hide-for-desktop{
     display:none;

@@ -51,7 +51,7 @@ const setRepsAsTarget = () => {
   target = reps
 }
 const increment = () => {
-    target.value += props.incrementAmount
+  target.value += props.incrementAmount
 }
 const decrement = () => {
   target.value -= props.incrementAmount

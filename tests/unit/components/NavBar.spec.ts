@@ -1,5 +1,5 @@
 import {mount} from '@vue/test-utils'
-import NavBar from '@/components/NavBar.vue'
+import NavBar from '@/components/common/NavBar.vue'
 import {getRouter} from "vue-router-mock";
 
 let wrapper

@@ -41,7 +41,7 @@
 
 <script setup lang="ts">
 import {PropType} from "vue";
-import WorkoutResultChart from "@/components/ExerciseResultChart.vue";
+import WorkoutResultChart from "@/components/common/ExerciseResultChart.vue";
 import ExerciseResultData from "@/model/ExerciseResultData";
 import {useChart} from "@/composable/useChart";
 
@@ -59,9 +59,9 @@ const {chartHeight, chartWidth} = useChart()
 </script>
 
 <style lang="scss" scoped>
-@use "../styles/components/table";
-@use "../styles/components/button" as v;
-@use "../styles/mixins";
+@use "../../styles/components/table";
+@use "../../styles/components/button" as v;
+@use "../../styles/mixins";
 
 .exercise-result-image {
   border-radius: 25px;

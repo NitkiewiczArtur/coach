@@ -21,9 +21,9 @@ const onSearchFromStart = () => {
 </script>
 
 <style scoped lang="scss">
-@use "../styles/mixins";
-@use "../styles/variables" as v;
-@use "../styles/components/button";
+@use "../../styles/mixins";
+@use "../../styles/variables" as v;
+@use "../../styles/components/button";
 
 .search-bar-wrapper {
   @include mixins.flex-column-center

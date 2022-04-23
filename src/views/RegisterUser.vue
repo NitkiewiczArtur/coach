@@ -21,9 +21,8 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from "vue";
 import {signUp} from "@/services/authService";
-import {useCoachRouter} from "@/composable/useCoachRouter";
+import useCoachRouter from "@/composable/useCoachRouter";
 
 const {navigateToLogin, navigateToMyWorkouts} = useCoachRouter();
 

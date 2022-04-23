@@ -27,7 +27,7 @@
 
 <script setup>
 import {ref} from "vue";
-import {useCoachRouter} from "@/composable/useCoachRouter";
+import useCoachRouter from "@/composable/useCoachRouter";
 import PasswordInput from "@/components/inputs/PasswordInput";
 import EmailInput from "@/components/inputs/EmailInput";
 import {signIn} from "@/services/authService";

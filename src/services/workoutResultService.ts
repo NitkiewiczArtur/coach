@@ -49,9 +49,8 @@ function mapToSnapshot(workoutResult: WorkoutResult) {
     return {...workoutResult, dayOfWorkout: dayOfWorkout.getTime()}
 }
 
-//TODO: get Real LAST WORKOUT RESULT!
 export function getLastWorkoutResultsExerciseResults(workoutResults: WorkoutResult[]) {
-    return workoutResults[workoutResults.length - 1].exerciseResults
+    return workoutResults.length ? workoutResults[workoutResults.length - 1].exerciseResults : []
 }
 
 function sortBy(arr, prop) {

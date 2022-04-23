@@ -1,5 +1,5 @@
 import {mount} from '@vue/test-utils'
-import ExerciseDetails from '@/components/modals/ExerciseDetails.vue'
+import ExerciseDetails from '@/components/common/ExerciseDetails.vue'
 import {getTestExercise} from "../../../utils/testHelper";
 
 let wrapper

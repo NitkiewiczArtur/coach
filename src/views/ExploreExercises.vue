@@ -1,9 +1,8 @@
 <script lang="ts">
 import {defineComponent, ref} from "vue";
-import ExerciseTable from "@/components/ExerciseTable.vue";
+import ExerciseTable from "@/components/collections/ExerciseTable.vue";
 import {getExercises, searchExercises} from "@/services/exerciseService"
-import SearchBar from "@/components/SearchBar.vue";
-import Exercise from "@/model/Exercise";
+import SearchBar from "@/components/common/SearchBar.vue";
 
 export default defineComponent({
   components: {
@@ -36,12 +35,9 @@ export default defineComponent({
 @use "../styles/mixins";
 
 .explore-exercise-wrapper {
-  @include mixins.reverse-column-content-wrapper
-}
-
-@media screen and (min-width: 700px) {
-  .explore-exercise-wrapper{
-    @include mixins.justify-start-column;
-  }
+  padding-top:1rem;
+  @include mixins.column-content-wrapper;
+  justify-content: flex-start;
+  height: 88vh;
 }
 </style>

@@ -7,7 +7,6 @@
 
 table {
   width: 93vw;
-  margin: 1rem 0 3rem 0;
   text-align: center;
 }
 
@@ -38,7 +37,6 @@ td {
 
 tbody tr:first-of-type td:first-of-type {
   border-top-left-radius: 10px;
-  //border-radius: 10px 0 0 0;
 }
 
 tbody tr:first-of-type td:last-of-type {
@@ -47,12 +45,10 @@ tbody tr:first-of-type td:last-of-type {
 
 tbody tr:last-of-type td:first-of-type {
   border-bottom-left-radius: 10px;
-  //  border-radius: 0 0 0 10px;
 }
 
 tbody tr:last-of-type td:last-of-type {
   border-bottom-right-radius: 10px;
-  // border-radius: 0 0 10px 0;
 }
 
 .dont-show-in-desktop {

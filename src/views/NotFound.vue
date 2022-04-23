@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import {useCoachRouter} from "@/composable/useCoachRouter";
+import useCoachRouter from "@/composable/useCoachRouter";
 
 const {navigateHome} = useCoachRouter()
 </script>

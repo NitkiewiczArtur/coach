@@ -16,9 +16,9 @@
 
 <script setup lang="ts">
 import {getResultsByWorkoutId} from "@/services/workoutResultService";
-import WorkoutResultTable from "@/components/ExerciseResultTable.vue";
+import WorkoutResultTable from "@/components/collections/ExerciseResultTable.vue";
 import {getWorkoutById} from "@/services/workoutService";
-import {useCoachRouter} from "@/composable/useCoachRouter";
+import useCoachRouter from "@/composable/useCoachRouter";
 import ExerciseResultData from "@/model/ExerciseResultData";
 import {getExerciseResultData} from "@/services/exerciseResultDataService";
 

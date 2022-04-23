@@ -1,5 +1,5 @@
 import {shallowMount} from '@vue/test-utils'
-import SearchBar from '@/components/SearchBar.vue'
+import SearchBar from '@/components/common/SearchBar.vue'
 import {getEmittedEventValue} from "../../utils/testHelper";
 
 let wrapper

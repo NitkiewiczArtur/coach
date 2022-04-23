@@ -1,54 +1,14 @@
-<script setup lang="ts">
-import {onMounted, ref} from "vue";
-import {onAuthStateChange, signOutUser} from "@/services/authService";
-import {isMobileScreen} from "@/utils/utils";
-import {useCoachRouter} from "@/composable/useCoachRouter";
-
-const {navigateHome} = useCoachRouter()
-const isNavHidden = ref(false);
-const loggedIn = ref(false);
-const currentUser = ref(null)
-
-const signOut = () => {
-  signOutUser().then(() => {
-    navigateHome();
-  }).catch((error) => console.log(error))
-};
-const toggleShowNavIfMobile = () => {
-  if (isMobileScreen) {
-    isNavHidden.value = !isNavHidden.value;
-  }
-};
-const initMobile = () => toggleShowNavIfMobile();
-
-onMounted(() => {
-  if (isMobileScreen) {
-    console.log('init Mobile')
-    initMobile();
-  }
-  onAuthStateChange((user) => {
-    if (user) {
-      currentUser.value = user
-      loggedIn.value = true
-    } else {
-      currentUser.value = null
-      loggedIn.value = false
-    }
-  })
-});
-</script>
-
 <template>
   <div class="navbar-wrapper">
     <div class="logo-wrapper">
-      <span><img src="../assets/hantel.svg" alt="logo"/></span>
+      <span><img src="../../assets/hantel.svg" alt="logo"/></span>
       <span class="purple">C</span><span>OACH</span>
       <button
           class="button button--triangle button--triangle--white"
           v-if="isMobileScreen"
           @click="toggleShowNavIfMobile"
       >
-        {{isNavHidden? "▲": "▼"}}
+        {{ isNavHidden ? "▲" : "▼" }}
       </button>
     </div>
     <div class="nav-button-group" v-show="!isNavHidden">
@@ -66,9 +26,50 @@ onMounted(() => {
   </div>
 </template>
 
+<script setup lang="ts">
+import {onMounted, ref} from "vue";
+import {onAuthStateChange, signOutUser} from "@/services/authService";
+import useCoachRouter from "@/composable/useCoachRouter";
+import {isMobileScreen} from "@/utils/utils";
+
+const {navigateHome} = useCoachRouter()
+const isNavHidden = ref(false);
+const loggedIn = ref(false);
+const currentUser = ref(null)
+
+const signOut = () => {
+  signOutUser().then(() => {
+    navigateHome();
+  }).catch((error) => console.log(error))
+};
+//Showing and hiding depending on mobile/desktop
+const toggleShowNavIfMobile = () => {
+  if (isMobileScreen) {
+    isNavHidden.value = !isNavHidden.value;
+  }
+};
+const initMobile = () => toggleShowNavIfMobile();
+
+onMounted(() => {
+  if (isMobileScreen) {
+    initMobile();
+  }
+  //Wywalić do vuexa? a co z api firebasowym? authService
+  onAuthStateChange((user) => {
+    if (user) {
+      currentUser.value = user
+      loggedIn.value = true
+    } else {
+      currentUser.value = null
+      loggedIn.value = false
+    }
+  })
+});
+</script>
+
 <style scoped lang="scss">
-@use "../styles/variables" as v;
-@use "../styles/mixins";
+@use "../../styles/variables" as v;
+@use "../../styles/mixins";
 
 .navbar-wrapper {
   @include mixins.flex-column-center;

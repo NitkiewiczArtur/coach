@@ -8,6 +8,8 @@ import {
 import {getCurrentDateString} from "@/utils/utils";
 import {DEFAULT_TIME_OF_WORKOUT} from "@/utils/globalParameters";
 import {currentUserId} from "@/services/authService";
+import {getWorkoutById} from "@/services/workoutService";
+import ExerciseResult from "@/model/ExerciseResult";
 
 const state = {
     newWorkoutResult: {} as WorkoutResult
@@ -39,14 +41,14 @@ const mutations = {
     setDayOfWorkout(state, dayOfWorkout: Date) {
         state.newWorkoutResult.dayOfWorkout = dayOfWorkout;
     },
-    addSet(state, payload: ExerciseSetPayload) {
+    addExerciseSet(state, payload: ExerciseSetPayload) {
         const setResult = payload.newSetResult
         const exerciseResultToEdit = state.newWorkoutResult.exerciseResults
             .find(result => result.exerciseId == payload.exerciseId)
         exerciseResultToEdit.loads.push(setResult.load)
         exerciseResultToEdit.reps.push(setResult.reps)
     },
-    removeSet(state, exerciseId: string) {
+    removeExerciseSet(state, exerciseId: string) {
         const exerciseResultToEdit = state.newWorkoutResult.exerciseResults
             .find(result => result.exerciseId == exerciseId)
         exerciseResultToEdit.loads.pop()
@@ -59,15 +61,25 @@ const actions = {
         const workoutResults = await getResultsByWorkoutId(workoutId, 5)
         //hack, dayOfWorkout saved as String to make display date in dateInput possible.
         // mapToSnapshot in workoutResultService handles it
+        let lastExerciseResults
+        if (!workoutResults.length) {
+            const workout = await getWorkoutById(workoutId)
+            lastExerciseResults = workout?.exercises.map(exerciseId => ({
+                exerciseId,
+                loads: [],
+                reps: []
+            } as ExerciseResult))
+        } else {
+            lastExerciseResults = getLastWorkoutResultsExerciseResults(workoutResults)
+        }
         const newWorkoutResult = {
             dayOfWorkout: getCurrentDateString(),
-            exerciseResults: getLastWorkoutResultsExerciseResults(workoutResults),
+            exerciseResults: lastExerciseResults,
             timeOfWorkout: DEFAULT_TIME_OF_WORKOUT,
             workoutId: workoutId,
             userId: currentUserId(),
         }
         commit('setWorkoutResult', newWorkoutResult)
-        console.log('newWorkoutResult', newWorkoutResult);
         return Promise.resolve(newWorkoutResult)
     },
     async finishWorkout({state}) {
@@ -76,6 +88,21 @@ const actions = {
     },
     setDayOfWorkout({commit}, dayOfWorkout: Date) {
         commit('setDayOfWorkout', dayOfWorkout)
+    },
+    setWorkoutTime({commit}, timeOfWorkout: number) {
+        commit('setWorkoutTime', timeOfWorkout)
+    },
+    removeExerciseSet({commit}, exerciseId) {
+        commit('removeExerciseSet', exerciseId)
+    },
+    addExerciseSet({commit}, payload: ExerciseSetPayload) {
+        commit('addExerciseSet', payload)
+    },
+    setExerciseSetLoad({commit}, payload: ExerciseSetPayload) {
+        commit('setExerciseSetLoad', payload)
+    },
+    setExerciseSetReps({commit}, payload: ExerciseSetPayload) {
+        commit('setExerciseSetReps', payload)
     }
 };
 

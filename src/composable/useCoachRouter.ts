@@ -1,6 +1,6 @@
 import {useRoute, useRouter} from "vue-router";
 
-export function useCoachRouter() {
+export default function useCoachRouter() {
     const route = useRoute();
     const router = useRouter()
 
@@ -21,6 +21,7 @@ export function useCoachRouter() {
         router.push({name: "exploreExercises"})
     const navigateToMyWorkouts = () =>
         router.push({name: "myWorkouts"})
+
     return {
         workoutIdFromRoute,
         navigateBackward,

@@ -13,11 +13,11 @@
                     @click="startTraining(workout.id)">start
             </button>
             <button class="button button--triangle"
-                    @click="toggleShowExercises(index)">{{ isWorkoutExercisesHidden[index] ? '▼' : '▲' }}
+                    @click="toggleShowExercises(index)">{{ isWorkoutsExercisesHiddenArray[index] ? '▼' : '▲' }}
             </button>
           </div>
         </div>
-        <exercise-table v-if="workoutsExercises.length" v-show="!isWorkoutExercisesHidden[index]"
+        <exercise-table v-if="workoutsExercises.length" v-show="!isWorkoutsExercisesHiddenArray[index]"
                         :exercises-to-display="workoutsExercises[index]"/>
       </div>
     </div>
@@ -28,9 +28,11 @@
 import {PropType, reactive, Ref, ref} from "vue";
 import Workout from "@/model/Workout";
 import {getWorkoutsExercises} from "@/services/exerciseService"
-import ExerciseTable from "@/components/ExerciseTable.vue";
-import {useCoachRouter} from "@/composable/useCoachRouter";
+import ExerciseTable from "@/components/collections/ExerciseTable.vue";
+import useCoachRouter from "@/composable/useCoachRouter";
 import Exercise from "@/model/Exercise";
+
+const {navigateToWorkoutResults, navigateToDoWorkout} = useCoachRouter()
 
 const props = defineProps({
   workoutsToDisplay: {
@@ -41,19 +43,17 @@ const props = defineProps({
     type: Error,
   },
 })
-
-const {navigateToWorkoutResults, navigateToDoWorkout} = useCoachRouter()
 const mapWorkoutsToIsHiddenExercises = (workouts: Workout[]) => {
   return workouts.map(workout => true)
 }
-const isWorkoutExercisesHidden = reactive(mapWorkoutsToIsHiddenExercises(props.workoutsToDisplay))
-
+const isWorkoutsExercisesHiddenArray = reactive(mapWorkoutsToIsHiddenExercises(props.workoutsToDisplay))
 //TODO: Test utils doesnt work for setup with async await, now recommended is Vitest so I postpone resolving this 'issue'
 const workoutsExercises:Ref<(Exercise | undefined)[][]> = ref([])
 getWorkoutsExercises(props.workoutsToDisplay)
     .then(workoutsExercisesResponse => {
       workoutsExercises.value = workoutsExercisesResponse
     })
+
 
 const startTraining = (workoutId: string) => {
   navigateToDoWorkout(workoutId)
@@ -62,14 +62,14 @@ const showResults = (workoutId: string) => {
   navigateToWorkoutResults(workoutId)
 }
 const toggleShowExercises = (workoutIndex: number) => {
-  isWorkoutExercisesHidden[workoutIndex] = !isWorkoutExercisesHidden[workoutIndex]
+  isWorkoutsExercisesHiddenArray[workoutIndex] = !isWorkoutsExercisesHiddenArray[workoutIndex]
 }
 </script>
 
 <style lang="scss" scoped>
-@use "../styles/variables" as v;
-@use "../styles/components/modal";
-@use "../styles/components/button";
+@use "../../styles/variables" as v;
+@use "../../styles/components/modal";
+@use "../../styles/components/button";
 
 .list {
   color: black;

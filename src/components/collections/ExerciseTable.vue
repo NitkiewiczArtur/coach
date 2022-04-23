@@ -45,7 +45,7 @@
 <script setup lang="ts">
 import {PropType, ref, Ref} from "vue";
 import Exercise from "@/model/Exercise";
-import ExerciseDetails from "@/components/modals/ExerciseDetails.vue";
+import ExerciseDetails from "@/components/common/ExerciseDetails.vue";
 
 const props = defineProps({
   exercisesToDisplay: {
@@ -69,8 +69,8 @@ const onCloseExerciseDetailsModalClicked = () => {
 </script>
 
 <style lang="scss" scoped>
-@use "../styles/components/table";
-@use "../styles/components/button" as v;
+@use "../../styles/components/table";
+@use "../../styles/components/button" as v;
 .exercise-table-wrapper{
   font-weight: bold;
 }
