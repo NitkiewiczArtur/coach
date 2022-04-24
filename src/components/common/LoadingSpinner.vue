@@ -1,12 +1,17 @@
 <template>
-  <div class="spinner-wrapper">
+  <div  v-show="isLoading" class="spinner-wrapper">
     <div class="spinner">
       <div class="dot1"></div>
       <div class="dot2"></div>
     </div>
   </div>
 </template>
+<script setup lang="ts">
+import {store} from "@/store";
+import {computed} from "vue";
 
+const isLoading = computed(() => store.getters['loader/isLoading'])
+</script>
 <style lang="scss" scoped>
 @use "../../styles/mixins" as m;
 @use "../../styles/variables" as v;

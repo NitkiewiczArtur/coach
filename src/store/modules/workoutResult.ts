@@ -20,35 +20,35 @@ const getters = {
     },
 };
 const mutations = {
-    setWorkoutResult(state, workoutResult: WorkoutResult) {
+    SET_WORKOUT_RESULT(state, workoutResult: WorkoutResult) {
         state.newWorkoutResult = workoutResult;
     },
-    setExerciseSetLoad(state, payload: ExerciseSetPayload) {
+    SET_EXERCISE_SET_LOAD(state, payload: ExerciseSetPayload) {
         const setResult = payload.newSetResult
         const exerciseResultToEdit = state.newWorkoutResult.exerciseResults
             .find(result => result.exerciseId == payload.exerciseId)
         exerciseResultToEdit.loads[setResult.index] = setResult.load
     },
-    setExerciseSetReps(state, payload: ExerciseSetPayload) {
+    SET_EXERCISE_SET_REPS(state, payload: ExerciseSetPayload) {
         const setResult = payload.newSetResult
         const exerciseResultToEdit = state.newWorkoutResult.exerciseResults
             .find(result => result.exerciseId == payload.exerciseId)
         exerciseResultToEdit.reps[setResult.index] = setResult.reps
     },
-    setWorkoutTime(state, timeOfWorkout: number) {
+    SET_WORKOUT_TIME(state, timeOfWorkout: number) {
         state.newWorkoutResult.timeOfWorkout = timeOfWorkout;
     },
-    setDayOfWorkout(state, dayOfWorkout: Date) {
+    SET_DAY_OF_WORKOUT(state, dayOfWorkout: Date) {
         state.newWorkoutResult.dayOfWorkout = dayOfWorkout;
     },
-    addExerciseSet(state, payload: ExerciseSetPayload) {
+    ADD_EXERCISE_SET(state, payload: ExerciseSetPayload) {
         const setResult = payload.newSetResult
         const exerciseResultToEdit = state.newWorkoutResult.exerciseResults
             .find(result => result.exerciseId == payload.exerciseId)
         exerciseResultToEdit.loads.push(setResult.load)
         exerciseResultToEdit.reps.push(setResult.reps)
     },
-    removeExerciseSet(state, exerciseId: string) {
+    REMOVE_EXERCISE_SET(state, exerciseId: string) {
         const exerciseResultToEdit = state.newWorkoutResult.exerciseResults
             .find(result => result.exerciseId == exerciseId)
         exerciseResultToEdit.loads.pop()
@@ -79,7 +79,7 @@ const actions = {
             workoutId: workoutId,
             userId: currentUserId(),
         }
-        commit('setWorkoutResult', newWorkoutResult)
+        commit('SET_WORKOUT_RESULT', newWorkoutResult)
         return Promise.resolve(newWorkoutResult)
     },
     async finishWorkout({state}) {
@@ -87,22 +87,22 @@ const actions = {
         return saveWorkoutResult(state.newWorkoutResult)
     },
     setDayOfWorkout({commit}, dayOfWorkout: Date) {
-        commit('setDayOfWorkout', dayOfWorkout)
+        commit('SET_DAY_OF_WORKOUT', dayOfWorkout)
     },
     setWorkoutTime({commit}, timeOfWorkout: number) {
-        commit('setWorkoutTime', timeOfWorkout)
+        commit('SET_WORKOUT_TIME', timeOfWorkout)
     },
     removeExerciseSet({commit}, exerciseId) {
-        commit('removeExerciseSet', exerciseId)
+        commit('REMOVE_EXERCISE_SET', exerciseId)
     },
     addExerciseSet({commit}, payload: ExerciseSetPayload) {
-        commit('addExerciseSet', payload)
+        commit('ADD_EXERCISE_SET', payload)
     },
     setExerciseSetLoad({commit}, payload: ExerciseSetPayload) {
-        commit('setExerciseSetLoad', payload)
+        commit('SET_EXERCISE_SET_LOAD', payload)
     },
     setExerciseSetReps({commit}, payload: ExerciseSetPayload) {
-        commit('setExerciseSetReps', payload)
+        commit('SET_EXERCISE_SET_REPS', payload)
     }
 };
 

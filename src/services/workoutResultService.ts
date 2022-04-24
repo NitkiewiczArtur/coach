@@ -2,8 +2,9 @@ import {collection, getFirestore, query, where} from "firebase/firestore";
 import WorkoutResult from "@/model/WorkoutResult";
 import ExerciseResult from "@/model/ExerciseResult";
 import {firebaseFetchDocs, firebaseSave} from "@/services/http";
+import {firebaseApp} from "@/plugins/firebase";
 
-const db = getFirestore();
+const db = getFirestore(firebaseApp);
 
 //TODO: return await?
 export async function saveWorkoutResult(workoutResult: WorkoutResult) {

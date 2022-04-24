@@ -1,15 +1,16 @@
-import {isMobileScreen} from "@/utils/utils";
 import {onMounted, ref} from "vue";
+import useScreen from "@/composable/useScreen";
 
 export function useChart() {
+    const {isMobileScreenCondition, isTabletScreenCondition} = useScreen()
     const chartHeight = ref(0)
     const chartWidth = ref(0)
 
     const doChart = () => {
-        if (isMobileScreen) {
+        if (isMobileScreenCondition()) {
             chartWidth.value = window.innerWidth * 0.9
             chartHeight.value = window.innerHeight * 0.4
-        } else if (window.innerWidth >= 700 && window.innerWidth < 1400) {
+        } else if (isTabletScreenCondition()) {
             chartWidth.value = window.innerWidth * 0.4
             chartHeight.value = window.innerHeight * 0.4
         } else {

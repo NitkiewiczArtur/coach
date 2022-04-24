@@ -1,11 +1,6 @@
 <script setup lang="ts">
 import NavBar from "@/components/common/NavBar.vue";
-import LoadingSpinner from "@/components/common/LoadingSpinner.vue";
-import {store} from "@/store";
-import {computed} from "vue";
-
-const isLoading = computed(() => store.getters['loader/isLoading'])
-</script>
+import LoadingSpinner from "@/components/common/LoadingSpinner.vue";</script>
 
 <template>
   <div class="app-wrapper">
@@ -16,7 +11,7 @@ const isLoading = computed(() => store.getters['loader/isLoading'])
       <suspense>
         <RouterView/>
       </suspense>
-      <loading-spinner v-show="isLoading"/>
+      <loading-spinner/>
     </div>
   </div>
 </template>

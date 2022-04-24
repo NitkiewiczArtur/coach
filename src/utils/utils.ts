@@ -1,4 +1,4 @@
-export const isMobileScreen = window.innerWidth < 700;
+export const isMobileScreen = window.innerWidth < 700
 export const getCurrentDateString = () => {
     const currentDate = new Date(Date.now())
     return `${currentDate.getFullYear()}-${getMonthString(currentDate)}-${getDayString(currentDate)}`

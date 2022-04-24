@@ -1,0 +1,46 @@
+@use "../../styles/mixins";
+@use "../../styles/variables" as v;
+
+.navbar-wrapper {
+  @include mixins.flex-column-center;
+  background: v.$primary-color;
+  color: v.$secondary-color;
+  min-height: 3rem;
+}
+
+.nav-button-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 16rem;
+
+  .nav-button {
+    text-align: center;
+    padding: 1rem;
+
+    &:hover {
+      color: v.$info;
+      cursor: pointer;
+    }
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .navbar-wrapper {
+    @include mixins.flex-row-center;
+    justify-content: space-between;
+    padding: 1rem;
+    background: v.$primary-color;
+    color: v.$secondary-color;
+  }
+
+  .toggle-nav-button {
+    display: none;
+  }
+
+  .nav-button-group {
+    flex-direction: row;
+    justify-content: space-between;
+    height: auto;
+  }
+}

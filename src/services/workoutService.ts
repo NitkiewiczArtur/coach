@@ -1,8 +1,9 @@
 import Workout from "@/model/Workout";
 import {collection, doc, getDoc, getFirestore, query, Query, where} from "firebase/firestore";
 import {firebaseFetchDocs, firebaseGetDoc} from "@/services/http";
+import {firebaseApp} from "@/plugins/firebase";
 
-const db = getFirestore();
+const db = getFirestore(firebaseApp);
 
 export async function getWorkoutById(id: string) {
     try {

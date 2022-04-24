@@ -2,8 +2,11 @@ import {addDoc, collection, doc, getDoc, getDocs, getFirestore, Query} from "fir
 import firebase from "firebase/compat";
 import {store} from "@/store"
 import DocumentData = firebase.firestore.DocumentData;
+import {firebaseApp} from "@/plugins/firebase";
 
-const db = getFirestore();
+//TODO: use Axios for requests and use interceptors instead all those methods...
+
+const db = getFirestore(firebaseApp);
 
 export const firebaseFetchDocs = async (query: Query<DocumentData>) => {
     let querySnapshot

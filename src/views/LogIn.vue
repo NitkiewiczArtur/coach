@@ -1,9 +1,10 @@
 <template>
   <div class="login-wrapper">
     <form novalidate @submit.prevent="onSubmit">
-      <h3>Logging in</h3>
-      <email-input v-model:value="email" v-model:isValid="isEmailValid" :showErrors="showErrors"/>
-      <password-input v-model:value="password" v-model:isValid="isPasswordValid" :showErrors="showErrors"/>
+      <h3>Sign in</h3>
+      <error-display :errors="errors"/>
+      <email-input v-model:value="email" v-model:isValid="isEmailValid" :showErrors="showInputErrors"/>
+      <password-input v-model:value="password" v-model:isValid="isPasswordValid" :showErrors="showInputErrors"/>
       <button class="button" type="submit">Log in</button>
     </form>
     <div>
@@ -14,31 +15,26 @@
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import useCoachRouter from "@/composable/useCoachRouter";
 import PasswordInput from "@/components/inputs/PasswordInput";
 import EmailInput from "@/components/inputs/EmailInput";
-import {signIn} from "@/services/authService";
 import {store} from "@/store"
+import ErrorDisplay from "@/components/inputs/ErrorDisplay";
 
 const {navigateToSignup, navigateToMyWorkouts} = useCoachRouter();
-const showErrors = ref(false)
+const showInputErrors = ref(false)
 const password = ref("");
 const email = ref("")
 const isEmailValid = ref(false)
 const isPasswordValid = ref(false)
-
-const onSubmit = () => {
+const errors = computed(() => store.state.auth.error ? [store.state.auth.error.code] : [])
+const onSubmit = async () => {
   if (isEmailValid.value && isPasswordValid.value) {
-    //firestore doesnt work if store used in authService
-    store.commit('loader/START_LOADING')
-    signIn(email.value, password.value)
-        .then(() => {
-          store.commit('loader/FINISH_LOADING')
-          navigateToMyWorkouts()
-        })
+    await store.dispatch('auth/signIn', {email: email.value, password: password.value})
+    await navigateToMyWorkouts()
   } else {
-    showErrors.value = true
+    showInputErrors.value = true
   }
 }
 </script>

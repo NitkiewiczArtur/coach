@@ -1,28 +1,19 @@
-import {initializeApp} from "firebase/app";
 import {
     createUserWithEmailAndPassword,
     getAuth,
-    onAuthStateChanged,
+    onAuthStateChanged as onAuthStateChangedFromFirebase,
     signInWithEmailAndPassword,
-    signOut
+    signOut as signOutFromFirebase
 } from "firebase/auth";
-
-const firebaseApp = initializeApp({
-    apiKey: "AIzaSyCScbP0uh0vuV9aOixklfEwFAFIpXR4IAM",
-    authDomain: "coach-db-47391.firebaseapp.com",
-    projectId: "coach-db-47391",
-    storageBucket: "coach-db-47391.appspot.com",
-    messagingSenderId: "157123462234",
-    appId: "1:157123462234:web:e5f4bd48221ad984d9c463",
-});
 
 export const signIn = (email, password) => {
     const auth = getAuth();
     return signInWithEmailAndPassword(auth, email, password)
 }
-export const signOutUser = () => {
+
+export const signOut = () => {
     const auth = getAuth();
-    return signOut(auth)
+    return signOutFromFirebase(auth)
 }
 
 export const signUp = (email, password) => {
@@ -30,9 +21,9 @@ export const signUp = (email, password) => {
     return createUserWithEmailAndPassword(auth, email.value, password.value)
 }
 
-export const onAuthStateChange = (nextOrObserver) => {
+export const onAuthStateChanged = (nextOrObserver) => {
     const auth = getAuth();
-    return onAuthStateChanged(auth, nextOrObserver)
+    return onAuthStateChangedFromFirebase(auth, nextOrObserver)
 }
 
 export const currentUser = () => {
