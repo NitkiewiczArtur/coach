@@ -1,13 +1,14 @@
-import {collection, endAt, getDocs, getFirestore, limit, orderBy, query, startAt, where} from "firebase/firestore";
+import {collection, endAt, getFirestore, limit, orderBy, query, startAt, where} from "firebase/firestore";
 import Exercise from "@/model/Exercise";
 import Workout from "@/model/Workout";
+import {firebaseFetchDocs} from "@/services/http";
 
 const db = getFirestore();
 
 export async function getExerciseById(id: string) {
     const q = query(collection(db, "exercises"), where("id", "==", id));
     try {
-        const querySnapshot = await getDocs(q);
+        const querySnapshot = await firebaseFetchDocs(q);
         if (querySnapshot.docs[0].exists()) {
             return querySnapshot.docs[0].data() as Exercise
         }
@@ -26,7 +27,7 @@ export const getExercises = async () => {
     const exercises: Array<Exercise> = []
     const q = query(collection(db, "exercises"), limit(10));
     try {
-        const querySnapshot = await getDocs(q);
+        const querySnapshot = await firebaseFetchDocs(q);
         querySnapshot.forEach((doc) => {
             exercises.push(doc.data() as Exercise);
         });
@@ -45,7 +46,7 @@ export async function searchExercisesStrict(searchValue: string) {
         endAt(searchValue + '~'),
         limit(10));
     try {
-        const querySnapshot = await getDocs(q);
+        const querySnapshot = await firebaseFetchDocs(q);
         querySnapshot.forEach((doc) => {
             exercises.push(doc.data() as Exercise);
         });
@@ -63,7 +64,7 @@ export async function searchExercises(searchValue: string) {
         where('name', '>=', searchValue),
         limit(10));
     try {
-        const querySnapshot = await getDocs(q);
+        const querySnapshot = await firebaseFetchDocs(q);
         querySnapshot.forEach((doc) => {
             exercises.push(doc.data() as Exercise);
         });

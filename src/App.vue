@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import NavBar from "@/components/common/NavBar.vue";</script>
+import NavBar from "@/components/common/NavBar.vue";
+import LoadingSpinner from "@/components/common/LoadingSpinner.vue";
+import {store} from "@/store";
+import {computed} from "vue";
+
+const isLoading = computed(() => store.getters['loader/isLoading'])
+</script>
 
 <template>
   <div class="app-wrapper">
@@ -10,6 +16,7 @@ import NavBar from "@/components/common/NavBar.vue";</script>
       <suspense>
         <RouterView/>
       </suspense>
+      <loading-spinner v-show="isLoading"/>
     </div>
   </div>
 </template>
@@ -96,11 +103,6 @@ a.nav-link {
   }
 }
 
-.error {
-  background-color: yellow;
-  border-radius: 5px;
-  padding: 5px;
-}
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

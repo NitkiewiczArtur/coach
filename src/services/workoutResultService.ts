@@ -1,6 +1,7 @@
-import {addDoc, collection, getDocs, getFirestore, query, where} from "firebase/firestore";
+import {collection, getFirestore, query, where} from "firebase/firestore";
 import WorkoutResult from "@/model/WorkoutResult";
 import ExerciseResult from "@/model/ExerciseResult";
+import {firebaseFetchDocs, firebaseSave} from "@/services/http";
 
 const db = getFirestore();
 
@@ -8,8 +9,7 @@ const db = getFirestore();
 export async function saveWorkoutResult(workoutResult: WorkoutResult) {
     const workoutResultToSave = mapToSnapshot(workoutResult)
     try {
-        const save = await addDoc(collection(db, "workout_results"), workoutResultToSave);
-        return save
+        return firebaseSave("workout_results", workoutResultToSave)
     } catch (e) {
         console.log("Error while saving workout in firestore: " + e)
     }
@@ -21,7 +21,7 @@ export async function getResultsByWorkoutId(id: string, resultLimit?: number) {
         collection(db, "workout_results"),
         where('workoutId', '==', id))
     try {
-        const querySnapshot = await getDocs(q);
+        const querySnapshot = await firebaseFetchDocs(q);
         querySnapshot.forEach((doc) => {
             const workoutResult = mapToWorkoutResult(doc.data())
             workoutResults.push(workoutResult);

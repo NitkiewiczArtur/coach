@@ -1,12 +1,12 @@
 import Workout from "@/model/Workout";
-import {collection, doc, getDoc, getDocs, getFirestore, limit, query, where, Query} from "firebase/firestore";
-
+import {collection, doc, getDoc, getFirestore, query, Query, where} from "firebase/firestore";
+import {firebaseFetchDocs, firebaseGetDoc} from "@/services/http";
 
 const db = getFirestore();
 
 export async function getWorkoutById(id: string) {
     try {
-        const snap = await getDoc(doc(db, 'workouts', id))
+        const snap = await firebaseGetDoc('workouts', id)
         if (snap.exists()) {
             return snap.data() as Workout
         }
@@ -18,18 +18,13 @@ export async function getWorkoutById(id: string) {
 
 export async function getWorkoutsByUserId(userId: string) {
     const q = query(collection(db, "workouts"), where("userId", "==", userId));
-    return getWorkoutsForQuery(q)
+    return getWorkouts(q)
 }
 
-export async function getSomeWorkouts() {
-    const q = query(collection(db, "workouts"), limit(5));
-    return getWorkoutsForQuery(q)
-}
-
-export async function getWorkoutsForQuery(query: Query) {
+export async function getWorkouts(query: Query) {
     const workouts: Array<Workout> = []
     try {
-        const querySnapshot = await getDocs(query);
+        const querySnapshot = await firebaseFetchDocs(query);
         querySnapshot.forEach((doc) => {
             const workout = doc.data() as Workout;
             workout.id = doc.id;
