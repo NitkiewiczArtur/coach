@@ -12,20 +12,16 @@
           :key="index"
           class="tbody-row">
         <td align=Center>
-          <div class="hide-for-desktop">
-            <span>{{ exerciseResultData.exerciseName.toUpperCase() }}</span>
-          </div>
+          <span>{{ exerciseResultData.exerciseName.toUpperCase() }}</span>
           <workout-result-chart v-if="chartHeight"
                                 :exercise-result-data="exerciseResultData"
                                 :height="chartHeight"
                                 :width="chartWidth"/>
-          <exercise-result-creation-fragment
-              :exerciseId="exerciseResultData.exerciseId"
-              class="hide-for-desktop"/>
+          <exercise-result-creation-fragment v-if="isMobileScreen"
+                                             :exerciseId="exerciseResultData.exerciseId"/>
         </td>
-<!--        Jak to rozwiązać?-->
-        <td class="hide-for-mobile" align=Center>
-          <exercise-result-creation-fragment v-if="!isMobileScreen" :exerciseId="exerciseResultData.exerciseId"/>
+        <td v-if="!isMobileScreen" align=Center>
+          <exercise-result-creation-fragment :exerciseId="exerciseResultData.exerciseId"/>
         </td>
       </tr>
       </tbody>
@@ -38,8 +34,8 @@ import {PropType} from "vue";
 import WorkoutResultChart from "@/components/common/ExerciseResultChart.vue";
 import ExerciseResultData from "@/model/ExerciseResultData";
 import ExerciseResultCreationFragment from "@/components/ExerciseResultCreationFragment.vue";
-import {useChart} from "@/composable/useChart";
-import {isMobileScreen} from '@/utils/utils';
+import useChart from "@/composable/useChart";
+import useScreen from "@/composable/useScreen";
 
 const props = defineProps({
   resultsDataListToDisplay: {
@@ -51,6 +47,7 @@ const props = defineProps({
   },
 })
 const {chartHeight, chartWidth} = useChart()
+const {isMobileScreen} = useScreen()
 </script>
 
 <style lang="scss" scoped>

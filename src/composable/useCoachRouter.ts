@@ -13,9 +13,9 @@ export default function useCoachRouter() {
         router.push({name: "doWorkout", params: {workoutId: workoutId}})
     const navigateToDoneWorkout = (workoutId) =>
         router.push({name: "doneWorkout", params: {workoutId: workoutId}})
-    const navigateToLogin = () =>
-        router.push({name: "logIn"})
-    const navigateToSignup = () =>
+    const navigateToSignIn = () =>
+        router.push({name: "signIn"})
+    const navigateToSignUp = () =>
         router.push({name: "signUp"})
     const navigateToExploreExercises = () =>
         router.push({name: "exploreExercises"})
@@ -29,8 +29,8 @@ export default function useCoachRouter() {
         navigateToWorkoutResults,
         navigateToDoWorkout,
         navigateToDoneWorkout,
-        navigateToLogin,
-        navigateToSignup,
+        navigateToSignIn,
+        navigateToSignUp,
         navigateToExploreExercises,
         navigateToMyWorkouts
     }

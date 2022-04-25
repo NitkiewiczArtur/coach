@@ -10,19 +10,19 @@
     <div>
       <h4>You dont have an account?</h4>
     </div>
-      <button @click="navigateToSignup" class="button">Sign up</button>
+      <button @click="navigateToSignUp" class="button">Sign up</button>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {computed, ref} from "vue";
 import useCoachRouter from "@/composable/useCoachRouter";
-import PasswordInput from "@/components/inputs/PasswordInput";
-import EmailInput from "@/components/inputs/EmailInput";
+import PasswordInput from "@/components/inputs/PasswordInput.vue";
+import EmailInput from "@/components/inputs/EmailInput.vue";
 import {store} from "@/store"
-import ErrorDisplay from "@/components/inputs/ErrorDisplay";
+import ErrorDisplay from "@/components/inputs/ErrorDisplay.vue";
 
-const {navigateToSignup, navigateToMyWorkouts} = useCoachRouter();
+const {navigateToSignUp, navigateToMyWorkouts} = useCoachRouter();
 const showInputErrors = ref(false)
 const password = ref("");
 const email = ref("")

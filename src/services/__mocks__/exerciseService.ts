@@ -2,21 +2,30 @@ import {getTestExercises, getTestWorkoutExercises} from "../../../tests/utils/te
 import Workout from "@/model/Workout";
 
 const firebaseApp = {}
-
 const db = {};
 
 export const getExerciseById = async (id: number) => {
-    return new Promise((resolve) => resolve(null));
+    return new Promise((resolve) => {
+        resolve(null)
+    });
 };
 export const searchExercise = async (id: number) => {
-    return new Promise((resolve) => resolve(null));
+    return new Promise((resolve) => {
+        resolve(null)
+    });
 };
 export const getWorkoutsExercises = async (workouts: Workout[]) => {
-    return new Promise((resolve) => resolve(getTestWorkoutExercises()));
+    return new Promise((resolve) => {
+        resolve(getTestWorkoutExercises())
+    });
 };
 export const getExercisesByIds = (ids: Array<string>) => {
-    return new Promise((resolve) => resolve(getTestExercises()));
+    return new Promise((resolve) => {
+        resolve(getTestExercises())
+    });
 };
 export const getExercises = async () => {
-    return new Promise((resolve) => resolve(null));
+    return new Promise((resolve) => {
+        resolve(null)
+    });
 };

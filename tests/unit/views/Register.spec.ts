@@ -1,12 +1,12 @@
 import {shallowMount} from '@vue/test-utils'
-import RegisterView from '@/views/RegisterUser.vue'
+import RegisterView from '@/views/SignUp.vue'
 import {signUp} from "@/services/authService";
 
 let wrapper;
 const TEST_EMAIL = "test@test.pl";
 const TEST_PASSWORD = "testPassword";
 
-describe('RegisterUser.vue', () => {
+describe('SignUp.vue', () => {
     beforeEach(() => {
         wrapper = shallowMount(RegisterView)
     });

@@ -42,7 +42,7 @@ const isLoading = computed(() => store.getters['loader/isLoading'])
   display: inline-block;
   position: absolute;
   top: 0;
-  background-color: v.$third-color;
+  background-color: v.$info;
   border-radius: 100%;
 
   -webkit-animation: sk-bounce 2.0s infinite ease-in-out;

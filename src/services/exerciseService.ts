@@ -3,6 +3,7 @@ import Exercise from "@/model/Exercise";
 import Workout from "@/model/Workout";
 import {firebaseFetchDocs} from "@/services/http";
 import {firebaseApp} from "@/plugins/firebase";
+import {handleError} from "@/utils/utils";
 
 const db = getFirestore(firebaseApp);
 
@@ -65,12 +66,14 @@ export async function searchExercises(searchValue: string) {
         where('name', '>=', searchValue),
         limit(10));
     try {
+        console.log('ssss')
         const querySnapshot = await firebaseFetchDocs(q);
         querySnapshot.forEach((doc) => {
             exercises.push(doc.data() as Exercise);
         });
     } catch (e) {
         console.log("Error while getting exercises from firestore:" + e)
+        await handleError(e)
     }
     return exercises;
 }

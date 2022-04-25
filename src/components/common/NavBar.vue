@@ -18,7 +18,7 @@
       <router-link class="nav-link" to="/myWorkouts">
         <div class="nav-button" @click="toggleShowNavIfMobile">My Workouts</div>
       </router-link>
-      <router-link v-if="!loggedIn" class="nav-link" to="/logIn">
+      <router-link v-if="!loggedIn" class="nav-link" to="/signIn">
         <div class="nav-button" @click="toggleShowNavIfMobile">Sign in</div>
       </router-link>
       <div v-else class="nav-button" @click="signOut">Sign out</div>

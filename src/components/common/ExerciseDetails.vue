@@ -22,7 +22,6 @@
 </template>
 
 <script setup lang="ts">
-
 import {PropType} from "vue";
 import Exercise from "@/model/Exercise";
 

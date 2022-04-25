@@ -1,7 +1,7 @@
 import {createRouter, createWebHashHistory, RouteRecordRaw} from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import RegisterView from "@/views/RegisterUser.vue";
-import LogIn from "@/views/LogIn.vue";
+import SignUp from "@/views/SignUp.vue";
+import SignIn from "@/views/SignIn.vue";
 import ExploreExercises from "@/views/ExploreExercises.vue";
 import {currentUser} from "@/services/authService";
 import MyWorkoutsView from "@/views/MyWorkouts.vue";
@@ -9,7 +9,6 @@ import WorkoutResultsView from "@/views/MyWorkoutResults.vue";
 import NotFound from "@/views/NotFound.vue";
 import DoWorkout from "@/views/DoWorkout.vue";
 import DoneWorkout from "@/views/DoneWorkout.vue";
-
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -61,16 +60,20 @@ const routes: Array<RouteRecordRaw> = [
 
     },
     {
-        path: "/register",
-        name: "register",
-        component: RegisterView,
+        path: "/signUp",
+        name: "signUp",
+        component: SignUp,
     },
     {
-        path: "/logIn",
-        name: "logIn",
-        component: LogIn,
+        path: "/signIn",
+        name: "signIn",
+        component: SignIn,
     },
-    { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound },
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'not-found',
+        component: NotFound
+    },
 ]
 
 const router = createRouter({
@@ -80,10 +83,10 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-    const isAuthenticated = currentUser();
+    const isAuthenticated = currentUser(); //store.getters['auth/isUserAuth']
 
     if (requiresAuth && !isAuthenticated) {
-        next("/logIn");
+        next("/signIn");
     } else {
         next();
     }

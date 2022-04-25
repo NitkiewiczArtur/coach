@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import NavBar from "@/components/common/NavBar.vue";
-import LoadingSpinner from "@/components/common/LoadingSpinner.vue";</script>
+import LoadingSpinner from "@/components/common/LoadingSpinner.vue";
+import ErrorMessage from "@/components/common/ErrorMessage.vue";</script>
 
 <template>
   <div class="app-wrapper">
@@ -12,6 +13,7 @@ import LoadingSpinner from "@/components/common/LoadingSpinner.vue";</script>
         <RouterView/>
       </suspense>
       <loading-spinner/>
+      <error-message/>
     </div>
   </div>
 </template>

@@ -1,4 +1,5 @@
-export const isMobileScreen = window.innerWidth < 700
+import {store} from "@/store";
+
 export const getCurrentDateString = () => {
     const currentDate = new Date(Date.now())
     return `${currentDate.getFullYear()}-${getMonthString(currentDate)}-${getDayString(currentDate)}`
@@ -16,4 +17,7 @@ const getDayString = (date: Date) => {
         return day
     }
     return `0${day}`
+}
+export const handleError = (error) => {
+   return store.dispatch('setError', error)
 }

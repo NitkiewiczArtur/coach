@@ -1,7 +1,7 @@
 import {onMounted, ref} from "vue";
 import useScreen from "@/composable/useScreen";
 
-export function useChart() {
+export default function useChart() {
     const {isMobileScreenCondition, isTabletScreenCondition} = useScreen()
     const chartHeight = ref(0)
     const chartWidth = ref(0)

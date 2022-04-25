@@ -51,7 +51,6 @@ const addSet = () => {
       ? {...lastSet, index: lastSet.index + 1}
       : {load: 0, reps: 1, index: 0}) as SetResult /// Czy :SetResult?
 
-  //setResults.value.push(newSetResult)!!!!!
   const storePayload = {
     exerciseId: props.exerciseId,
     newSetResult: newSetResult,
