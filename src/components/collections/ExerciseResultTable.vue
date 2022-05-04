@@ -43,7 +43,7 @@
 import {PropType} from "vue";
 import WorkoutResultChart from "@/components/common/ExerciseResultChart.vue";
 import ExerciseResultData from "@/model/ExerciseResultData";
-import {useChart} from "@/composable/useChart";
+import useChart from "@/composable/useChart";
 
 const props = defineProps({
   resultsDataListToDisplay: {
