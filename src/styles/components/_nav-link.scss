@@ -1,0 +1,23 @@
+@use "../variables" as v;
+
+a.nav-link {
+  &:link {
+    color: v.$secondary-color;
+    text-decoration: none;
+  }
+
+  &:visited {
+    color: v.$secondary-color;
+    text-decoration: none;
+  }
+
+  &:hover {
+    color: v.$info;
+    text-decoration: none;
+  }
+
+  &:active {
+    color: v.$secondary-color;
+    text-decoration: none;
+  }
+}

@@ -1,5 +1,5 @@
 import Workout from "@/model/Workout";
-import {collection, doc, getDoc, getFirestore, query, Query, where} from "firebase/firestore";
+import {collection, getFirestore, query, Query, where} from "firebase/firestore";
 import {firebaseFetchDocs, firebaseGetDoc} from "@/services/http";
 import {firebaseApp} from "@/plugins/firebase";
 

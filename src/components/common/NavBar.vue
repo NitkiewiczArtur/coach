@@ -47,10 +47,12 @@ const toggleShowNavIfMobile = () => {
     isNavHidden.value = !isNavHidden.value;
   }
 };
+
 const init = () => {
   if (isMobileScreen.value) {
     toggleShowNavIfMobile();
   }
+  store.dispatch('auth/onAuthStateChanged')
 }
 
 watch(isMobileScreen, (newIsMobileScreen) => {
@@ -59,7 +61,6 @@ watch(isMobileScreen, (newIsMobileScreen) => {
 
 onMounted(() => {
   init()
-  store.dispatch('auth/onAuthStateChanged')
 });
 </script>
 

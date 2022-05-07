@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from "vue";
+import {computed, ref, unref} from "vue";
 import useCoachRouter from "@/composable/useCoachRouter";
 import PasswordInput from "@/components/inputs/PasswordInput.vue";
 import EmailInput from "@/components/inputs/EmailInput.vue";
@@ -31,7 +31,7 @@ const isPasswordValid = ref(false)
 const errors = computed(() => store.state.auth.error ? [store.state.auth.error.code] : [])
 const onSubmit = async () => {
   if (isEmailValid.value && isPasswordValid.value) {
-    await store.dispatch('auth/signUp', {email: email.value, password: password.value})
+    await store.dispatch('auth/signUp', {email: unref(email), password: unref(password)})
     await navigateToMyWorkouts()
   } else {
     showInputErrors.value = true

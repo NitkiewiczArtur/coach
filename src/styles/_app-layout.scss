@@ -1,0 +1,60 @@
+@use "variables" as v;
+
+.app-wrapper {
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  height: 100vh;
+  width: 100vw;
+  background-color: v.$background;
+  color: v.$primary-color;
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (max-width: 700px) {
+  .hide-for-mobile {
+    display: none;
+  }
+
+  .navbar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 100;
+  }
+  .content {
+    padding-bottom: 3rem;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .app-wrapper {
+    font-size: 16px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(11, 1fr);
+    grid-template-rows: repeat(11, 1fr);
+  }
+
+  .navbar {
+    grid-column: 1 / -1;
+  }
+
+  .sidebar {
+    grid-column: 1 / 1;
+    grid-row: 2 / 4;
+  }
+
+  .content {
+    grid-column: 1 / 12;
+    grid-row: 2 / 12;
+  }
+  .hide-for-desktop {
+    display: none;
+  }
+}
+
+h2 {
+  font-size: 2rem;
+  margin: 0;
+}

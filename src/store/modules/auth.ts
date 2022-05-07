@@ -30,9 +30,9 @@ const mutations = {
 
 const actions = {
     onAuthStateChanged({commit}) {
-        onAuthStateChangedFromService((user: User) => {
+        return onAuthStateChangedFromService((user: User) => {
             if (user) {
-                commit("SET_USER", user)
+                commit("SET_USER", {id: user.uid, email: user.email})
             } else {
                 commit("SET_USER", null)
             }

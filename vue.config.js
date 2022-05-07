@@ -1,8 +1,6 @@
-//const { defineConfig } = require('@vue/cli-service')
-module.exports = {
-  publicPath: '/coach/'
-}
-/*defineConfig({
+const {defineConfig} = require('@vue/cli-service')
+module.exports = defineConfig({
   publicPath: '/coach/',
   transpileDependencies: true
-})*/
+})
+

@@ -1,34 +1,30 @@
 import {
     createUserWithEmailAndPassword,
-    getAuth,
     onAuthStateChanged as onAuthStateChangedFromFirebase,
     signInWithEmailAndPassword,
     signOut as signOutFromFirebase
 } from "firebase/auth";
+import {auth} from "@/plugins/firebase";
 
-export const signIn = (email, password) => {
-    const auth = getAuth();
+export const signIn = (email:string, password:string) => {
     return signInWithEmailAndPassword(auth, email, password)
 }
 
 export const signOut = () => {
-    const auth = getAuth();
     return signOutFromFirebase(auth)
 }
 
-export const signUp = (email, password) => {
-    const auth = getAuth();
-    return createUserWithEmailAndPassword(auth, email.value, password.value)
+export const signUp = (email:string, password:string) => {
+    return createUserWithEmailAndPassword(auth, email, password)
 }
 
 export const onAuthStateChanged = (nextOrObserver) => {
-    const auth = getAuth();
     return onAuthStateChangedFromFirebase(auth, nextOrObserver)
 }
 
 export const currentUser = () => {
-    return getAuth().currentUser
+    return auth.currentUser
 }
 export const currentUserId = () => {
-    return getAuth().currentUser?.uid
+    return auth.currentUser?.uid
 }

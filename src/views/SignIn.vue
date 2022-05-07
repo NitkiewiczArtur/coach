@@ -5,7 +5,7 @@
       <error-display :errors="errors"/>
       <email-input v-model:value="email" v-model:isValid="isEmailValid" :showErrors="showInputErrors"/>
       <password-input v-model:value="password" v-model:isValid="isPasswordValid" :showErrors="showInputErrors"/>
-      <button class="button" type="submit">Log in</button>
+      <button class="button" type="submit">Sign in</button>
     </form>
     <div>
       <h4>You dont have an account?</h4>
