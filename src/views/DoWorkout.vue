@@ -22,9 +22,9 @@
                                              class="input" type="date"/>
         </div>
       </div>
-      <p v-if="showInvalidFormCommunicate">
-        Form invalid! Correct displayed incompatibility and press finish again.
-      </p>
+      <div class="align-right">
+        <ErrorDisplay v-if="showInvalidFormCommunicate" :errors="FORM_ERROR"/>
+      </div>
       <div class="align-right">
         <button @click="onSubmit"
                 type="submit"
@@ -46,9 +46,10 @@ import {defineComponent, ref, watch} from "vue";
 import {isValidWorkoutResult} from "@/utils/workoutResultValidator";
 import DoExerciseTable from "@/components/collections/DoExerciseTable.vue";
 import {store} from "@/store"
+import ErrorDisplay from "@/components/inputs/ErrorDisplay.vue";
 
 export default defineComponent({
-  components: {DoExerciseTable},
+  components: {ErrorDisplay, DoExerciseTable},
   async beforeRouteEnter(to) {
     await store.dispatch('workoutResult/initNewWorkoutResult', to.params.workoutId)
   },
@@ -58,7 +59,7 @@ export default defineComponent({
       dispatchSetWorkoutTime, timeOfWorkoutState,
       newWorkoutResultState, dispatchSetDayOfWorkout
     } = useWorkoutResultStore()
-
+    const FORM_ERROR = ['Form invalid! Correct displayed incompatibility and press finish again.']
     const {workoutIdFromRoute, navigateBackward, navigateToDoneWorkout} = useCoachRouter()
     const showInvalidFormCommunicate = ref(false)
 
@@ -90,13 +91,14 @@ export default defineComponent({
     const exerciseResultDataList = ref(await Promise.all(exerciseResultDataPromises))
 
     return {
+      FORM_ERROR,
       exerciseResultDataList,
-      navigateBackward,
       workout,
       timeOfWorkout,
       dayOfWorkout,
-      onSubmit,
       showInvalidFormCommunicate,
+      onSubmit,
+      navigateBackward,
     }
   }
 })

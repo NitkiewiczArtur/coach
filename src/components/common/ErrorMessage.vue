@@ -20,7 +20,6 @@ import {computed} from "vue";
 
 const error = computed(() => store.state.error)
 const dismissError = () => {
-  console.log(error.value);
   store.dispatch('setError', null)
 }
 </script>

@@ -1,10 +1,6 @@
 import WorkoutResult from "@/model/WorkoutResult";
 import SetResult from "@/model/SetResult";
-import {
-    getLastWorkoutResultsExerciseResults,
-    getResultsByWorkoutId,
-    saveWorkoutResult
-} from "@/services/workoutResultService";
+import {getLastWorkoutResult, saveWorkoutResult} from "@/services/workoutResultService";
 import {getCurrentDateString} from "@/utils/utils";
 import {DEFAULT_TIME_OF_WORKOUT} from "@/utils/globalParameters";
 import {currentUserId} from "@/services/authService";
@@ -58,32 +54,35 @@ const mutations = {
 
 const actions = {
     async initNewWorkoutResult({commit}, workoutId: string) {
-        const workoutResults = await getResultsByWorkoutId(workoutId, 5)
+        //TODO: getLastWorkoutResult i polepszyć czytelność
+        const lastWorkoutResult = await getLastWorkoutResult(workoutId)
         //hack, dayOfWorkout saved as String to make display date in dateInput possible.
         // mapToSnapshot in workoutResultService handles it
-        let lastExerciseResults
-        if (!workoutResults.length) {
+        let initialExerciseResults
+        /*if there is no workout results user starts with empty initial workout result,
+        if there is any workout result, we take last one and set its results as initial in new w. r.,
+        because You use similar weights during your training each time */
+        if (!lastWorkoutResult) {
             const workout = await getWorkoutById(workoutId)
-            lastExerciseResults = workout?.exercises.map(exerciseId => ({
+            initialExerciseResults = workout?.exercises.map(exerciseId => ({
                 exerciseId,
                 loads: [],
                 reps: []
             } as ExerciseResult))
         } else {
-            lastExerciseResults = getLastWorkoutResultsExerciseResults(workoutResults)
+            initialExerciseResults = lastWorkoutResult.exerciseResults
         }
         const newWorkoutResult = {
             dayOfWorkout: getCurrentDateString(),
-            exerciseResults: lastExerciseResults,
+            exerciseResults: initialExerciseResults,
             timeOfWorkout: DEFAULT_TIME_OF_WORKOUT,
             workoutId: workoutId,
             userId: currentUserId(),
         }
         commit('SET_WORKOUT_RESULT', newWorkoutResult)
-        return Promise.resolve(newWorkoutResult)
+        return newWorkoutResult
     },
     async finishWorkout({state}) {
-        console.log("state.newWorkoutResult", state.newWorkoutResult);
         return saveWorkoutResult(state.newWorkoutResult)
     },
     setDayOfWorkout({commit}, dayOfWorkout: Date) {

@@ -17,14 +17,6 @@ const routes: Array<RouteRecordRaw> = [
         component: HomeView
     },
     {
-        path: '/about',
-        name: 'about',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-    },
-    {
         path: "/exploreExercises",
         name: "exploreExercises",
         component: ExploreExercises,
@@ -36,28 +28,24 @@ const routes: Array<RouteRecordRaw> = [
         name: "myWorkouts",
         component: MyWorkoutsView,
         meta: {requiresAuth: true}
-
     },
     {
         path: "/workoutResults",
         name: "workoutResults",
         component: WorkoutResultsView,
         meta: {requiresAuth: true}
-
     },
     {
         path: "/doWorkout",
         name: "doWorkout",
         component: DoWorkout,
         meta: {requiresAuth: true}
-
     },
     {
         path: "/doneWorkout",
         name: "doneWorkout",
         component: DoneWorkout,
         meta: {requiresAuth: true}
-
     },
     {
         path: "/signUp",
@@ -92,5 +80,4 @@ router.beforeEach((to, from, next) => {
     }
 })
 
-export {routes};
 export default router;

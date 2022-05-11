@@ -23,7 +23,7 @@ export async function getExerciseResultData(exerciseId: string, workoutResults: 
         console.log("Error while getting exercise from firestore:" + e)
     }
 }
-
+//TODO: optimization of data structure to eliminate find
 function getExerciseVolumePerDay(exerciseId: string, workoutResults: WorkoutResult[]) {
     return new Map(workoutResults.map(({exerciseResults, dayOfWorkout}) => {
         const exerciseResult = exerciseResults
@@ -32,7 +32,7 @@ function getExerciseVolumePerDay(exerciseId: string, workoutResults: WorkoutResu
         return [getDateString(dayOfWorkout), volume]
     }))
 }
-
+//TODO: saving to db
 function getExerciseVolume(exerciseResult: ExerciseResult | undefined) {
     if (exerciseResult) {
         return exerciseResult.loads.reduce((total, amount, index) => {
@@ -42,7 +42,7 @@ function getExerciseVolume(exerciseResult: ExerciseResult | undefined) {
         }, 0)
     }
 }
-
+//TODO: saving to db
 function getExerciseMaxRepPerDay(exerciseId: string, workoutResults: WorkoutResult[]) {
     return new Map(workoutResults.map(({exerciseResults, dayOfWorkout}) => {
         const exerciseResult = exerciseResults
